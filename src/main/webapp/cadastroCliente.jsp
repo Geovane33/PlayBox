@@ -8,9 +8,12 @@
     <body>
         <h1>Formulário de Cadastro</h1>
         <form action="CadastroClienteServlet" method="POST">
-                Nome:<input type="text" name="nome"/><br>
-               Email:<input type="text" name="email"/><br>
-               <button type="submit" >Enviar</button>
+            Nome:<input type="text" name="nome"/><br>
+            Data de nascimento: <input type="date" name="dataNascimento"/><br>
+            sex0o: <input type="text" name="sexo"/><br>
+            Telefone: <input type="text" name="telefone"/><br>
+            Email: <input type="text" name="email"/><br>
+            <button type="submit" >Enviar</button>
         </form>
     </body>
 </html>
