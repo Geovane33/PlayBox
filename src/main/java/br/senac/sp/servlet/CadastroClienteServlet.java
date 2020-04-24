@@ -4,12 +4,16 @@ import br.senac.sp.dao.ClienteDAO;
 import br.senac.sp.entidade.Cliente;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 
 public class CadastroClienteServlet extends HttpServlet {
 
@@ -19,16 +23,26 @@ public class CadastroClienteServlet extends HttpServlet {
         //Empty
     }
 
-   
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String nome = request.getParameter("nome");
-        String email = request.getParameter("email");
         
-        Cliente cliente = new Cliente(nome, email);
-        boolean ok = ClienteDAO.cadastrarCliente(cliente);
+        Date dataNascimento= null;
+        SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            dataNascimento = formato.parse(request.getParameter("dataNascimento"));
+        } catch (ParseException ex) {
+            Logger.getLogger(CadastroClienteServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        String sexo = request.getParameter("sexo");
+         String telefone = request.getParameter("telefone");
+        String email = request.getParameter("email");
+
+        Cliente cliente = new Cliente(nome, dataNascimento, sexo, telefone, email,"","","","","","");
+        boolean ok = ClienteDAO.salvarCliente(cliente);
         PrintWriter out = response.getWriter();
 
         String url = "";
@@ -38,8 +52,7 @@ public class CadastroClienteServlet extends HttpServlet {
             url = "/erro.jsp";
         }
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
-            dispatcher.forward(request,response);
-       
+        dispatcher.forward(request, response);
 
     }
 
