@@ -36,6 +36,7 @@ public class ConexaoDB {
         try {
             CONEXAO = DriverManager.getConnection(dbURL, USER, PASSWORD);
         } catch (SQLException ex) {
+            System.out.println("Erro ao conectar no banco");
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
