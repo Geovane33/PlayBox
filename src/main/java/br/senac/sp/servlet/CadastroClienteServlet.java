@@ -20,6 +20,7 @@ public class CadastroClienteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         //Empty
     }
 
@@ -27,33 +28,40 @@ public class CadastroClienteServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String nome = request.getParameter("nome");
-        
-        Date dataNascimento= null;
-        SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
-        try {
-            dataNascimento = formato.parse(request.getParameter("dataNascimento"));
-        } catch (ParseException ex) {
-            Logger.getLogger(CadastroClienteServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        String sexo = request.getParameter("sexo");
-         String telefone = request.getParameter("telefone");
-        String email = request.getParameter("email");
+        String acao = request.getParameter("acao");
+        ClienteDAO clienteDAO = new ClienteDAO();
+        if (acao.equals("salvar")) {
+            String nome = request.getParameter("nome");
+            Date dataNascimento = parseData(request.getParameter("dataNascimento"), "dd-MM-yyyy");
+            String sexo = request.getParameter("sexo");
+            String telefone = request.getParameter("telefone");
+            String email = request.getParameter("email");
+            String cpf = request.getParameter("cpf");
+            String cep = request.getParameter("cep");
+            String cidade = request.getParameter("cidade");
+            String uf = request.getParameter("uf");
+            String bairro = request.getParameter("bairro");
+            String numero = request.getParameter("numero");
 
-        Cliente cliente = new Cliente(nome, dataNascimento, sexo, telefone, email,"","","","","","");
-        boolean ok = ClienteDAO.salvarCliente(cliente);
-        PrintWriter out = response.getWriter();
+            Cliente cliente = new Cliente(nome, dataNascimento, sexo, telefone, email, cpf, cep, cidade, uf, bairro, numero);
+            boolean ok = clienteDAO.salvarCliente(cliente);
+            PrintWriter out = response.getWriter();
+            String url = "";
+            if (ok) {
+                url = "/sucesso.jsp";
+            } else {
+                url = "/erro.jsp";
+            }
 
-        String url = "";
-        if (ok) {
-            url = "/sucesso.jsp";
-        } else {
-            url = "/erro.jsp";
+        } else if (acao.equals("excluir")) {
+            String cpf = request.getParameter("cpf");
+
+            
         }
+        String url = null;
+
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
         dispatcher.forward(request, response);
-
     }
 
     /**
@@ -66,4 +74,13 @@ public class CadastroClienteServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    private static Date parseData(String data, String fomato) {
+        SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            return formato.parse(data);
+        } catch (ParseException ex) {
+            Logger.getLogger(CadastroClienteServlet.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
 }

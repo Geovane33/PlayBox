@@ -23,7 +23,7 @@ public class Cliente {
     public Cliente(){
         
     }
-
+        //contrutor que recebe por paramentro todos os atributos
     public Cliente(String nome, Date dataNascimento, String sexo, String telefone, String email, String cpf, String cep, String cidade, String uf, String bairro, String numero) {
         this.nome = nome;
         this.dataNascimento = dataNascimento;
@@ -38,7 +38,16 @@ public class Cliente {
         this.numero = numero;
     }
     
+    //Abaixo metodos getters e setters
     
+    public void setId(int Id){
+        this.id = Id;
+    }
+    
+    public int getId(){
+        return this.id;
+    }
+        
     public void setNome(String nome){
         this.nome = nome;
     }
