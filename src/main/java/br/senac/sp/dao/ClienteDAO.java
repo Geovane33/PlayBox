@@ -160,10 +160,7 @@ public class ClienteDAO {
             ps.setString(11, cliente.getNumero());
             ps.setInt(12, cliente.getId());
 
-            int linhasAfetadas = ps.executeUpdate();
-
-            return linhasAfetadas > 0;
-
+            return ps.executeUpdate() > 0;
         } catch (SQLException ex) {
             System.out.println("Erro ao atualizar cliente");
             System.out.println("SQLException: " + ex.getMessage());
@@ -178,6 +175,37 @@ public class ClienteDAO {
                     ps.close();
                 }
 
+                ConexaoDB.fecharConexao();
+
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar conexãoDB");
+                System.out.println("SQLException: " + ex.getMessage());
+                System.out.println("SQLState: " + ex.getSQLState());
+                System.out.println("VendorError: " + ex.getErrorCode());
+            }
+        }
+    }
+
+    public boolean excluirCliente(int id) {
+        Connection conexao = null;
+        PreparedStatement ps = null;
+        try {
+            conexao = ConexaoDB.getConexao();
+            ps = conexao.prepareStatement("DELETE FROM cliente WHERE ID = ?");
+            ps.setInt(1, id);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            System.out.println("Erro ao excluir cliente");
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+            return false;
+        } finally {
+            //Libero os recursos da memória
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
                 ConexaoDB.fecharConexao();
 
             } catch (SQLException ex) {
