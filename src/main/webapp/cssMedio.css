@@ -1,0 +1,46 @@
+body > table{
+    width: 80%;
+}
+
+/*section{
+    width: max-content;
+    margin-left: auto;
+    margin-right: auto;
+}*/
+
+table.list{
+    width: 910px;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+td.tabela{
+    float: right;
+}
+td.cadastro{
+    display: inline-block;
+}
+
+tr.desc {
+    width: auto;
+    background-color: #dddddd;
+}
+
+
+input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input.btnSalvar{
+    color: black;
+}
