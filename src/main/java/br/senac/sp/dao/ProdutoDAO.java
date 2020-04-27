@@ -32,17 +32,18 @@ public class ProdutoDAO {
             String sql = "Insert INTO produto VALUES (default, ?, ?, ?, ?, ?, ?, ?)";
             ps = conexao.prepareStatement(sql);
             ps.setString(1, produto.getNome());
-            ps.setString(2, produto.getTipo());
-            ps.setString(3, produto.getMarca());
-            ps.setString(4, produto.getDescricao());
-            ps.setInt(5, produto.getQuantidade());
-            ps.setDouble(6, produto.getPreco());
-            ps.setDate(7, new Date(produto.getDataDeEntrada().getTime()));
+            ps.setInt(2, produto.getQuantidade());
+            ps.setString(3, produto.getDescricao());
+            ps.setDouble(4, produto.getPreco());
+            // ps.setDate(7, new Date(produto.getDataDeEntrada().getTime()));
+            ps.setInt(5, produto.getIdFilial());
+            ps.setString(6, produto.getTipo());
+            ps.setString(7, produto.getMarca());
             ps.execute();
             ok = true;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-            System.out.println("Erro ao salvar cliente");
+            System.out.println("Erro ao salvar produto");
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
@@ -64,9 +65,6 @@ public class ProdutoDAO {
         }
         return ok;
     }
-    
-    
-    
 
     /**
      * metodo que realiza pesquisa de produto por nome
@@ -79,7 +77,7 @@ public class ProdutoDAO {
         Connection conexao = null;
         PreparedStatement ps = null;
 
-        ArrayList<Produto> listaProdutos = new ArrayList<Produto>();
+        ArrayList<Produto> listaProdutos = new ArrayList<>();
 
         try {
             conexao = ConexaoDB.getConexao();
@@ -93,10 +91,11 @@ public class ProdutoDAO {
                 produto.setNome(rs.getString("nome"));
                 produto.setTipo(rs.getString("tipo"));
                 produto.setMarca(rs.getString("marca"));
-                produto.setDescricao(rs.getString("descricao"));
-                produto.setQuantidade(rs.getInt("quantidade"));
+                produto.setPreco(rs.getDouble("valor_prod"));
+                produto.setDescricao(rs.getString("desc_prod"));
+                produto.setQuantidade(rs.getInt("qtd_prod"));
                 produto.setDataDeEntrada(rs.getDate("data_entrada"));
-
+                produto.setIdFilial(rs.getInt("id_filial"));
                 listaProdutos.add(produto);
             }
         } catch (SQLException ex) {
@@ -157,7 +156,7 @@ public class ProdutoDAO {
 
             return ps.executeUpdate() > 0;
         } catch (SQLException ex) {
-            System.out.println("Erro ao atualizar cliente");
+            System.out.println("Erro ao atualizar produto");
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());

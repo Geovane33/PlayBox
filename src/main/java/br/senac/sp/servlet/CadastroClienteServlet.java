@@ -2,15 +2,12 @@ package br.senac.sp.servlet;
 
 import br.senac.sp.dao.ClienteDAO;
 import br.senac.sp.entidade.Cliente;
+import br.senac.sp.utils.Conversor;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -62,9 +59,10 @@ public class CadastroClienteServlet extends HttpServlet {
         String url = "";
         String acao = request.getParameter("acao");
         ClienteDAO clienteDAO = new ClienteDAO();
+         Conversor data = new Conversor();
         if (acao.equals("salvar")) {
             String nome = request.getParameter("nome");
-            Date dataNascimento = parseData(request.getParameter("dataNascimento"), "dd-MM-yyyy");
+            Date dataNascimento = data.parseData(request.getParameter("dataNascimento"), "dd-MM-yyyy");
             String sexo = request.getParameter("sexo");
             String telefone = request.getParameter("telefone");
             String email = request.getParameter("email");
@@ -107,14 +105,4 @@ public class CadastroClienteServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private static Date parseData(String data, String fomato) {
-        SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
-        try {
-            return formato.parse(data);
-        } catch (ParseException ex) {
-            System.out.println("Erro ao converte data - data:" + data + "formato: " + formato);
-            Logger.getLogger(CadastroClienteServlet.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-    }
 }

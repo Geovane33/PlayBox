@@ -7,6 +7,7 @@
         <title>Cadastro de Cliente</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="cadastroCliente.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="CadastroCliente.css">
     </head>
     <body>
         <h1>Formulário de Cadastro</h1>
@@ -32,7 +33,7 @@
             Cpf: <input type="text" name="cpf" /><br>
             <button value="excluir" name="acao" type="submit">Excluir</button>
         </forme>
-        <a type="button" style="cursor:pointer"id="consultarCli"> consultar </a>
+        <a id="consultarCli"> consultar </a>
 
         <table  id="clientesCon" align="center" border="1">
             <tr>

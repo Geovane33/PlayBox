@@ -73,7 +73,7 @@ public class ClienteDAO {
         ResultSet rs = null;
         Connection conexao = null;
         PreparedStatement ps = null;
-        ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
+        ArrayList<Cliente> listaClientes = new ArrayList<>();
         try {
             conexao = ConexaoDB.getConexao();
             ps = conexao.prepareStatement("SELECT * FROM cliente "); //where " + tipo + " like ?;
