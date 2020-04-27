@@ -2,13 +2,12 @@ package br.senac.sp.servlet;
 
 import br.senac.sp.dao.ClienteDAO;
 import br.senac.sp.entidade.Cliente;
+import br.senac.sp.utils.Conversor;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,22 +16,53 @@ import javax.servlet.http.HttpServletResponse;
 
 public class CadastroClienteServlet extends HttpServlet {
 
+    /**
+     *
+     * @param request - HttpServletRequest
+     * @param response - HttpServletResponse
+     * @throws ServletException - checar tratamento
+     * @throws IOException - checar tratamento
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        //Empty
+        PrintWriter out = response.getWriter();
+        ClienteDAO clienteDAO = new ClienteDAO();
+        Gson gson = new Gson();
+        try{
+        int id = Integer.parseInt(request.getParameter("id"));
+        clienteDAO.excluirCliente(id);
+        }catch(Exception e){
+            e.getMessage();
+        }
+        
+        List<Cliente> clientes = clienteDAO.consultarCliente("", "");
+        request.setAttribute("cliente", gson.toJson(clientes));
+        out.write(gson.toJson(clientes));
+        out.flush();
+        out.close();
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/consultarClientes2.jsp");
+        dispatcher.include(request, response);
     }
 
+    /**
+     *
+     * @param request - HttpServletRequest
+     * @param response - HttpServletResponse
+     * @throws ServletException - checar tratamento
+     * @throws IOException - checar tratamento
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        String url = "";
         String acao = request.getParameter("acao");
         ClienteDAO clienteDAO = new ClienteDAO();
+         Conversor data = new Conversor();
         if (acao.equals("salvar")) {
             String nome = request.getParameter("nome");
-            Date dataNascimento = parseData(request.getParameter("dataNascimento"), "dd-MM-yyyy");
+            Date dataNascimento = data.parseData(request.getParameter("dataNascimento"), "dd-MM-yyyy");
             String sexo = request.getParameter("sexo");
             String telefone = request.getParameter("telefone");
             String email = request.getParameter("email");
@@ -46,7 +76,6 @@ public class CadastroClienteServlet extends HttpServlet {
             Cliente cliente = new Cliente(nome, dataNascimento, sexo, telefone, email, cpf, cep, cidade, uf, bairro, numero);
             boolean ok = clienteDAO.salvarCliente(cliente);
             PrintWriter out = response.getWriter();
-            String url = "";
             if (ok) {
                 url = "/sucesso.jsp";
             } else {
@@ -54,12 +83,14 @@ public class CadastroClienteServlet extends HttpServlet {
             }
 
         } else if (acao.equals("excluir")) {
-            String cpf = request.getParameter("cpf");
-
-            
+            try{
+        int id = Integer.parseInt(request.getParameter("id"));
+        clienteDAO.excluirCliente(id);
+        }catch(NumberFormatException e){
+            e.getMessage();
         }
-        String url = null;
-
+        }
+        
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
         dispatcher.forward(request, response);
     }
@@ -74,13 +105,4 @@ public class CadastroClienteServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private static Date parseData(String data, String fomato) {
-        SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
-        try {
-            return formato.parse(data);
-        } catch (ParseException ex) {
-            Logger.getLogger(CadastroClienteServlet.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-    }
 }

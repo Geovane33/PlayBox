@@ -2,8 +2,9 @@ package br.senac.sp.entidade;
 
 import java.util.Date;
 
-
-
+/**
+ *Entidade Cliente
+ */
 public class Cliente {
     //atributos privados(encapsulados)
     private int id;
@@ -19,11 +20,27 @@ public class Cliente {
     private String bairro;
     private String numero;
 
-    //contrutor vazio
+
+    /**
+     *construtor vazio
+     */
     public Cliente(){
         
     }
-        //contrutor que recebe por paramentro todos os atributos
+    /**
+     * Construtor que recebe por paramentro todos os atributos
+     * @param nome String
+     * @param dataNascimento Date
+     * @param sexo String
+     * @param telefone String
+     * @param email String
+     * @param cpf String
+     * @param cep String
+     * @param cidade String
+     * @param uf String
+     * @param bairro String
+     * @param numero String
+     */
     public Cliente(String nome, Date dataNascimento, String sexo, String telefone, String email, String cpf, String cep, String cidade, String uf, String bairro, String numero) {
         this.nome = nome;
         this.dataNascimento = dataNascimento;
@@ -37,9 +54,40 @@ public class Cliente {
         this.bairro = bairro;
         this.numero = numero;
     }
+
+    /**
+     *Construtor para atualizar dados do cliente
+     * @param id int
+     * @param nome String
+     * @param dataNascimento Date
+     * @param sexo String
+     * @param telefone String
+     * @param email String
+     * @param cpf String
+     * @param cep String
+     * @param cidade String
+     * @param uf String
+     * @param bairro String
+     * @param numero String
+     */
+    public Cliente(int id, String nome, Date dataNascimento, String sexo, String telefone, String email, String cpf, String cep, String cidade, String uf, String bairro, String numero) {
+        this.id = id;
+        this.nome = nome;
+        this.dataNascimento = dataNascimento;
+        this.sexo = sexo;
+        this.telefone = telefone;
+        this.email = email;
+        this.cpf = cpf;
+        this.cep = cep;
+        this.cidade = cidade;
+        this.uf = uf;
+        this.bairro = bairro;
+        this.numero = numero;
+    }
+    
+    
     
     //Abaixo metodos getters e setters
-    
     public void setId(int Id){
         this.id = Id;
     }

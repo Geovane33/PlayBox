@@ -13,10 +13,9 @@ import java.util.ArrayList;
 public class ClienteDAO {
 
     /**
-     * Metodo para salvar clientes
-     *
-     * @param cliente
-     * @return true: salvo com sucesso e false: erro ao salvar
+     * Salvar clientes
+     * @param cliente recebe uma entidade cliente
+     * @return true: salvo com sucesso false: erro ao salvar
      */
     public boolean salvarCliente(Cliente cliente) {
         boolean ok = false;
@@ -65,21 +64,20 @@ public class ClienteDAO {
     }
 
     /**
-     * metodo que consulta cliente por cpf e retornar uma lista de clientes
-     *
-     * @param values
+     * Retorna uma lista de clientes de acordo com os paramentro passados
+     * @param values String - recebe por parametro o cpf ou nome do cliente a ser consultado
+     * @param tipo String - recebe por parametro o tipo de consulta a ser realizada
      * @return listaClientes
      */
     public ArrayList<Cliente> consultarCliente(String values, String tipo) {
         ResultSet rs = null;
         Connection conexao = null;
         PreparedStatement ps = null;
-
-        ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
+        ArrayList<Cliente> listaClientes = new ArrayList<>();
         try {
             conexao = ConexaoDB.getConexao();
-            ps = conexao.prepareStatement("SELECT * FROM cliente where " + tipo + " like ?;");
-            ps.setString(1, "%" + values + "%");
+            ps = conexao.prepareStatement("SELECT * FROM cliente "); //where " + tipo + " like ?;
+           // ps.setString(1, "%" + values + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
               
@@ -125,12 +123,10 @@ public class ClienteDAO {
     }
 
     /**
-     * Atualizar dados do cliente
-     *
-     * @param cliente recebe por parametro um objeto cliente criado na classe
+     * Atualizar dados do Cliente
+     * @param cliente - recebe por parametro um objeto cliente criado na classe
      * controle
-     * @return true caso o cliente foi atulizado com sucesso e false caso de
-     * erro ao atualizar o cliente
+     * @return true: Cliente atulizado com sucesso false: Erro ao atualizar o Cliente
      */
     public boolean atualizarCliente(Cliente cliente) {
         Connection conexao = null;
@@ -187,6 +183,12 @@ public class ClienteDAO {
         }
     }
 
+    /**
+     * Excluir um determinado cliente
+     * @param id - recebe por parametro o id referente ao cliente que deseja excluir
+     * @return boolean - true: excluido com sucesso
+     * false: erro ao excluir  
+     */
     public boolean excluirCliente(int id) {
         Connection conexao = null;
         PreparedStatement ps = null;
