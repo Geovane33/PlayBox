@@ -68,7 +68,7 @@ public class Venda {
             produtos.add(new Produto(produto));
         }else{ //Produto já está na lista, só atualiza a quantidade.
             Produto encontrado = produtos.get(index);
-            int quatidadeAtual = encontrado.getQuantidadeNaVenda();
+            int quantidadeAtual = encontrado.getQuantidadeNaVenda();
             int quantidadeAtualizada = quantidadeAtual + produto.getQuantidadeNaVenda();
             encontrado.setQuantidadeNaVenda(quantidadeAtualizada);
         }
@@ -82,7 +82,7 @@ public class Venda {
         double soma = 0;
         for (int i = 0; i < produtos.size(); i++) {
             Produto produto = produtos.get(i);
-            soma = soma + (produto.getValor() * produto.getQuantidadeNaVenda());
+            soma = soma + (produto.getPreco()* produto.getQuantidadeNaVenda());
         }
         return soma;
     }

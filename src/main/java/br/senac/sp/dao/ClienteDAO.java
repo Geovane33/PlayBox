@@ -14,6 +14,7 @@ public class ClienteDAO {
 
     /**
      * Salvar clientes
+     *
      * @param cliente recebe uma entidade cliente
      * @return true: salvo com sucesso false: erro ao salvar
      */
@@ -65,8 +66,11 @@ public class ClienteDAO {
 
     /**
      * Retorna uma lista de clientes de acordo com os paramentro passados
-     * @param values String - recebe por parametro o cpf ou nome do cliente a ser consultado
-     * @param tipo String - recebe por parametro o tipo de consulta a ser realizada
+     *
+     * @param values String - recebe por parametro o cpf ou nome do cliente a
+     * ser consultado
+     * @param tipo String - recebe por parametro o tipo de consulta a ser
+     * realizada
      * @return listaClientes
      */
     public ArrayList<Cliente> consultarCliente(String values, String tipo) {
@@ -76,11 +80,16 @@ public class ClienteDAO {
         ArrayList<Cliente> listaClientes = new ArrayList<>();
         try {
             conexao = ConexaoDB.getConexao();
-            ps = conexao.prepareStatement("SELECT * FROM cliente "); //where " + tipo + " like ?;
-           // ps.setString(1, "%" + values + "%");
+            if (!values.equals("") && !tipo.equals("")) {
+                ps = conexao.prepareStatement("SELECT * FROM cliente where " + tipo + " like ?");
+                ps.setString(1, "%" + values + "%");
+            } else {
+                ps = conexao.prepareStatement("SELECT * FROM cliente "); //where " + tipo + " like ?;
+            }
+
             rs = ps.executeQuery();
             while (rs.next()) {
-              
+
                 Cliente cliente = new Cliente();
                 cliente.setId(rs.getInt("id"));
                 cliente.setNome(rs.getString("nome"));
@@ -124,9 +133,11 @@ public class ClienteDAO {
 
     /**
      * Atualizar dados do Cliente
+     *
      * @param cliente - recebe por parametro um objeto cliente criado na classe
      * controle
-     * @return true: Cliente atulizado com sucesso false: Erro ao atualizar o Cliente
+     * @return true: Cliente atulizado com sucesso false: Erro ao atualizar o
+     * Cliente
      */
     public boolean atualizarCliente(Cliente cliente) {
         Connection conexao = null;
@@ -155,9 +166,9 @@ public class ClienteDAO {
             ps.setString(10, cliente.getBairro());
             ps.setString(11, cliente.getNumero());
             ps.setInt(12, cliente.getId());
-          
+
             return ps.executeUpdate() > 0;
-          
+
         } catch (SQLException ex) {
             System.out.println("Erro ao atualizar cliente");
             System.out.println("SQLException: " + ex.getMessage());
@@ -185,9 +196,10 @@ public class ClienteDAO {
 
     /**
      * Excluir um determinado cliente
-     * @param id - recebe por parametro o id referente ao cliente que deseja excluir
-     * @return boolean - true: excluido com sucesso
-     * false: erro ao excluir  
+     *
+     * @param id - recebe por parametro o id referente ao cliente que deseja
+     * excluir
+     * @return boolean - true: excluido com sucesso false: erro ao excluir
      */
     public boolean excluirCliente(int id) {
         Connection conexao = null;
@@ -216,7 +228,7 @@ public class ClienteDAO {
                 System.out.println("SQLException: " + ex.getMessage());
                 System.out.println("SQLState: " + ex.getSQLState());
                 System.out.println("VendorError: " + ex.getErrorCode());
-           
+
             }
         }
     }

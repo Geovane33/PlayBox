@@ -9,6 +9,7 @@ public class Produto {
 
     //encapsulamento dos atributos
     private int id;
+    private int idFilial;
     private String nome;
     private String tipo;
     private String marca;
@@ -16,13 +17,15 @@ public class Produto {
     private int quantidade;
     private double preco;
     private Date dataDeEntrada;
-    private int idFilial;
+    
 
     /**
      * construtor vazio
      */
     public Produto() {
     }
+    
+    
 
     /**
      * construtor para cadastrar produto
@@ -70,6 +73,18 @@ public class Produto {
         this.preco = preco;
         this.dataDeEntrada = dataDeEntrada;
         this.idFilial = idFilial;
+    }
+    
+    /**
+     * contrutos para adicionar produto ao carrinho
+     * @param copia
+     */
+    public Produto(Produto copia) {
+        this.id = copia.id;
+        this.nome = copia.nome;
+        this.preco = copia.preco;
+        this.quantidade = copia.quantidade;
+        this.quantidadeNaVenda = copia.quantidadeNaVenda;
     }
 
     /**

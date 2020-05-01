@@ -1,10 +1,12 @@
 
 var filiais = null;
 
+
 $(document).ready(function () {
     console.log(filiais);
     console.log();
 }
+        
 );
 function carregarFiliais() {
     $("#formFiliais").html("<h3>Carregando filiais</h3>");
@@ -12,14 +14,11 @@ function carregarFiliais() {
     if (filiais.length < 1) {
         $("#formFiliais").html("<h3> Nenhuma filial cadastrada</h3>");
     } else {
-        for (var i = 0; i < filiais.length; i++) {
+        for (var i =0; i < filiais.length; i++) {
             console.log(filiais[i]);
-            filial.append('<button name="filiais" value="' + filiais[i].id + '">Filial ' + filiais[i].nome + '</button>');
+            filial.append('<button name="filiais" value="' + filiais[i].id + '">' + filiais[i].nome + '</button>');
 
         }
         $("#formFiliais").html(filial);
     }
-
-
-
 }

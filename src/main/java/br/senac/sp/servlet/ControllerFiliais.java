@@ -33,15 +33,15 @@ public class ControllerFiliais extends HttpServlet {
             throws ServletException, IOException {
         System.out.println("entrou");
         testeFiliais = new ArrayList<>();
-        testeFiliais.add(new Filiais(0,"São Paulo"));
-        testeFiliais.add(new Filiais(1,"Minas Gerais"));
-        testeFiliais.add(new Filiais(2,"Rio de Janeiro"));
-        testeFiliais.add(new Filiais(3,"Brasilia"));
+        testeFiliais.add(new Filiais(0, "São Paulo"));
+        testeFiliais.add(new Filiais(1, "Minas Gerais"));
+        testeFiliais.add(new Filiais(2, "Rio de Janeiro"));
+        testeFiliais.add(new Filiais(3, "Brasilia"));
         String url = "/filiais.jsp";
         //pesquisar filial no banco de dados correspondente ao parametro passado e devolver o id para o front
-        if (!request.getParameter("filiais").equals("")) {
+        try {
             request.setAttribute("filial", testeFiliais.get(Integer.parseInt(request.getParameter("filiais"))).getNome());
-        } else {
+        } catch (Exception ex) {
             request.setAttribute("filial", "filial não cadastrada");
             url = "index.html";
         }
@@ -60,17 +60,17 @@ public class ControllerFiliais extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         testeFiliais = new ArrayList<>();
-        testeFiliais.add(new Filiais(0,"São Paulo"));
-        testeFiliais.add(new Filiais(1,"Minas Gerais"));
-        testeFiliais.add(new Filiais(2,"Rio de Janeiro"));
-        testeFiliais.add(new Filiais(3,"Brasilia"));
+        testeFiliais = new ArrayList<>();
+        testeFiliais.add(new Filiais(0, "São Paulo"));
+        testeFiliais.add(new Filiais(1, "Minas Gerais"));
+        testeFiliais.add(new Filiais(2, "Rio de Janeiro"));
+        testeFiliais.add(new Filiais(3, "Brasilia"));
         PrintWriter out = response.getWriter();
         Gson gson = new Gson();
         out.write(gson.toJson(testeFiliais));
         out.flush();
         out.close();
-       
+
     }
 
     /**
