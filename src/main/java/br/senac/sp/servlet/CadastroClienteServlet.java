@@ -37,8 +37,9 @@ public class CadastroClienteServlet extends HttpServlet {
             e.getMessage();
         }
         
-        List<Cliente> clientes = clienteDAO.consultarCliente("", "");
+        List<Cliente> clientes = clienteDAO.consultarCliente("", "TODOS");
         request.setAttribute("cliente", gson.toJson(clientes));
+        response.setContentType("application/json");
         out.write(gson.toJson(clientes));
         out.flush();
         out.close();

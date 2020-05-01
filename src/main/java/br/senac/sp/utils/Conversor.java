@@ -18,6 +18,8 @@ import java.util.logging.Logger;
  */
 public class Conversor {
     
+    
+    
      public Date parseData(String data, String formato) {
         SimpleDateFormat formatar = new SimpleDateFormat(formato);
         try {

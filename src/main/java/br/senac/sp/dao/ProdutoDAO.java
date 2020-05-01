@@ -2,7 +2,6 @@ package br.senac.sp.dao;
 
 import br.senac.sp.db.ConexaoDB;
 import br.senac.sp.entidade.Produto;
-import com.mysql.cj.xdevapi.PreparableStatement;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -34,8 +33,8 @@ public class ProdutoDAO {
             ps.setInt(1, produto.getIdFilial());
             ps.setString(2, produto.getNome());
             ps.setString(3, produto.getMarca());
-            ps.setDouble(4, produto.getValor());
-            ps.setInt(5, produto.getQuantidade());
+            ps.setInt(4, produto.getQuantidade());
+            ps.setDouble(5, produto.getValor());
             ps.setString(6, produto.getDescricao());
             ps.setDate(7, new Date(produto.getDataDeEntrada().getTime()));
             ps.execute();
@@ -80,7 +79,8 @@ public class ProdutoDAO {
 
         try {
             conexao = ConexaoDB.getConexao();
-            ps = conexao.prepareStatement("SELECT * FROM produto where " + nome + " like ?;");
+
+            ps = conexao.prepareStatement("SELECT * FROM produto where nome_produto like ?;");
             ps.setString(1, "%" + nome + "%");
             rs = ps.executeQuery();
 
@@ -92,7 +92,7 @@ public class ProdutoDAO {
                 produto.setMarca(rs.getString("marca_produto"));
                 produto.setQuantidade(rs.getInt("quantidade_produto"));
                 produto.setQuantidade(rs.getInt("valor_produto"));
-                produto.setDescricao(rs.getString("desc_prod"));
+                produto.setDescricao(rs.getString("desc_produto"));
                 produto.setDataDeEntrada(rs.getDate("data_entrada"));
                 listaProdutos.add(produto);
             }
@@ -140,17 +140,17 @@ public class ProdutoDAO {
             conexao = ConexaoDB.getConexao();
 
             ps = conexao.prepareStatement("UPDATE produto SET nome_produto = ?,"
-                    + "marca_produto = ?, quantidade_produto = ?, valor_produto = ?, descricao_produto = ?, data_entrada = ?,  WHERE id_produto = ?",
+
+                    + "marca_produto = ?, quantidade_produto = ?, valor_produto = ?, desc_produto = ?, data_entrada = ? WHERE id_produto = ?;",
                     Statement.RETURN_GENERATED_KEYS);  //Caso queira retornar o ID do cliente
             //Adiciono os parâmetros ao meu comando SQL
             ps.setString(1, produto.getNome());
             ps.setString(2, produto.getMarca());
-            ps.setInt(4, produto.getQuantidade());
-            ps.setDouble(6, produto.getValor());
-            ps.setString(3, produto.getDescricao());
-            ps.setDate(7, new Date(produto.getDataDeEntrada().getTime()));
-            ps.setInt(8, produto.getId());
-
+            ps.setInt(3, produto.getQuantidade());
+            ps.setDouble(4, produto.getValor());
+            ps.setString(5, produto.getDescricao());
+            ps.setDate(6, new Date(produto.getDataDeEntrada().getTime()));
+            ps.setInt(7, produto.getId());
             return ps.executeUpdate() > 0;
         } catch (SQLException ex) {
             System.out.println("Erro ao atualizar produto");

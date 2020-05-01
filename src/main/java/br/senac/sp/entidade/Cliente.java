@@ -1,5 +1,6 @@
 package br.senac.sp.entidade;
 
+import br.senac.sp.utils.Conversor;
 import java.util.Date;
 
 /**

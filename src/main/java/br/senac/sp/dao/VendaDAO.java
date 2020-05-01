@@ -48,8 +48,8 @@ public class VendaDAO {
 
             for (Produto produto : venda.getProdutos()) {
 
-                ps = conexao.prepareStatement("INSERT INTO venda_produto (quantidade_produto, id_produto, id_venda) VALUES (?, ?, ?",
-                        Statement.RETURN_GENERATED_KEYS);
+                ps = conexao.prepareStatement("INSERT INTO venda_produto VALUES (default, ?, ?, ?)",
+                                              Statement.RETURN_GENERATED_KEYS);
 
                 ps.setInt(1, produto.getQuantidadeNaVenda());
                 ps.setInt(2, produto.getId());
@@ -60,9 +60,11 @@ public class VendaDAO {
             }
 
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            System.out.println("Erro ao atualizar produto venda");
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
         }
-
     }
 
     /**
@@ -73,7 +75,6 @@ public class VendaDAO {
     public boolean salvarVenda(Venda venda) {
         Connection conexao = null;
         PreparedStatement instrucaoSQL = null;
-
         try {
 
             //Tenta estabeler a conexão com o SGBD e cria comando a ser executado conexão
@@ -87,7 +88,6 @@ public class VendaDAO {
             instrucaoSQL.setDate(1, new java.sql.Date(venda.getDataVenda().getTime()));
             instrucaoSQL.setDouble(2, venda.getTotal());
             instrucaoSQL.setInt(3, venda.getCliente().getId());
-            System.out.println(venda.getCliente().getId());
             instrucaoSQL.setInt(4, venda.getFilial().getId());
 
             int linhasAfetadas = instrucaoSQL.executeUpdate(); //sintetico executeQuery
@@ -103,12 +103,13 @@ public class VendaDAO {
                 } else {
                     throw new SQLException("Falha ao obter o ID do cliente.");
                 }
-            } else {
-                return false;
             }
-
+            return true;
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            System.out.println("Erro ao salvar venda");
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
             return false;
         } finally {
 
@@ -119,9 +120,11 @@ public class VendaDAO {
                 }
 
                 ConexaoDB.fecharConexao();
-                conexao.close();
-
             } catch (SQLException ex) {
+                System.out.println("Erro ao fechar conexão");
+                System.out.println("SQLException: " + ex.getMessage());
+                System.out.println("SQLState: " + ex.getSQLState());
+                System.out.println("VendorError: " + ex.getErrorCode());
             }
         }
     }
@@ -161,8 +164,7 @@ public class VendaDAO {
                 Venda venda = new Venda();
                 venda.setDataVenda(rs.getDate("data_venda"));
                 venda.setTotal(rs.getInt("total_venda"));
-                venda.setId(rs.getInt("id"));
-
+                venda.setId(rs.getInt("id_venda"));
                 adicionaClienteVenda(venda, rs.getInt("id_cliente"));
                 adicionaProdutosNaVenda(venda, conexao);
 
@@ -184,6 +186,10 @@ public class VendaDAO {
                 ConexaoDB.fecharConexao();
 
             } catch (SQLException ex) {
+                System.out.println("Erro ao fechar conexãoDB");
+                System.out.println("SQLException: " + ex.getMessage());
+                System.out.println("SQLState: " + ex.getSQLState());
+                System.out.println("VendorError: " + ex.getErrorCode());
             }
         }
 
@@ -225,7 +231,10 @@ public class VendaDAO {
             }
 
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            System.out.println("Erro ao adicionar produto na venda");
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
         }
     }
 
