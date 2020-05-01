@@ -95,6 +95,7 @@ public class ClienteDAO {
                 System.out.println("COnsultar TODOS");
                 ps = conexao.prepareStatement("SELECT * FROM cliente ");
             }
+
             rs = ps.executeQuery();
 
             while (rs.next()) {

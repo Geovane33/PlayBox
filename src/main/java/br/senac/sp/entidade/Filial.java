@@ -10,7 +10,6 @@ package br.senac.sp.entidade;
  * @author Geovane
  */
 public class Filial {
-
     private int id;
     private String nome;
     private String estado;
@@ -86,4 +85,6 @@ public class Filial {
         this.estado = estado;
     }
 
+}
+    
 }

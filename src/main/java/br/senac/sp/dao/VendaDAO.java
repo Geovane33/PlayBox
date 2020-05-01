@@ -45,16 +45,18 @@ public class VendaDAO {
         Connection conexao = ConexaoDB.getConexao();
 
         try {
+
             for (Produto produto : venda.getProdutos()) {
 
                 ps = conexao.prepareStatement("INSERT INTO venda_produto VALUES (default, ?, ?, ?)",
-                        Statement.RETURN_GENERATED_KEYS);
+                                              Statement.RETURN_GENERATED_KEYS);
 
                 ps.setInt(1, produto.getQuantidadeNaVenda());
                 ps.setInt(2, produto.getId());
                 ps.setInt(3, venda.getId());
 
                 ps.executeUpdate();
+
             }
 
         } catch (SQLException ex) {
@@ -74,6 +76,7 @@ public class VendaDAO {
         Connection conexao = null;
         PreparedStatement instrucaoSQL = null;
         try {
+
             //Tenta estabeler a conexão com o SGBD e cria comando a ser executado conexão
             //Obs: A classe GerenciadorConexao já carrega o Driver e define os parâmetros de conexão
             conexao = ConexaoDB.getConexao();
@@ -117,7 +120,6 @@ public class VendaDAO {
                 }
 
                 ConexaoDB.fecharConexao();
-
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexão");
                 System.out.println("SQLException: " + ex.getMessage());
@@ -163,7 +165,6 @@ public class VendaDAO {
                 venda.setDataVenda(rs.getDate("data_venda"));
                 venda.setTotal(rs.getInt("total_venda"));
                 venda.setId(rs.getInt("id_venda"));
-
                 adicionaClienteVenda(venda, rs.getInt("id_cliente"));
                 adicionaProdutosNaVenda(venda, conexao);
 

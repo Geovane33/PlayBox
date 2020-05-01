@@ -79,6 +79,7 @@ public class ProdutoDAO {
 
         try {
             conexao = ConexaoDB.getConexao();
+
             ps = conexao.prepareStatement("SELECT * FROM produto where nome_produto like ?;");
             ps.setString(1, "%" + nome + "%");
             rs = ps.executeQuery();
@@ -139,6 +140,7 @@ public class ProdutoDAO {
             conexao = ConexaoDB.getConexao();
 
             ps = conexao.prepareStatement("UPDATE produto SET nome_produto = ?,"
+
                     + "marca_produto = ?, quantidade_produto = ?, valor_produto = ?, desc_produto = ?, data_entrada = ? WHERE id_produto = ?;",
                     Statement.RETURN_GENERATED_KEYS);  //Caso queira retornar o ID do cliente
             //Adiciono os parâmetros ao meu comando SQL
@@ -149,7 +151,6 @@ public class ProdutoDAO {
             ps.setString(5, produto.getDescricao());
             ps.setDate(6, new Date(produto.getDataDeEntrada().getTime()));
             ps.setInt(7, produto.getId());
-
             return ps.executeUpdate() > 0;
         } catch (SQLException ex) {
             System.out.println("Erro ao atualizar produto");
