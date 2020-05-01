@@ -1,11 +1,3 @@
--- quantos clientes tem cadastrados em determinada loja
--- quantos produtos vendidos em todas as vendas de uma determinada filial
--- quantos clientes fez compra em determinada filial
--- https://www.devmedia.com.br/clausulas-inner-join-left-join-e-right-join-no-sql-server/18930 muito bom
--- https://www.guj.com.br/t/ligacao-venda-com-itens-de-vendas-mysql/290962/10 
--- https://www.w3schools.com/sql/sql_foreignkey.asp
--- indentar ctrl + E ctrl + B
-
 SELECT 
     COUNT(v.id_venda) AS 'QTD Vendas Filias'
 FROM
@@ -41,7 +33,22 @@ FROM
     venda v
 WHERE
     v.id_filial = '2';-- and v.id_cliente='1';
-
+    
+    -- produtos vendido em determinada venda, tabela preparada para VendaDAO        
+SELECT 
+    venda_produto.quantidade_produto as quantidade_produto_na_venda,
+    produto.ID_produto id_produto,
+    produto.nome_produto nome_produto,
+    produto.quantidade_produto quantidade_produto,
+    produto.valor_produto valor_produto
+FROM
+    venda_produto
+        INNER JOIN
+    produto ON produto.ID_produto = venda_produto.id_produto
+WHERE
+    id_venda = 1; 
+    
+-- --------------------- PRODUTOS ----------------------------
 SELECT 
     SUM(vp.quantidade_produto) AS 'QTD Total 
     Produtos Vendidos'

@@ -1,5 +1,6 @@
 package br.senac.sp.entidade;
 
+import br.senac.sp.utils.Conversor;
 import java.util.Date;
 
 /**
@@ -152,6 +153,7 @@ public class Cliente {
      * @return dataNascimento
      */
     public Date getDataNascimento() {
+            
         return dataNascimento;
     }
 
@@ -159,6 +161,7 @@ public class Cliente {
      * @param dataNascimento dataNascimento para set
      */
     public void setDataNascimento(Date dataNascimento) {
+            Conversor data = new Conversor();
         this.dataNascimento = dataNascimento;
     }
 

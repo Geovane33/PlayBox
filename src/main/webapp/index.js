@@ -4,7 +4,7 @@ var filiais = null;
 function atribuiFilial(idFilial){
 filiais=filiais[idFilial].nome;
 var fi = $("<h1>");
-fi.append('Filia '+filiais);
+fi.append('Filial '+filiais);
 $("#idFilial").html(fi);
 }
 
@@ -16,13 +16,13 @@ $(document).ready(function () {
         $.ajax({
             type: 'POST',
             url: 'ControllerFiliais',
-            contentType: 'application/json;charset=ISO-8859-1',
+            contentType: 'application/json;charset=UTF-8',
             headers: {
-                Accept: "application/json;charset=ISO-8859-1",
-                "Content-Type": "application/json;charset=ISO-8859-1"
+                Accept: "application/json;charset=UTF-8",
+                "Content-Type": "application/json;charset=UTF-8"
             },
             success: function (result) {
-                filiais = $.parseJSON(result);
+                filiais = result;
                 console.log("primeiro carregamento");
                 carregarFiliais();
             }});
@@ -37,7 +37,7 @@ function carregarFiliais() {
     } else {
         for (var i = 0; i < filiais.length; i++) {
             console.log(filiais[i]);
-            filial.append('<button name="filiais" value="' + filiais[i].id + '">Filial ' + filiais[i].nome + '</button>');
+            filial.append('<button name="filiais" value="' + filiais[i].id + '">' + filiais[i].nome + '</button>');
 
         }
         $("#formFiliais").html(filial);

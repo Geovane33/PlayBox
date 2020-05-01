@@ -1,49 +1,47 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package br.senac.sp.dao;
 
 import br.senac.sp.db.ConexaoDB;
-import br.senac.sp.entidade.Cliente;
-import br.senac.sp.utils.Conversor;
+import br.senac.sp.entidade.Filial;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class ClienteDAO {
+/**
+ *
+ * @author Geovane
+ */
+public class FilialDAO {
 
     /**
-     * Salvar clientes
+     * Salvar filial
      *
-     * @param cliente recebe uma entidade cliente
+     * @param filial recebe uma entidade filial
      * @return true: salvo com sucesso false: erro ao salvar
      */
-    public boolean salvarCliente(Cliente cliente) {
+    public boolean salvarFilial(Filial filial) {
         boolean ok = false;
         Connection conexao = null;
         PreparedStatement ps = null;
         try {
             conexao = ConexaoDB.getConexao();
-            String sql = "INSERT INTO cliente VALUES (default,?,?,?,?,?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO filial VALUES (default,?,?,?)";
             ps = conexao.prepareStatement(sql);
-            ps.setInt(1, cliente.getIdFilial());
-            ps.setString(2, cliente.getNome());
-            ps.setString(3, cliente.getCpf());
-            ps.setDate(4, new Date(cliente.getDataNascimento().getTime()));
-            ps.setString(5, cliente.getSexo());
-            ps.setString(6, cliente.getTelefone());
-            ps.setString(7, cliente.getEmail());
-            ps.setString(8, cliente.getUf());
-            ps.setString(9, cliente.getCidade());
-            ps.setString(10, cliente.getCep());
-            ps.setString(11, cliente.getBairro());
-            ps.setString(12, cliente.getNumero());
+            ps.setInt(1, filial.getId());
+            ps.setString(2, filial.getNome());
+            ps.setString(3, filial.getEstado());
             ps.execute();
             ok = true;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-            System.out.println("Erro ao salvar cliente");
+            System.out.println("Erro ao salvar filial");
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
@@ -67,57 +65,44 @@ public class ClienteDAO {
     }
 
     /**
-     * Retorna uma lista de clientes de acordo com os paramentro passados
+     * Retorna uma lista de filiais de acordo com os paramentro passados
      *
-     * @param values String - recebe por parametro o cpf ou nome do cliente a
-     * ser consultado
+     * @param values String - recebe por parametro o cpf, nome ou id do cliente
+     * a ser consultado
      * @param tipo String - recebe por parametro o tipo de consulta a ser
-     * realizada
-     * @return listaClientes
+     * realizada --> nome, ID ou todos
+     * @return listaFiliais
      */
-    public ArrayList<Cliente> consultarCliente(String values, String tipo) {
+    public ArrayList<Filial> consultarFiliais(String values, String tipo) {
         ResultSet rs = null;
         Connection conexao = null;
         PreparedStatement ps = null;
-        ArrayList<Cliente> listaClientes = new ArrayList<>();
+        ArrayList<Filial> listaClientes = new ArrayList<>();
         try {
             conexao = ConexaoDB.getConexao();
-            if (!values.equals("") && tipo.equals("CPF")) {
-                     System.out.println("COnsultar CPF");
-                ps = conexao.prepareStatement("SELECT * FROM cliente where cpf_cliente like '%" + values + "%';");
-            } else if (!values.equals("") && tipo.equals("nome")) {
-                     System.out.println("COnsultar NOME");
-                ps = conexao.prepareStatement("SELECT * FROM cliente where nome_cliente like '%" + values + "%';");
+            if (!values.equals("") && tipo.equals("nome")) {
+                System.out.println("COnsultar NOME");
+                ps = conexao.prepareStatement("SELECT * FROM filial where nome_filial like '%" + values + "%';");
             } else if (tipo.equals("ID")) {
-                     System.out.println("COnsultar ID");
-                ps = conexao.prepareStatement("SELECT * FROM cliente WHERE id_cliente = " + Integer.parseInt(values));
-            } else if (tipo.equals("TODOS")) {
+                System.out.println("COnsultar ID");
+                ps = conexao.prepareStatement("SELECT * FROM filial WHERE id_filial = " + Integer.parseInt(values));
+            } else if (tipo.equals("todos")) {
                 System.out.println("COnsultar TODOS");
-                ps = conexao.prepareStatement("SELECT * FROM cliente ");
+                ps = conexao.prepareStatement("SELECT * FROM filial ");
             }
+
             rs = ps.executeQuery();
 
             while (rs.next()) {
+                Filial filial = new Filial();
+                filial.setId(rs.getInt("id_filial"));
+                filial.setNome(rs.getString("nome_filial"));
+                filial.setEstado(rs.getString("estado_filial"));
 
-                Cliente cliente = new Cliente();
-                cliente.setId(rs.getInt("id_cliente"));
-                cliente.setIdFilial(rs.getInt("id_filial"));
-                cliente.setNome(rs.getString("nome_cliente"));
-                cliente.setCpf(rs.getString("cpf_cliente"));
-                cliente.setDataNascimento(rs.getDate("nasc_cliente"));
-                cliente.setSexo(rs.getString("sexo_cliente"));
-                cliente.setTelefone(rs.getString("telefone_cliente"));
-                cliente.setEmail(rs.getString("email_cliente"));
-                cliente.setUf(rs.getString("uf_cliente"));
-                cliente.setCidade(rs.getString("cidade_cliente"));
-                cliente.setCep(rs.getString("cep_cliente"));
-                cliente.setBairro(rs.getString("bairro_cliente"));
-                cliente.setNumero(rs.getString("numero_cliente"));
-
-                listaClientes.add(cliente);
+                listaClientes.add(filial);
             }
         } catch (SQLException ex) {
-            System.out.println("Erro ao consultar cliente");
+            System.out.println("Erro ao consultar filial");
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
@@ -141,14 +126,13 @@ public class ClienteDAO {
     }
 
     /**
-     * Atualizar dados do Cliente
+     * Atualizar dados do Filial
      *
-     * @param cliente - recebe por parametro um objeto cliente criado na classe
-     * controle
-     * @return true: Cliente atulizado com sucesso false: Erro ao atualizar o
-     * Cliente
+     * @param filial recebe uma entidade filial
+     * @return true: Filial atulizado com sucesso false: Erro ao atualizar o
+     * Filial
      */
-    public boolean atualizarCliente(Cliente cliente) {
+    public boolean atualizarFilial(Filial filial) {
         Connection conexao = null;
         PreparedStatement ps = null;
 
@@ -158,28 +142,17 @@ public class ClienteDAO {
             //Obs: A classe ConexãoDB já carrega o Driver e define os parâmetros de conexão
             conexao = ConexaoDB.getConexao();
 
-            ps = conexao.prepareStatement("UPDATE cliente SET nome_cliente = ?, cpf_cliente = ?, nasc_cliente = ?, sexo_cliente = ?,"
-                    + " telefone_cliente = ?, email_cliente = ?, uf_cliente = ?, cidade_cliente =?, cep_cliente = ?,"
-                    + "bairro_cliente = ?,  numero_cliente = ? WHERE id_cliente = ?",
-                    Statement.RETURN_GENERATED_KEYS);  //Caso queira retornar o ID do cliente
+            ps = conexao.prepareStatement("UPDATE cliente SET nome_filial = ?, estado_filial = ? WHERE id_filial = ?",
+                    Statement.RETURN_GENERATED_KEYS);  //Caso queira retornar o ID
             //Adiciono os parâmetros ao meu comando SQL
-            ps.setString(1, cliente.getNome());
-            ps.setString(2, cliente.getCpf());
-            ps.setDate(3, new Date(cliente.getDataNascimento().getTime()));
-            ps.setString(4, cliente.getSexo());
-            ps.setString(5, cliente.getTelefone());
-            ps.setString(6, cliente.getEmail());
-            ps.setString(7, cliente.getUf());
-            ps.setString(8, cliente.getCidade());
-            ps.setString(9, cliente.getCep());
-            ps.setString(10, cliente.getBairro());
-            ps.setString(11, cliente.getNumero());
-            ps.setInt(12, cliente.getId());
+            ps.setString(1, filial.getNome());
+            ps.setString(2, filial.getEstado());
+            ps.setInt(3, filial.getId());
 
             return ps.executeUpdate() > 0;
 
         } catch (SQLException ex) {
-            System.out.println("Erro ao atualizar cliente");
+            System.out.println("Erro ao atualizar filial");
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
@@ -204,9 +177,9 @@ public class ClienteDAO {
     }
 
     /**
-     * Excluir um determinado cliente
+     * Excluir uma determinado filial
      *
-     * @param id - recebe por parametro o id referente ao cliente que deseja
+     * @param id - recebe por parametro o id referente a filial que deseja
      * excluir
      * @return boolean - true: excluido com sucesso false: erro ao excluir
      */
@@ -215,11 +188,11 @@ public class ClienteDAO {
         PreparedStatement ps = null;
         try {
             conexao = ConexaoDB.getConexao();
-            ps = conexao.prepareStatement("DELETE FROM cliente WHERE id_cliente = ?");
+            ps = conexao.prepareStatement("DELETE FROM filial WHERE id_filial = ?");
             ps.setInt(1, id);
             return ps.executeUpdate() > 0;
         } catch (SQLException ex) {
-            System.out.println("Erro ao excluir cliente");
+            System.out.println("Erro ao excluir filial");
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
