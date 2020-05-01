@@ -68,41 +68,14 @@ public class ControllerFiliais extends HttpServlet {
         testeFiliais.add(new Filial(0,"São Paulo"));
         testeFiliais.add(new Filial(1,"Minas Gerais"));
         testeFiliais.add(new Filial(2,"Rio de Janeiro"));
-        testeFiliais.add(new Filial(3,"Brasilia"));  
-        
-            ProdutoDAO produtoDAO = new ProdutoDAO();
-        ClienteDAO clienteDAO = new ClienteDAO();
-        VendaDAO vendaDAO = new VendaDAO();
-                
-        Filial filial = new Filial(1, "SÃO PAULO");
-        Filial filial2 = new Filial(2, "RIO DE JANEIRO");
-        Produto produto = new Produto(1,"Notebook1", "Acer", "Notebook", 100, 2000, new Date());
-        Cliente cliente = new Cliente(1, "Cliente1", "43234432", new Date(), "Masculino", "23432432", "fdsdsf@dsd", "SP", "dasdasda", "rerw", "dasdas", "fdsfsdds");
-        Venda venda = new Venda();
-        venda.setDataVenda(new Date());
-        cliente.setId(4);
-        venda.setCliente(cliente);
-        venda.setFilial(filial);
-        
-        venda.addProduto(produto);
-        
-        if(!produtoDAO.salvarProduto(produto)){
-            System.out.println("erro ao salvar PRODUTO");
-        }
-        if(!clienteDAO.salvarCliente(cliente)){
-            System.out.println("erro ao salvar CLIENTE");
-        }
-        if(!vendaDAO.salvarVenda(venda)){
-            System.out.println("erro ao salvar VENDA");
-        }
+        testeFiliais.add(new Filial(3,"Brasilia"));
         
         PrintWriter out = response.getWriter();
         Gson gson = new Gson();
-        response.setContentType("application/json;charset=UTF-8");
+//        response.setContentType("application/json;charset=UTF-8");
         out.write(gson.toJson(testeFiliais));
         out.flush();
         out.close();
-       
     }
 
     /**
