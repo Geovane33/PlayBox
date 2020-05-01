@@ -39,16 +39,14 @@ public class CadastroProdutoServlet extends HttpServlet {
         ProdutoDAO produtoDAO = new ProdutoDAO();
         if (acao.equals("Cadastrar")) {
             String nome = request.getParameter("nome");
-            String tipo = request.getParameter("tipo");
             String marca = request.getParameter("marca");
             String descricao = request.getParameter("desc");
             int quantidade = Integer.parseInt(request.getParameter("qtd"));
             double preco = Double.parseDouble(request.getParameter("preco"));
             Date dataDeEntrada = data.parseData(request.getParameter("dataEnt"), "dd-MM-yyyy");
-            
              int idFilial = Integer.parseInt(request.getParameter("idFilial"));
 
-            Produto produto = new Produto(nome, tipo, marca, descricao, quantidade, preco, dataDeEntrada, idFilial);
+            Produto produto = new Produto(idFilial, nome, marca, descricao, quantidade, preco, dataDeEntrada);
             boolean ok = produtoDAO.salvarProduto(produto);
             PrintWriter out = response.getWriter();
 

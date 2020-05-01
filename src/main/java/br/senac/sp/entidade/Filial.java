@@ -9,13 +9,13 @@ package br.senac.sp.entidade;
  *
  * @author Geovane
  */
-public class Filiais {
+public class Filial {
     private static int qtdFiliais;
     
     private int id;
     private String nome; 
 
-    public Filiais(int id, String nome) {
+    public Filial(int id, String nome) {
         this.id = id;
         this.nome = nome;
     }

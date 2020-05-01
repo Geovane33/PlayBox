@@ -14,7 +14,7 @@ $(document).ready(function () {
                     "Content-Type": "application/json; charset=utf-8"
                 },
                 success: function (result) {
-                    cliente = $.parseJSON(result);
+                    cliente = JSON.stringify(result);
                     console.log("primeiro carregamento");
                     linhasTB();
                 }});

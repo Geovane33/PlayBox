@@ -72,8 +72,9 @@ public class CadastroClienteServlet extends HttpServlet {
             String uf = request.getParameter("uf");
             String bairro = request.getParameter("bairro");
             String numero = request.getParameter("numero");
+            int idFilial =  Integer.parseInt(request.getParameter("idFilial"));
 
-            Cliente cliente = new Cliente(nome, dataNascimento, sexo, telefone, email, cpf, cep, cidade, uf, bairro, numero);
+            Cliente cliente = new Cliente(idFilial, nome, cpf, dataNascimento, sexo, telefone, email, uf, cidade, cep, bairro, numero);
             boolean ok = clienteDAO.salvarCliente(cliente);
             PrintWriter out = response.getWriter();
             if (ok) {
