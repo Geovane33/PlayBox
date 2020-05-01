@@ -76,7 +76,6 @@ public class ControllerFiliais extends HttpServlet {
         out.write(gson.toJson(testeFiliais));
         out.flush();
         out.close();
-       
     }
 
     /**
