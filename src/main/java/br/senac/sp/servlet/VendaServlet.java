@@ -10,6 +10,7 @@ import br.senac.sp.entidade.Venda;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -37,19 +38,11 @@ public class VendaServlet extends HttpServlet{
         VendaDAO vendaDAO = new VendaDAO();
         if (acao.equals("salvar")) {
             String nome = request.getParameter("nome");
-            Date dataNascimento = parseData(request.getParameter("dataNascimento"), "dd-MM-yyyy");
-            String sexo = request.getParameter("sexo");
-            String telefone = request.getParameter("telefone");
-            String email = request.getParameter("email");
-            String cpf = request.getParameter("cpf");
-            String cep = request.getParameter("cep");
-            String cidade = request.getParameter("cidade");
-            String uf = request.getParameter("uf");
-            String bairro = request.getParameter("bairro");
-            String numero = request.getParameter("numero");
-
-            Cliente cliente = new Cliente(nome, dataNascimento, sexo, telefone, email, cpf, cep, cidade, uf, bairro, numero);
-            boolean ok = clienteDAO.salvarCliente(cliente);
+            long data = 3213213;
+            Date teste = new Date();
+                    
+            List<Venda> vendas = vendaDAO.consultarVendas(teste,teste);
+            boolean ok = true;
             PrintWriter out = response.getWriter();
             String url = "";
             if (ok) {

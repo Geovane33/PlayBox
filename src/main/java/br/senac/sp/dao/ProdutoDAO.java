@@ -31,14 +31,13 @@ public class ProdutoDAO {
             conexao = ConexaoDB.getConexao();
             String sql = "Insert INTO produto VALUES (default, ?, ?, ?, ?, ?, ?, ?)";
             ps = conexao.prepareStatement(sql);
-            ps.setString(1, produto.getNome());
-            ps.setInt(2, produto.getQuantidade());
-            ps.setString(3, produto.getDescricao());
-            ps.setDouble(4, produto.getPreco());
-            // ps.setDate(7, new Date(produto.getDataDeEntrada().getTime()));
-            ps.setInt(5, produto.getIdFilial());
-            ps.setString(6, produto.getTipo());
-            ps.setString(7, produto.getMarca());
+            ps.setInt(1, produto.getIdFilial());
+            ps.setString(2, produto.getNome());
+            ps.setString(3, produto.getMarca());
+            ps.setDouble(4, produto.getValor());
+            ps.setInt(5, produto.getQuantidade());
+            ps.setString(6, produto.getDescricao());
+            ps.setDate(7, new Date(produto.getDataDeEntrada().getTime()));
             ps.execute();
             ok = true;
         } catch (SQLException ex) {
@@ -69,10 +68,10 @@ public class ProdutoDAO {
     /**
      * metodo que realiza pesquisa de produto por nome
      *
-     * @param name recebe o nome do produto como parâmetro
+     * @param nome recebe o nome do produto como parâmetro
      * @return listaProdutos
      */
-    public ArrayList<Produto> consultarProduto(String name) {
+    public ArrayList<Produto> consultarProduto(String nome) {
         ResultSet rs = null;
         Connection conexao = null;
         PreparedStatement ps = null;
@@ -81,21 +80,20 @@ public class ProdutoDAO {
 
         try {
             conexao = ConexaoDB.getConexao();
-            ps = conexao.prepareStatement("SELECT * FROM produto where " + name + " like ?;");
-            ps.setString(1, "%" + name + "%");
+            ps = conexao.prepareStatement("SELECT * FROM produto where " + nome + " like ?;");
+            ps.setString(1, "%" + nome + "%");
             rs = ps.executeQuery();
 
             while (rs.next()) {
                 Produto produto = new Produto();
-                produto.setId(rs.getInt("id"));
-                produto.setNome(rs.getString("nome"));
-                produto.setTipo(rs.getString("tipo"));
-                produto.setMarca(rs.getString("marca"));
-                produto.setPreco(rs.getDouble("valor_prod"));
-                produto.setDescricao(rs.getString("desc_prod"));
-                produto.setQuantidade(rs.getInt("qtd_prod"));
-                produto.setDataDeEntrada(rs.getDate("data_entrada"));
+                produto.setId(rs.getInt("id_produto"));
                 produto.setIdFilial(rs.getInt("id_filial"));
+                produto.setNome(rs.getString("nome_produto"));
+                produto.setMarca(rs.getString("marca_produto"));
+                produto.setQuantidade(rs.getInt("quantidade_produto"));
+                produto.setQuantidade(rs.getInt("valor_produto"));
+                produto.setDescricao(rs.getString("desc_prod"));
+                produto.setDataDeEntrada(rs.getDate("data_entrada"));
                 listaProdutos.add(produto);
             }
         } catch (SQLException ex) {
@@ -141,16 +139,15 @@ public class ProdutoDAO {
             //Obs: A classe ConexãoDB já carrega o Driver e define os parâmetros de conexão
             conexao = ConexaoDB.getConexao();
 
-            ps = conexao.prepareStatement("UPDATE produto SET nome = ?, tipo = ?,"
-                    + "marca = ?, descricao = ?, quantidade = ?, data_entrada,  WHERE id = ?",
+            ps = conexao.prepareStatement("UPDATE produto SET nome_produto = ?,"
+                    + "marca_produto = ?, quantidade_produto = ?, valor_produto = ?, descricao_produto = ?, data_entrada = ?,  WHERE id_produto = ?",
                     Statement.RETURN_GENERATED_KEYS);  //Caso queira retornar o ID do cliente
             //Adiciono os parâmetros ao meu comando SQL
             ps.setString(1, produto.getNome());
-            ps.setString(2, produto.getTipo());
-            ps.setString(3, produto.getMarca());
-            ps.setString(4, produto.getDescricao());
-            ps.setInt(5, produto.getQuantidade());
-            ps.setDouble(6, produto.getPreco());
+            ps.setString(2, produto.getMarca());
+            ps.setInt(4, produto.getQuantidade());
+            ps.setDouble(6, produto.getValor());
+            ps.setString(3, produto.getDescricao());
             ps.setDate(7, new Date(produto.getDataDeEntrada().getTime()));
             ps.setInt(8, produto.getId());
 

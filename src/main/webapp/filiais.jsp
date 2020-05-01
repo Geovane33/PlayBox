@@ -3,7 +3,7 @@
 <html>
     <head>
         <title>Inicio</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="UTF-8">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src='filiais.js'></script>
     </head>

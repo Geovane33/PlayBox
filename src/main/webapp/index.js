@@ -16,9 +16,10 @@ $(document).ready(function () {
         $.ajax({
             type: 'POST',
             url: 'ControllerFiliais',
+            contentType: 'application/json;charset=ISO-8859-1',
             headers: {
-                Accept: "application/json; charset=utf-8",
-                "Content-Type": "application/json; charset=utf-8"
+                Accept: "application/json;charset=ISO-8859-1",
+                "Content-Type": "application/json;charset=ISO-8859-1"
             },
             success: function (result) {
                 filiais = $.parseJSON(result);

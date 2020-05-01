@@ -9,14 +9,13 @@ public class Produto {
 
     //encapsulamento dos atributos
     private int id;
-    private String nome;
-    private String tipo;
-    private String marca;
-    private String descricao;
-    private int quantidade;
-    private double preco;
-    private Date dataDeEntrada;
     private int idFilial;
+    private String nome;
+    private String marca;
+    private int quantidade;
+    private double valor;
+    private String descricao;
+    private Date dataDeEntrada;
 
     /**
      * construtor vazio
@@ -27,53 +26,63 @@ public class Produto {
     /**
      * construtor para cadastrar produto
      *
+     * @param idFilial int
      * @param nome String
-     * @param tipo String
      * @param marca String
      * @param descricao String
      * @param quantidade int
      * @param preco double
      * @param dataDeEntrada Date
-     * @param idFilial int
+     *
      */
-    public Produto(String nome, String tipo, String marca, String descricao, int quantidade, double preco, Date dataDeEntrada, int idFilial) {
+    public Produto(int idFilial, String nome, String marca, String descricao, int quantidade, double preco, Date dataDeEntrada) {
+        this.idFilial = idFilial;
         this.nome = nome;
-        this.tipo = tipo;
         this.marca = marca;
         this.descricao = descricao;
         this.quantidade = quantidade;
-        this.preco = preco;
+        this.valor = preco;
         this.dataDeEntrada = dataDeEntrada;
-        this.idFilial = idFilial;
     }
 
     /**
      * construtor para atualizar dados do produto
      *
-     * @param id int
      * @param nome String
-     * @param tipo String
      * @param marca String
      * @param descricao String
      * @param quantidade int
      * @param preco double
      * @param dataDeEntrada Date
-     * @param idFilial int
+     * @param id int
      */
-    public Produto(int id, String nome, String tipo, String marca, String descricao, int quantidade, double preco, Date dataDeEntrada, int idFilial) {
-        this.id = id;
+    public Produto(String nome, String marca, String descricao, int quantidade, double preco, Date dataDeEntrada, int id) {
         this.nome = nome;
-        this.tipo = tipo;
         this.marca = marca;
         this.descricao = descricao;
         this.quantidade = quantidade;
-        this.preco = preco;
+        this.valor = preco;
         this.dataDeEntrada = dataDeEntrada;
-        this.idFilial = idFilial;
+        this.id = id;
     }
 
     /**
-     * @return a quantidadeNaVenda
+     * Construtor para adicionar produto na lista de venda
+     * 
+     * @param produto
+     */
+    public Produto(Produto produto) {
+        this.nome = produto.nome;
+        this.marca = produto.marca;
+        this.descricao = produto.descricao;
+        this.quantidade = produto.quantidade;
+        this.valor = produto.valor;
+        this.dataDeEntrada = produto.dataDeEntrada;
+        this.id = produto.id;
+    }
+
+    /**
+     * @return quantidadeNaVenda
      */
     public int getQuantidadeNaVenda() {
         return quantidadeNaVenda;
@@ -87,7 +96,7 @@ public class Produto {
     }
 
     /**
-     * @return o id int
+     * @return id int
      */
     public int getId() {
         return id;
@@ -101,7 +110,21 @@ public class Produto {
     }
 
     /**
-     * @return o nome String
+     * @return idFilial int
+     */
+    public int getIdFilial() {
+        return idFilial;
+    }
+
+    /**
+     * @param idFilial int idFilial para set
+     */
+    public void setIdFilial(int idFilial) {
+        this.idFilial = idFilial;
+    }
+
+    /**
+     * @return nome String
      */
     public String getNome() {
         return nome;
@@ -115,21 +138,7 @@ public class Produto {
     }
 
     /**
-     * @return o tipo String
-     */
-    public String getTipo() {
-        return tipo;
-    }
-
-    /**
-     * @param tipo String tipo para set
-     */
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    /**
-     * @return a marca String
+     * @return marca String
      */
     public String getMarca() {
         return marca;
@@ -140,20 +149,6 @@ public class Produto {
      */
     public void setMarca(String marca) {
         this.marca = marca;
-    }
-
-    /**
-     * @return a descricao String
-     */
-    public String getDescricao() {
-        return descricao;
-    }
-
-    /**
-     * @param descricao String descricao para set
-     */
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
     }
 
     /**
@@ -173,43 +168,43 @@ public class Produto {
     /**
      * @return o preco double
      */
-    public double getPreco() {
-        return preco;
+    public double getValor() {
+        return valor;
     }
 
     /**
-     * @param preco double preco para set
+     * @param valor double preco para set
      */
-    public void setPreco(double preco) {
-        this.preco = preco;
+    public void setValor(double valor) {
+        this.valor = valor;
     }
 
     /**
-     * @return a dataDeEntrada Date
+     * @return descricao String
+     */
+    public String getDescricao() {
+        return descricao;
+    }
+
+    /**
+     * @param descricao String descricao para set
+     */
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    /**
+     * @return dataDeEntrada Date
      */
     public Date getDataDeEntrada() {
         return dataDeEntrada;
     }
 
     /**
-     * @param dataDeEntrada Date a dataDeEntrada para set
+     * @param dataDeEntrada Date dataDeEntrada para set
      */
     public void setDataDeEntrada(Date dataDeEntrada) {
         this.dataDeEntrada = dataDeEntrada;
-    }
-
-    /**
-     * @return o idFilial int
-     */
-    public int getIdFilial() {
-        return idFilial;
-    }
-
-    /**
-     * @param idFilial int idFilial para set
-     */
-    public void setIdFilial(int idFilial) {
-        this.idFilial = idFilial;
     }
 
 }
