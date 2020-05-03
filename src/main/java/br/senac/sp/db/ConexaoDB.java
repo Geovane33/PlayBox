@@ -3,25 +3,24 @@ package br.senac.sp.db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ConexaoDB {
-    private static int n = 1;
+
     private static String STATUS = "Não conectado";
     private static String DRIVER = "com.mysql.cj.jdbc.Driver";  //A partir da versao 8.0, mudou para com.mysql.cj.jdbc.Driver (Connector/J)                   
 
-    private static String DB_ADDRESS = "jdbc:mysql://localhost:3305/notestore";
-    private static String USER = "root";                     //nome de um usuário de seu BD      
-    private static String PASSWORD = "";                     //sua senha de acesso
+    private static String DB_ADDRESS = "jdbc:mysql://db4free.net:3306/notestore";
+    private static String USER = "notestore";                     //nome de um usuário de seu BD      
+    private static String PASSWORD = "notestore";                     //sua senha de acesso
     private static Connection CONEXAO = null;
 
     static {
         try {
             Class.forName(DRIVER);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ConexaoDB.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConexaoDB2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -37,24 +36,7 @@ public class ConexaoDB {
      * @return Connection - se for possivel realizar a conexão com o banco de dados 
      * é retornado uma Connection
      */
-
     public static Connection getConexao() {
-        if(n==0){
-         while(n<1 && n>2){
-             System.out.println("Digite apenas 1 ou 2");
-            Scanner teste = new Scanner(System.in);
-        System.out.println("Escolha uma conexão\n 1 - conexão local\n 2 - conexão remota");
-        try{
-             n = teste.nextInt();
-        }catch(NumberFormatException ex){
-            System.out.println("Digite apenas numero");
-        }
-         }
-        }
-        if(n==2){
-            return ConexaoDB.getConexao();
-        }
-        
         String dbURL = DB_ADDRESS + "?useTimezone=true&serverTimezone=UTC&useSSL=false";
 
         try {
