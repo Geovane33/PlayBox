@@ -1,6 +1,6 @@
 package br.senac.sp.dao;
 
-import br.senac.sp.db.ConexaoDB2;
+import br.senac.sp.db.ConexaoDB;
 import br.senac.sp.entidade.Cliente;
 import br.senac.sp.utils.Conversor;
 import java.sql.Connection;
@@ -24,7 +24,7 @@ public class ClienteDAO {
         Connection conexao = null;
         PreparedStatement ps = null;
         try {
-            conexao = ConexaoDB2.getConexao();
+            conexao = ConexaoDB.getConexao();
             String sql = "INSERT INTO cliente VALUES (default,?,?,?,?,?,?,?,?,?,?,?,?)";
             ps = conexao.prepareStatement(sql);
             ps.setInt(1, cliente.getIdFilial());
@@ -54,7 +54,7 @@ public class ClienteDAO {
                 if (ps != null) {
                     ps.close();
                 }
-                ConexaoDB2.fecharConexao();
+                ConexaoDB.fecharConexao();
 
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexãoDB");
@@ -81,7 +81,7 @@ public class ClienteDAO {
         PreparedStatement ps = null;
         ArrayList<Cliente> listaClientes = new ArrayList<>();
         try {
-            conexao = ConexaoDB2.getConexao();
+            conexao = ConexaoDB.getConexao();
             if (!values.equals("") && tipo.equals("CPF")) {
                      System.out.println("COnsultar CPF");
                 ps = conexao.prepareStatement("SELECT * FROM cliente where cpf_cliente like '%" + values + "%';");
@@ -128,7 +128,7 @@ public class ClienteDAO {
                 if (rs != null) {
                     rs.close();
                 }
-                ConexaoDB2.fecharConexao();
+                ConexaoDB.fecharConexao();
 
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexãoDB");
@@ -157,7 +157,7 @@ public class ClienteDAO {
 
             //Tenta estabeler a conexão com o SGBD e cria comando a ser executado conexão
             //Obs: A classe ConexãoDB já carrega o Driver e define os parâmetros de conexão
-            conexao = ConexaoDB2.getConexao();
+            conexao = ConexaoDB.getConexao();
 
             ps = conexao.prepareStatement("UPDATE cliente SET nome_cliente = ?, cpf_cliente = ?, nasc_cliente = ?, sexo_cliente = ?,"
                     + " telefone_cliente = ?, email_cliente = ?, uf_cliente = ?, cidade_cliente =?, cep_cliente = ?,"
@@ -193,7 +193,7 @@ public class ClienteDAO {
                     ps.close();
                 }
 
-                ConexaoDB2.fecharConexao();
+                ConexaoDB.fecharConexao();
 
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexãoDB");
@@ -215,7 +215,7 @@ public class ClienteDAO {
         Connection conexao = null;
         PreparedStatement ps = null;
         try {
-            conexao = ConexaoDB2.getConexao();
+            conexao = ConexaoDB.getConexao();
             ps = conexao.prepareStatement("DELETE FROM cliente WHERE id_cliente = ?");
             ps.setInt(1, id);
             return ps.executeUpdate() > 0;
@@ -231,7 +231,7 @@ public class ClienteDAO {
                 if (ps != null) {
                     ps.close();
                 }
-                ConexaoDB2.fecharConexao();
+                ConexaoDB.fecharConexao();
 
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexãoDB");
