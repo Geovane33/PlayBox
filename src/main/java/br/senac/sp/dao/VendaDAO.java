@@ -5,7 +5,7 @@
  */
 package br.senac.sp.dao;
 
-import br.senac.sp.db.ConexaoDB2;
+import br.senac.sp.db.ConexaoDB;
 import br.senac.sp.entidade.Cliente;
 import br.senac.sp.entidade.Venda;
 import br.senac.sp.entidade.Produto;
@@ -42,7 +42,7 @@ public class VendaDAO {
 
         PreparedStatement ps = null;
 
-        Connection conexao = ConexaoDB2.getConexao();
+        Connection conexao = ConexaoDB.getConexao();
 
         try {
 
@@ -79,7 +79,7 @@ public class VendaDAO {
 
             //Tenta estabeler a conexão com o SGBD e cria comando a ser executado conexão
             //Obs: A classe GerenciadorConexao já carrega o Driver e define os parâmetros de conexão
-            conexao = ConexaoDB2.getConexao();
+            conexao = ConexaoDB.getConexao();
 
             instrucaoSQL = conexao.prepareStatement("INSERT INTO venda VALUES(default, ?, ?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS);  //Caso queira retornar o ID do cliente
@@ -119,7 +119,7 @@ public class VendaDAO {
                     instrucaoSQL.close();
                 }
 
-                ConexaoDB2.fecharConexao();
+                ConexaoDB.fecharConexao();
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexão");
                 System.out.println("SQLException: " + ex.getMessage());
@@ -152,7 +152,7 @@ public class VendaDAO {
 
         try {
 
-            conexao = ConexaoDB2.getConexao();
+            conexao = ConexaoDB.getConexao();
             instrucaoSQL = conexao.prepareStatement("SELECT * FROM venda WHERE data_venda BETWEEN ? and ?;");
             instrucaoSQL.setDate(1, new Date(inicio.getTime()));
             instrucaoSQL.setDate(2, new Date(fim.getTime()));
@@ -183,7 +183,7 @@ public class VendaDAO {
                     instrucaoSQL.close();
                 }
 
-                ConexaoDB2.fecharConexao();
+                ConexaoDB.fecharConexao();
 
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexãoDB");

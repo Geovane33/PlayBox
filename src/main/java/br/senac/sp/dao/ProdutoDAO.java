@@ -1,6 +1,6 @@
 package br.senac.sp.dao;
 
-import br.senac.sp.db.ConexaoDB2;
+import br.senac.sp.db.ConexaoDB;
 import br.senac.sp.entidade.Produto;
 import java.sql.Connection;
 import java.sql.Date;
@@ -27,7 +27,7 @@ public class ProdutoDAO {
         Connection conexao = null;
         PreparedStatement ps = null;
         try {
-            conexao = ConexaoDB2.getConexao();
+            conexao = ConexaoDB.getConexao();
             String sql = "Insert INTO produto VALUES (default, ?, ?, ?, ?, ?, ?, ?)";
             ps = conexao.prepareStatement(sql);
             ps.setInt(1, produto.getIdFilial());
@@ -52,7 +52,7 @@ public class ProdutoDAO {
                 if (ps != null) {
                     ps.close();
                 }
-                ConexaoDB2.fecharConexao();
+                ConexaoDB.fecharConexao();
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexãoDB");
                 System.out.println("SQLException: " + ex.getMessage());
@@ -78,7 +78,7 @@ public class ProdutoDAO {
         ArrayList<Produto> listaProdutos = new ArrayList<>();
 
         try {
-            conexao = ConexaoDB2.getConexao();
+            conexao = ConexaoDB.getConexao();
 
             ps = conexao.prepareStatement("SELECT * FROM produto where nome_produto like ?;");
             ps.setString(1, "%" + nome + "%");
@@ -108,7 +108,7 @@ public class ProdutoDAO {
                 if (rs != null) {
                     rs.close();
                 }
-                ConexaoDB2.fecharConexao();
+                ConexaoDB.fecharConexao();
 
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexãoDB");
@@ -137,7 +137,7 @@ public class ProdutoDAO {
 
             //Tenta estabeler a conexão com o SGBD e cria comando a ser executado conexão
             //Obs: A classe ConexãoDB já carrega o Driver e define os parâmetros de conexão
-            conexao = ConexaoDB2.getConexao();
+            conexao = ConexaoDB.getConexao();
 
             ps = conexao.prepareStatement("UPDATE produto SET nome_produto = ?,"
 
@@ -166,7 +166,7 @@ public class ProdutoDAO {
                     ps.close();
                 }
 
-                ConexaoDB2.fecharConexao();
+                ConexaoDB.fecharConexao();
 
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexãoDB");

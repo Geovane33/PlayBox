@@ -20,7 +20,7 @@ public class ConexaoDB {
         try {
             Class.forName(DRIVER);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ConexaoDB2.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConexaoDB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
