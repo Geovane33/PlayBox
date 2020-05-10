@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ClienteDAO {
 
@@ -76,7 +77,7 @@ public class ClienteDAO {
      * @return listaClientes
      */
     public ArrayList<Cliente> consultarCliente(String values, String tipo) {
-        ResultSet rs = null;
+        ResultSet rs=null;
         Connection conexao = null;
         PreparedStatement ps = null;
         ArrayList<Cliente> listaClientes = new ArrayList<>();
@@ -84,18 +85,17 @@ public class ClienteDAO {
             conexao = ConexaoDB.getConexao();
             if (!values.equals("") && tipo.equals("CPF")) {
                      System.out.println("COnsultar CPF");
-                ps = conexao.prepareStatement("SELECT * FROM cliente where cpf_cliente like '%" + values + "%';");
+                ps = conexao.prepareStatement("SELECT * FROM cliente where cpf_cliente like '" + values + "';");
             } else if (!values.equals("") && tipo.equals("nome")) {
                      System.out.println("COnsultar NOME");
                 ps = conexao.prepareStatement("SELECT * FROM cliente where nome_cliente like '%" + values + "%';");
-            } else if (tipo.equals("ID")) {
+            } else if (!values.equals("") && tipo.equals("ID")) {
                      System.out.println("COnsultar ID");
                 ps = conexao.prepareStatement("SELECT * FROM cliente WHERE id_cliente = " + Integer.parseInt(values));
-            } else if (tipo.equals("TODOS")) {
+            } else if (tipo.equals("nome") || tipo.equals("CPF")) {
                 System.out.println("COnsultar TODOS");
                 ps = conexao.prepareStatement("SELECT * FROM cliente ");
             }
-
             rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -105,7 +105,7 @@ public class ClienteDAO {
                 cliente.setIdFilial(rs.getInt("id_filial"));
                 cliente.setNome(rs.getString("nome_cliente"));
                 cliente.setCpf(rs.getString("cpf_cliente"));
-                cliente.setDataNascimento(rs.getDate("nasc_cliente"));
+                cliente.setDataNascimento((rs.getDate("nasc_cliente")));
                 cliente.setSexo(rs.getString("sexo_cliente"));
                 cliente.setTelefone(rs.getString("telefone_cliente"));
                 cliente.setEmail(rs.getString("email_cliente"));

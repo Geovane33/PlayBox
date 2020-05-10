@@ -22,7 +22,7 @@ public class Conversor {
     
     
      public Date parseData(String data, String formato) {
-        SimpleDateFormat formatar = new SimpleDateFormat(formato, new Locale("pt", "BR"));
+        SimpleDateFormat formatar = new SimpleDateFormat(formato);
         try {
             return formatar.parse(data);
         } catch (ParseException ex) {

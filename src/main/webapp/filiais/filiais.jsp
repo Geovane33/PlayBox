@@ -14,10 +14,9 @@
 
         <h1 id='idFilial'>${filial}</h1>
         <form action="cadastroCliente=idFiliaRecebida">
-            <a href="cadastroCliente.jsp">Cadastro de Cliente</a>
-            <a href="cadastroProduto.jsp">Cadastro de Produto</a>
-            <a href="vendas\realizarVenda.jsp">Realizar Venda</a>
-
+            <a href="cadastroCliente/cadastroCliente.jsp">Clientes</a>
+            <a href="cadastroProduto/cadastroProduto.jsp">Produtos</a>
+            <a href="vendas/realizarVenda.jsp">Realizar Venda</a>
         </form>
     </body>
 </html>

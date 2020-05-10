@@ -42,10 +42,12 @@ public class CadastroProdutoServlet extends HttpServlet {
         List<Produto> produtos = produtoDAO.consultarProduto("", "TODOS");
 
         response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        System.out.println("data"+produtos.get(0).getDataDeEntrada());
         out.write(gson.toJson(produtos));
         out.flush();
         out.close();
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/consultarProdutos2.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("cadastroProduto/cadastroProduto.jsp");
         dispatcher.include(request, response);
     }
 
@@ -62,7 +64,7 @@ public class CadastroProdutoServlet extends HttpServlet {
             String descricao = request.getParameter("desc");
             int quantidade = Integer.parseInt(request.getParameter("qtd"));
             double valor = Double.parseDouble(request.getParameter("valor"));
-            Date dataDeEntrada = data.parseData(request.getParameter("dataEnt"), "dd/mm/yyyy");
+            Date dataDeEntrada = data.parseData(request.getParameter("dataEnt"), "dd/MM/yyyy");
             int idFilial = Integer.parseInt(request.getParameter("idFilial"));
 
             Produto produto = new Produto(idFilial, nome, marca, descricao, quantidade, valor, dataDeEntrada);

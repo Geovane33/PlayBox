@@ -2,6 +2,7 @@ package br.senac.sp.dao;
 
 import br.senac.sp.db.ConexaoDB;
 import br.senac.sp.entidade.Produto;
+import br.senac.sp.utils.Conversor;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -67,7 +68,8 @@ public class ProdutoDAO {
     /**
      * metodo que realiza pesquisa de produto por nome
      *
-     * @param nome recebe o nome do produto como parâmetro
+     * @param tipo recebe o tipo de consulta
+     * @param values recebe o nome do produto como parâmetro
      * @return listaProdutos
      */
     public ArrayList<Produto> consultarProduto(String values, String tipo) {
@@ -76,6 +78,8 @@ public class ProdutoDAO {
         PreparedStatement ps = null;
 
         ArrayList<Produto> listaProdutos = new ArrayList<>();
+
+        Conversor data = new Conversor();
 
         try {
             conexao = ConexaoDB.getConexao();
@@ -101,8 +105,8 @@ public class ProdutoDAO {
                 produto.setQuantidade(rs.getInt("quantidade_produto"));
                 produto.setValor(rs.getInt("valor_produto"));
                 produto.setDescricao(rs.getString("desc_produto"));
-                System.out.println(rs.getDate("data_entrada"));
-                produto.setDataDeEntrada(rs.getDate("data_entrada"));
+//                System.out.println(data.parseData(rs.getDate("data_entrada").toString(), "yyyy-MM-dd"));
+                produto.setDataDeEntrada(data.parseData(rs.getDate("data_entrada").toString(), "yyyy-MM-dd"));
                 listaProdutos.add(produto);
             }
         } catch (SQLException ex) {
