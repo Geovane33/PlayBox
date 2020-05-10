@@ -7,8 +7,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title> NoteStore </title>
 
-        <link rel="stylesheet" href="cssMedio.css" media="screen and (min-width:900px)">
-        <link rel="stylesheet" href="cssGrande.css" media="screen and (min-width:900px)">
+        <link rel="stylesheet" href="../cssMedio.css" media="screen and (min-width:900px)">
+        <link rel="stylesheet" href="../cssGrande.css" media="screen and (min-width:900px)">
     </head>
     <body>
         <header>
@@ -20,7 +20,7 @@
                 <tr>
                     <td class="cadastro">
                         <!-- Compos para preencher -->
-                        <form action="CadastroProdutoServlet" autocomplete="off" method="POST">
+                        <form action="../CadastroProdutoServlet" autocomplete="off" method="POST">
                             <div>
                                 <label>Nome </label><label class="validation-error hide" id="fullNameValidationError"></label>
                                 <input type="text" name="nome" id="nome">

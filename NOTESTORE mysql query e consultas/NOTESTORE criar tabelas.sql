@@ -1,5 +1,5 @@
--- create database notestore;
--- use notestore;
+ -- create database notestore;
+ -- use notestore;
 
 CREATE TABLE filial (
     id_filial INT AUTO_INCREMENT PRIMARY KEY,
@@ -27,7 +27,7 @@ CREATE TABLE cliente (
     cpf_cliente VARCHAR(15)  NOT NULL,
     nasc_cliente DATE NOT NULL,
     sexo_cliente VARCHAR(10),
-    telefone_cliente VARCHAR(15)  NOT NULL,
+    telefone_cliente VARCHAR(16)  NOT NULL,
     email_cliente VARCHAR(30)  NOT NULL,
     uf_cliente VARCHAR(2)  NOT NULL,
     cidade_cliente VARCHAR(20),

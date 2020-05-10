@@ -1,6 +1,5 @@
 package br.senac.sp.entidade;
 
-import br.senac.sp.utils.Conversor;
 import java.util.Date;
 
 /**
@@ -33,6 +32,7 @@ public class Cliente {
     /**
      * Construtor que recebe por paramentro todos os atributos
      *
+     * @param id int
      * @param idFilial int
      * @param nome String
      * @param cpf String

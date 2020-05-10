@@ -11,9 +11,9 @@ public class ConexaoDB {
     private static String STATUS = "Não conectado";
     private static String DRIVER = "com.mysql.cj.jdbc.Driver";  //A partir da versao 8.0, mudou para com.mysql.cj.jdbc.Driver (Connector/J)                   
 
-    private static String DB_ADDRESS = "jdbc:mysql://db4free.net:3306/notestore";
-    private static String USER = "notestore";                     //nome de um usuário de seu BD      
-    private static String PASSWORD = "notestore";                     //sua senha de acesso
+    private static String DB_ADDRESS = "jdbc:mysql://localhost:3305/notestore";
+    private static String USER = "root";                     //nome de um usuário de seu BD      
+    private static String PASSWORD = "";                     //sua senha de acesso
     private static Connection CONEXAO = null;
 
     static {

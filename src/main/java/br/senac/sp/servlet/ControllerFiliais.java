@@ -1,11 +1,7 @@
 package br.senac.sp.servlet;
 
-import br.senac.sp.dao.ClienteDAO;
 import br.senac.sp.dao.FilialDAO;
-import br.senac.sp.dao.ProdutoDAO;
-import br.senac.sp.entidade.Cliente;
 import br.senac.sp.entidade.Filial;
-import br.senac.sp.entidade.Produto;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -32,7 +28,7 @@ public class ControllerFiliais extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         testeFiliais = new FilialDAO().consultarFiliais("", "todos");
-        String url = "/filiais.jsp";
+        String url = "filiais/filiais.jsp";
         //pesquisar filial no banco de dados correspondente ao parametro passado e devolver o id para o front
         try{
             request.setAttribute("filial", testeFiliais.get(Integer.parseInt(request.getParameter("filiais"))-1).getNome());
