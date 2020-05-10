@@ -8,9 +8,11 @@ package br.senac.sp.servlet;
 import br.senac.sp.dao.ProdutoDAO;
 import br.senac.sp.entidade.Produto;
 import br.senac.sp.utils.Conversor;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -27,7 +29,26 @@ public class CadastroProdutoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        //Empty
+        PrintWriter out = response.getWriter();
+        ProdutoDAO produtoDAO = new ProdutoDAO();
+        Gson gson = new Gson();
+        try {
+            int id = Integer.parseInt(request.getParameter("id"));
+            produtoDAO.excluirProduto(id);
+        } catch (Exception e) {
+            e.getMessage();
+        }
+
+        List<Produto> produtos = produtoDAO.consultarProduto("", "TODOS");
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        System.out.println("data"+produtos.get(0).getDataDeEntrada());
+        out.write(gson.toJson(produtos));
+        out.flush();
+        out.close();
+        RequestDispatcher dispatcher = request.getRequestDispatcher("cadastroProduto/cadastroProduto.jsp");
+        dispatcher.include(request, response);
     }
 
     @Override
@@ -42,11 +63,11 @@ public class CadastroProdutoServlet extends HttpServlet {
             String marca = request.getParameter("marca");
             String descricao = request.getParameter("desc");
             int quantidade = Integer.parseInt(request.getParameter("qtd"));
-            double preco = Double.parseDouble(request.getParameter("preco"));
-            Date dataDeEntrada = data.parseData(request.getParameter("dataEnt"), "dd-MM-yyyy");
-             int idFilial = Integer.parseInt(request.getParameter("idFilial"));
+            double valor = Double.parseDouble(request.getParameter("valor"));
+            Date dataDeEntrada = data.parseData(request.getParameter("dataEnt"), "dd/MM/yyyy");
+            int idFilial = Integer.parseInt(request.getParameter("idFilial"));
 
-            Produto produto = new Produto(idFilial, nome, marca, descricao, quantidade, preco, dataDeEntrada);
+            Produto produto = new Produto(idFilial, nome, marca, descricao, quantidade, valor, dataDeEntrada);
             boolean ok = produtoDAO.salvarProduto(produto);
             PrintWriter out = response.getWriter();
 

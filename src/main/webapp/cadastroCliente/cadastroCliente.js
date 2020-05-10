@@ -2,9 +2,8 @@
 var cliente = null;
 var dataNascimento = null;
 var consultaTipo = 'nome';
-$(document).ready(function () {
-    console.log();
 
+$(document).ready(function () {
     $('#nascimento').mask("00/00/0000", {placeholder: "__/__/____"});
     $('#telefone').mask('(ZZ) Z-ZZZZ-ZZZZ', {
         translation: {
@@ -32,29 +31,29 @@ $(document).ready(function () {
     });
 
     $('#consultarCli').click(function () {
-        if (cliente === null) {
-            consulta = $("#campo").val();
-            $.ajax({
-                type: 'GET',
-                url: '../CadastroClienteServlet?acao=consultar',
+//        if (cliente === null) {
+        consulta = $("#campo").val();
+        $.ajax({
+            type: 'GET',
+            url: '../CadastroClienteServlet?acao=consultar',
 
-                headers: {
-                    Accept: "application/json; charset=utf-8",
-                    "Content-Type": "application/json; charset=utf-8"
-                }, beforeSend: function (xhr) {
-                    xhr.setRequestHeader('X-Consulta', consulta);
-                    xhr.setRequestHeader('X-ConsultaTipo', consultaTipo);
+            headers: {
+                Accept: "application/json; charset=utf-8",
+                "Content-Type": "application/json; charset=utf-8"
+            }, beforeSend: function (xhr) {
+                xhr.setRequestHeader('X-Consulta', consulta);
+                xhr.setRequestHeader('X-ConsultaTipo', consultaTipo);
 
-                },
-                success: function (result) {
-                    cliente = result;
-                    console.log("primeiro carregamento");
-                    consultaTB();
-                }});
-        } else {
-            console.log("segundo carregamento");
-           consultaTB();
-        }
+            },
+            success: function (result) {
+                cliente = result;
+                console.log("primeiro carregamento");
+                carregaTabela();
+            }});
+//        } else {
+//            console.log("segundo carregamento");
+//            carregaTabela();
+//        }
     }
     );
 });
@@ -99,34 +98,69 @@ function buttonRadio(tipo) {
 //    }
 //}
 
-function linhasTB() {
-    $("#desc").remove();//("<th>NOME</th><th>CPF</th><th>NASCIMENTO</th><th>SEXO</th><th>TELEFONE</th><th>E-MAIL</th><th>UF</th><th>CEP</th><th>CIDADE</th><th></th><th></th>");
-    document.getElementById("desc").innerHTML = "<th>NOME</th><th>CPF</th><th>NASCIMENTO</th><th>SEXO</th><th>TELEFONE</th><th>E-MAIL</th><th>UF</th><th>CEP</th><th>CIDADE</th><th></th><th></th>";
+function criarColuna() {
+    var coluna = $("tr");
+    var nome = "";
+    nome += '<th>NOME</th>';
+    nome += '<th>CPF</th>';
+    nome += '<th>NASCIMENTO</th>';
+    nome += '<th>SEXO</th>';
+    nome += '<th>TELEFONE</th>';
+    nome += '<th>E-MAIL</th>';
+    nome += '<th>UF</th>';
+    nome += '<th>CEP</th>';
+    nome += '<th>CIDADE</th>';
+    nome += '<th>AÇÃO</th>';
+    coluna.append(nome);
+    $("#tableClientes").append(coluna);
+}
+
+function removeLinha() {
+
+    i = document.querySelectorAll('tr').length - 2;
+    console.log(i);
+    for (; i > 0; i--) {
+        document.getElementById('tableClientes').getElementsByTagName('tr')[0].remove();
+    }
+
+//  document.getElementById('tableClientes').getElementsByTagName('tr')[0].remove();
+}
+
+function carregaTabela() {
+    removeLinha();
+//     $("#tableClientes").children().remove();
+//    criarColuna();
+    //$("#tableClientes").children().remove();//("<th>NOME</th><th>CPF</th><th>NASCIMENTO</th><th>SEXO</th><th>TELEFONE</th><th>E-MAIL</th><th>UF</th><th>CEP</th><th>CIDADE</th><th></th><th></th>");
+//    document.getElementById("desc").innerHTML = "<th>NOME</th><th>CPF</th><th>NASCIMENTO</th><th>SEXO</th><th>TELEFONE</th><th>E-MAIL</th><th>UF</th><th>CEP</th><th>CIDADE</th><th></th><th></th>";
+//     var div = $("<div id=tableClientes>");
+//            div.append("tabela clientes");
+//       $("#tbodyClientes").append(div);
     for (var i = 0; i < cliente.length; i++) {
         var linha = $("<tr>");
         var coluna = "";
         coluna += '<td>' + cliente[i].nome + '</td>';
         coluna += '<td>' + cliente[i].cpf + '</td>';
-        coluna += '<td>' + new Date(cliente[i].dataNascimento).toDateString() + '</td>';
+        coluna += '<td>' + dataAtualFormatada(cliente[i].dataNascimento) + '</td>';
         coluna += '<td>' + cliente[i].sexo + '</td>';
         coluna += '<td>' + cliente[i].telefone + '</td>';
         coluna += '<td>' + cliente[i].email + '</td>';
         coluna += '<td>' + cliente[i].uf + '</td>';
         coluna += '<td>' + cliente[i].cep + '</td>';
         coluna += '<td>' + cliente[i].cidade + '</td>';
-        coluna += '<td><img class="imgDel" src="../icons/baseline_delete_forever_black_18dp.png" onClick="excluirCli(' + cliente[i].id + ')"></td>';
-        coluna += '<td><img class="imgDel" src="../icons/outline_edit_black_18dp.png" onClick="editarCli(' + i + ')"></td>';
+        coluna += '<td><img class="imgDel" src="../icons/baseline_delete_forever_black_18dp.png" onClick="excluirCliente(this ,' + cliente[i].id + ')"></td>';
+        coluna += '<td><img class="imgDel" src="../icons/outline_edit_black_18dp.png" onClick="editarCliente(' + i + ')"></td>';
         linha.append(coluna);
-        $("#listaCadastros").append(linha);
+        $("#tableClientes").append(linha);
     }
+
 }
 
-function editarCli(indice) {
+function editarCliente(indice) {
     document.getElementById("id").value = cliente[indice].id;
     document.getElementById("idFilial").value = cliente[indice].idFilial;
     document.getElementById("nome").value = cliente[indice].nome;
     document.getElementById("CPF").value = cliente[indice].cpf;
-    document.getElementById("nascimento").value = new Date(cliente[indice].dataNascimento).toDateString();
+    document.getElementById("nascimento").value = dataAtualFormatada(cliente[indice].dataNascimento);
     document.getElementById("sexo").value = cliente[indice].sexo;
     document.getElementById("telefone").value = cliente[indice].telefone;
     document.getElementById("email").value = cliente[indice].email;
@@ -140,8 +174,11 @@ function editarCli(indice) {
 }
 
 
-function excluirCliente(idCli) {
-    linhasTB();
+function excluirCliente(td, idCli) {
+    linha = td.parentElement.parentElement;
+    document.getElementById("tableClientes").deleteRow(linha.rowIndex-1);
+    console.log(td);
+    console.log(idCli);
     $.ajax({
         type: 'GET',
         url: '../CadastroClienteServlet?acao=excluir&id=' + idCli,
@@ -150,6 +187,7 @@ function excluirCliente(idCli) {
             "Content-Type": "application/json; charset=utf-8"
         },
         success: function (result) {
+            console.log(result);
             alert("Excluido com sucesso");
         }});
 }
@@ -169,9 +207,20 @@ function consultaTB() {
         lista_td[7].textContent = cliente[i].cep;
         lista_td[8].textContent = cliente[i].cidade;
         lista_td[9].textContent = cliente[i].numero;
-        lista_td.concat('<td><img class="imgDel" src="../icons/baseline_delete_forever_black_18dp.png" onClick="excluirCli('+ cliente[i].id +')"></td>');
-        lista_td = ('<td><img class="imgDel" src="../icons/outline_edit_black_18dp.png" onClick="editarCli(' + i + ')"></td>');
+        // template.appendChild('<td><img class="imgDel" src="../icons/baseline_delete_forever_black_18dp.png" onClick="excluirCli('+ cliente[i].id +')"></td>');
+        //lista_td.create() ('<td><img class="imgDel" src="../icons/outline_edit_black_18dp.png" onClick="editarCli(' + i + ')"></td>');
     }
     var nova_linha = document.importNode(template.content, true);
     corpo_tabela.appendChild(nova_linha);
 }
+
+function dataAtualFormatada(data) {
+    var novaData = new Date(data),
+            dia = (novaData.getDate()).toString(),
+            diaF = (dia.length === 1) ? '0' + dia : dia,
+            mes = (novaData.getMonth() + 1).toString(), //+1 pois no getMonth Janeiro começa com zero.
+            mesF = (mes.length === 1) ? '0' + mes : mes,
+            anoF = novaData.getFullYear();
+    return dia + "/" + mes + "/" + anoF;
+}
+

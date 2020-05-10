@@ -30,8 +30,6 @@ public class CadastroClienteServlet extends HttpServlet {
             throws ServletException, IOException {
         String consulta = request.getHeader("X-Consulta");
         String consultaTipo = request.getHeader("X-ConsultaTipo");
-        System.out.println(consultaTipo);
-
         //apenas para testes
 //        Enumeration headerNames = request.getHeaderNames();
 //	List<String> lHeaderN = new ArrayList<String>(); 
@@ -46,23 +44,23 @@ public class CadastroClienteServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         ClienteDAO clienteDAO = new ClienteDAO();
         Gson gson = new Gson();
-        if(request.getParameter("acao").equals("excluir")){
-              try {
-            int id = Integer.parseInt(request.getParameter("id"));
-            clienteDAO.excluirCliente(id);
-        } catch (NumberFormatException e) {
-            e.getMessage();
-        }
-        }
-      
-        List<Cliente> clientes = clienteDAO.consultarCliente(consulta, consultaTipo);
+        if (request.getParameter("acao").equals("excluir")) {
+            try {
+                int id = Integer.parseInt(request.getParameter("id"));
+                clienteDAO.excluirCliente(id);
+            } catch (Exception e) {
+                e.getMessage();
+            }
 
-        response.setContentType("application/json");
-        out.write(gson.toJson(clientes));
-        out.flush();
-        out.close();
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/consultarClientes2.jsp");
-        dispatcher.include(request, response);
+        } else {
+            List<Cliente> clientes = clienteDAO.consultarCliente(consulta, consultaTipo);
+            response.setContentType("application/json");
+            out.write(gson.toJson(clientes));
+            out.flush();
+            out.close();
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroCliente/cadastroCliente.jsp");
+            dispatcher.include(request, response);
+        }
     }
 
     /**

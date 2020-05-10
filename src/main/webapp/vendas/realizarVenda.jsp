@@ -1,6 +1,3 @@
-  
-
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -8,8 +5,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Realizar venda</title>
 
-        <link rel="stylesheet" href="cssMedio.css" media="screen and (min-width:900px)">
-        <link rel="stylesheet" href="cssGrande.css" media="screen and (min-width:900px)">
+        <link rel="stylesheet" href="..\cssMedio.css" media="screen and (min-width:900px)">
+        <link rel="stylesheet" href="..\cssGrande.css" media="screen and (min-width:900px)">
     </head>
     <body>
         <h1>Realizar venda</h1>

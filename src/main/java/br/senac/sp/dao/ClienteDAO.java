@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ClienteDAO {
 
@@ -104,7 +105,7 @@ public class ClienteDAO {
                 cliente.setIdFilial(rs.getInt("id_filial"));
                 cliente.setNome(rs.getString("nome_cliente"));
                 cliente.setCpf(rs.getString("cpf_cliente"));
-                cliente.setDataNascimento(rs.getDate("nasc_cliente"));
+                cliente.setDataNascimento((rs.getDate("nasc_cliente")));
                 cliente.setSexo(rs.getString("sexo_cliente"));
                 cliente.setTelefone(rs.getString("telefone_cliente"));
                 cliente.setEmail(rs.getString("email_cliente"));

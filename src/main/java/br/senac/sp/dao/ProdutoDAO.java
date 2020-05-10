@@ -2,6 +2,7 @@ package br.senac.sp.dao;
 
 import br.senac.sp.db.ConexaoDB;
 import br.senac.sp.entidade.Produto;
+import br.senac.sp.utils.Conversor;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -67,21 +68,32 @@ public class ProdutoDAO {
     /**
      * metodo que realiza pesquisa de produto por nome
      *
-     * @param nome recebe o nome do produto como parâmetro
+     * @param tipo recebe o tipo de consulta
+     * @param values recebe o nome do produto como parâmetro
      * @return listaProdutos
      */
-    public ArrayList<Produto> consultarProduto(String nome) {
+    public ArrayList<Produto> consultarProduto(String values, String tipo) {
         ResultSet rs = null;
         Connection conexao = null;
         PreparedStatement ps = null;
 
         ArrayList<Produto> listaProdutos = new ArrayList<>();
 
+        Conversor data = new Conversor();
+
         try {
             conexao = ConexaoDB.getConexao();
+            if (!values.equals("") && tipo.equals("nome")) {
+                System.out.println("COnsultar NOME");
+                ps = conexao.prepareStatement("SELECT * FROM produto where nome_produto like '%" + values + "%';");
+            } else if (tipo.equals("ID")) {
+                System.out.println("COnsultar ID");
+                ps = conexao.prepareStatement("SELECT * FROM produto WHERE id_produto = " + Integer.parseInt(values));
+            } else if (tipo.equals("TODOS")) {
+                System.out.println("COnsultar TODOS");
+                ps = conexao.prepareStatement("SELECT * FROM produto ");
+            }
 
-            ps = conexao.prepareStatement("SELECT * FROM produto where nome_produto like ?;");
-            ps.setString(1, "%" + nome + "%");
             rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -91,9 +103,10 @@ public class ProdutoDAO {
                 produto.setNome(rs.getString("nome_produto"));
                 produto.setMarca(rs.getString("marca_produto"));
                 produto.setQuantidade(rs.getInt("quantidade_produto"));
-                produto.setQuantidade(rs.getInt("valor_produto"));
+                produto.setValor(rs.getInt("valor_produto"));
                 produto.setDescricao(rs.getString("desc_produto"));
-                produto.setDataDeEntrada(rs.getDate("data_entrada"));
+//                System.out.println(data.parseData(rs.getDate("data_entrada").toString(), "yyyy-MM-dd"));
+                produto.setDataDeEntrada(data.parseData(rs.getDate("data_entrada").toString(), "yyyy-MM-dd"));
                 listaProdutos.add(produto);
             }
         } catch (SQLException ex) {
@@ -140,7 +153,6 @@ public class ProdutoDAO {
             conexao = ConexaoDB.getConexao();
 
             ps = conexao.prepareStatement("UPDATE produto SET nome_produto = ?,"
-
                     + "marca_produto = ?, quantidade_produto = ?, valor_produto = ?, desc_produto = ?, data_entrada = ? WHERE id_produto = ?;",
                     Statement.RETURN_GENERATED_KEYS);  //Caso queira retornar o ID do cliente
             //Adiciono os parâmetros ao meu comando SQL
@@ -173,6 +185,38 @@ public class ProdutoDAO {
                 System.out.println("SQLException: " + ex.getMessage());
                 System.out.println("SQLState: " + ex.getSQLState());
                 System.out.println("VendorError: " + ex.getErrorCode());
+            }
+        }
+    }
+
+    public boolean excluirProduto(int id) {
+        Connection conexao = null;
+        PreparedStatement ps = null;
+        try {
+            conexao = ConexaoDB.getConexao();
+            ps = conexao.prepareStatement("DELETE FROM produto WHERE id_produto = ?");
+            ps.setInt(1, id);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            System.out.println("Erro ao excluir produto");
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+            return false;
+        } finally {
+            //Libero os recursos da memória
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                ConexaoDB.fecharConexao();
+
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar conexãoDB");
+                System.out.println("SQLException: " + ex.getMessage());
+                System.out.println("SQLState: " + ex.getSQLState());
+                System.out.println("VendorError: " + ex.getErrorCode());
+
             }
         }
     }
