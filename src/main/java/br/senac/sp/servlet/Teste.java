@@ -27,7 +27,7 @@ public class Teste {
 
         Filial filial = new Filial(1, "SÃO PAULO", "SP");
         Produto produto = new Produto("Notebook1atualizado", "Acer", "Notebook", 100, 2000, new Date(), 1);
-        Cliente cliente = new Cliente("clienteAtualizado", "43234432", new Date(), "Masculino", "23432432", "fdsdsf@dsd", "SP", "dasdasda", "rerw", "dasdas", "fdsfsdds", 1);
+        Cliente cliente = new Cliente(1,"clienteAtualizado", "43234432", new Date(), "Masculino", "23432432", "fdsdsf@dsd", "SP", "dasdasda", "rerw", "dasdas", "fdsfsdds");
         Venda venda = new Venda();
         venda.setId(1);
         venda.setDataVenda(new Date());

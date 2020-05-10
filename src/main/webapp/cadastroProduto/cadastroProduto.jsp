@@ -6,7 +6,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title> NoteStore </title>
-        <link rel="stylesheet" href="../cssMedio.css" media="screen and (min-width:900px)">
+        <link rel="stylesheet" href="../style/cssMedio.css" media="screen and (min-width:900px)">
         <!--<link rel="stylesheet" href="../cssPequeno.css" media="screen and (min-width:900px)">-->
         <link rel="stylesheet" href="CadastroProduto.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

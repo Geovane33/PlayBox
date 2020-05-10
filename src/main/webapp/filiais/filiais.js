@@ -1,9 +1,10 @@
 
 var filiais = null;
+var nomeFilial;
 
 $(document).ready(function () {
+    recebeFilial();
     console.log(filiais);
-    console.log();
 }
 );
 function carregarFiliais() {
@@ -19,7 +20,12 @@ function carregarFiliais() {
         }
         $("#formFiliais").html(filial);
     }
+}
 
 
 
+function recebeFilial() {
+    var filial = JSON.parse(sessionStorage.getItem('filial'));
+    console.log(filial.nome);
+    $("#idFilial").append(filial.nome);
 }

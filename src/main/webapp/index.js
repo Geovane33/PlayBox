@@ -1,11 +1,11 @@
 
 var filiais = null;
 
-function atribuiFilial(idFilial){
-filiais=filiais[idFilial].nome;
-var fi = $("<h1>");
-fi.append('Filial '+filiais);
-$("#idFilial").html(fi);
+function atribuiFilial(idFilial) {
+    filiais = filiais[idFilial].nome;
+    var fi = $("<h1>");
+    fi.append('Filial ' + filiais);
+    $("#idFilial").html(fi);
 }
 
 
@@ -14,8 +14,8 @@ $(document).ready(function () {
     console.log(document);
     if (filiais === null) {
         $.ajax({
-            type: 'POST',
-            url: 'ControllerFiliais',
+            type: 'GET',
+            url: 'notestore?controller=Filial&acao=consultar',
             contentType: 'application/json;charset=UTF-8',
             headers: {
                 Accept: "application/json;charset=UTF-8",
@@ -37,9 +37,34 @@ function carregarFiliais() {
     } else {
         for (var i = 0; i < filiais.length; i++) {
             console.log(filiais[i]);
-            filial.append('<button name="filiais" value="' + filiais[i].id + '">' + filiais[i].nome + '</button>');
-
+            filial.append('<input type=button  value="'+ filiais[i].nome + '" onClick=enviarFilial('+i+')>');
         }
         $("#formFiliais").html(filial);
     }
+}
+
+function submitFilial(idFilial) {
+    $.ajax({
+        type: 'GET',
+        url: 'notestore?controller=Filial&acao=consultar&filiais=' + idFilial,
+        contentType: 'application/json;charset=UTF-8',
+        headers: {
+            Accept: "application/json;charset=UTF-8",
+            "Content-Type": "application/json;charset=UTF-8"
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert("erro ao carregar filial");
+        },
+        success: function (result) {
+            filiais = result;
+            console.log("primeiro carregamento");
+            carregarFiliais();
+        }
+    });
+}
+
+function enviarFilial(indice) {
+    var filial = JSON.stringify(filiais[indice]);
+    sessionStorage.setItem('filial', filial);
+    $('form').submit();
 }

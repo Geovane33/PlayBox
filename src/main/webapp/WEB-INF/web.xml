@@ -16,25 +16,17 @@
         <servlet-name>CadastroProdutoServlet</servlet-name>
         <url-pattern>/CadastroProdutoServlet</url-pattern>
     </servlet-mapping>
-        <servlet>
-        <servlet-name>ControllerFiliais</servlet-name>
-        <servlet-class>br.senac.sp.servlet.ControllerFiliais</servlet-class>
+    <servlet>
+        <servlet-name>ControllerFilial</servlet-name>
+        <servlet-class>br.senac.sp.servlet.ControllerFilial</servlet-class>
     </servlet>
-       <servlet-mapping>
-        <servlet-name>ControllerFiliais</servlet-name>
-        <url-pattern>/ControllerFiliais</url-pattern>
+    <servlet-mapping>
+        <servlet-name>ControllerFilial</servlet-name>
+        <url-pattern>/ControllerFilial</url-pattern>
     </servlet-mapping>
-    
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-    <!--    <resource-ref>
-        <description>jdbc:derby://localhost:1527/sun-appserv-samples;create=true</description>
-        <res-ref-name>Cliente</res-ref-name>
-        <res-type>javax.sql.DataSource</res-type>
-        <res-auth>Container</res-auth>
-        <res-sharing-scope>Shareable</res-sharing-scope>
-    </resource-ref>-->
 </web-app>
