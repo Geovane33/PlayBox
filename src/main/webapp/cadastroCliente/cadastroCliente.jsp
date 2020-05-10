@@ -7,11 +7,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title> NoteStore </title>
 
-        <link rel="stylesheet" href="../cssPequeno.css" media="screen and (min-width:900px)">
-        <link rel="stylesheet" href="../cssMedio.css" media="screen and (min-width:900px)">
+        <link rel="stylesheet" href="../style/cssPequeno.css" media="screen and (min-width:900px)">
+        <link rel="stylesheet" href="../style/cssMedio.css" media="screen and (min-width:900px)">
         <link rel="stylesheet" href="CadastroCliente.css" type="text/css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
+        <script src="http://jqueryvalidation.org/files/dist/jquery.validate.js"></script>
         <script src="cadastroCliente.js"></script>
     </head>
 
@@ -21,12 +22,13 @@
                 <td class="cadastro">
                     <!-- Compos para preencher -->
 
-                    <form action="../CadastroClienteServlet" method="POST">
+                    <form action="../notestore?controller=Cliente" method="POST">
                         <div>
                             <label></label><label class="validation-error hide" id="fullNameValidationError"></label>
-                            <input hidden="true" value="0" type="text" id="id" name="id">
+                            <input  value="0" type="text" id="id" name="id">
                         </div>
                         <div>
+                            <!--type="hidden"-->
                             <label>idFilial</label><label class="validation-error hide" id="fullNameValidationError"></label>
                             <input type="text" name="idFilial" id="idFilial" placeholder="id da filial">
                         </div>
@@ -76,7 +78,7 @@
                             <input type="text" name="numero" id="numero" placeholder="numero da sua casa" >
                         </div>
                         <div>
-                            <button value="salvar" id="cadastrar" name="acao" type="submit" >cadastrar</button>
+                            <button value="adicionar" id="cadastrar" name="acao" type="submit" >cadastrar</button>
                         </div>
                     </form>
                 </td>
@@ -106,14 +108,14 @@
                             <th></th>
                             <th></th>
                         </tr>
-<!--                        <tr id="tableClientes">
-                        <tr>-->
+                        <!--                        <tr id="tableClientes">
+                                                <tr>-->
                     </thead>
-                   
+
                     <tbody  id="tableClientes">
-<!--                    <div id="tableClientes">
-                        
-                    </div>-->
+                        <!--                    <div id="tableClientes">
+                                                
+                                            </div>-->
                     </tbody>
                 </table>
             </td>

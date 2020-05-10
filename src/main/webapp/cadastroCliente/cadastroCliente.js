@@ -4,7 +4,7 @@ var dataNascimento = null;
 var consultaTipo = 'nome';
 
 $(document).ready(function () {
-    $('#nascimento').mask("00/00/0000", {placeholder: "__/__/____"});
+    $('#nascimento').mask("00/00/0000", {placeholder: "dd/mm/aaaa"});
     $('#telefone').mask('(ZZ) Z-ZZZZ-ZZZZ', {
         translation: {
             'Z': {
@@ -31,11 +31,10 @@ $(document).ready(function () {
     });
 
     $('#consultarCli').click(function () {
-//        if (cliente === null) {
         consulta = $("#campo").val();
         $.ajax({
             type: 'GET',
-            url: '../CadastroClienteServlet?acao=consultar',
+            url: '../notestore?controller=Cliente&acao=consultar',
 
             headers: {
                 Accept: "application/json; charset=utf-8",
@@ -50,10 +49,6 @@ $(document).ready(function () {
                 console.log("primeiro carregamento");
                 carregaTabela();
             }});
-//        } else {
-//            console.log("segundo carregamento");
-//            carregaTabela();
-//        }
     }
     );
 });
@@ -64,7 +59,7 @@ function buttonRadio(tipo) {
         $('#campo').mask('ZZZ.ZZZ.ZZZ-ZZ', {
             translation: {
                 'Z': {
-                    pattern: /[0-9]/, optional: true
+                    pattern: /[0-9]/, optional: false
                 }
             },
             placeholder: "___.___.___-__"
@@ -72,31 +67,11 @@ function buttonRadio(tipo) {
     } else {
         $('#campo').unmask();
         $("#campo").attr("placeholder", "nome");
+        $("#campo").attr("pattern", "[A-Za-z]{4,20}");
     }
 
     console.log(this.consultaTipo);
 }
-
-//function linhasTB() {
-//    $("#tableCli").text();
-//    for (var i = 0; i < cliente.length; i++) {
-//        var linha = $("<tr>");
-//        var coluna = $("<td>");
-//        coluna.append(cliente[i].nome);
-//        coluna.append(cliente[i].dataNascimento);
-//        coluna.append(cliente[i].sexo);
-//        coluna.append(cliente[i].cpf);
-//        coluna.append(cliente[i].telefone);
-//        coluna.append(cliente[i].email);
-//        coluna.append(cliente[i].uf);
-//        coluna.append(cliente[i].cep);
-//        coluna.append(cliente[i].cidade);
-//        coluna.append(cliente[i].bairro);
-//        coluna.append('<a src="delete_forever_18dp.png" onclick="excluirCli(' + cliente[i].id + ')"a>excluir<a>');
-//        linha.append(coluna);
-//        $("#clientesCon").append(linha);
-//    }
-//}
 
 function criarColuna() {
     var coluna = $("tr");
@@ -122,19 +97,10 @@ function removeLinha() {
     for (; i > 0; i--) {
         document.getElementById('tableClientes').getElementsByTagName('tr')[0].remove();
     }
-
-//  document.getElementById('tableClientes').getElementsByTagName('tr')[0].remove();
 }
 
 function carregaTabela() {
     removeLinha();
-//     $("#tableClientes").children().remove();
-//    criarColuna();
-    //$("#tableClientes").children().remove();//("<th>NOME</th><th>CPF</th><th>NASCIMENTO</th><th>SEXO</th><th>TELEFONE</th><th>E-MAIL</th><th>UF</th><th>CEP</th><th>CIDADE</th><th></th><th></th>");
-//    document.getElementById("desc").innerHTML = "<th>NOME</th><th>CPF</th><th>NASCIMENTO</th><th>SEXO</th><th>TELEFONE</th><th>E-MAIL</th><th>UF</th><th>CEP</th><th>CIDADE</th><th></th><th></th>";
-//     var div = $("<div id=tableClientes>");
-//            div.append("tabela clientes");
-//       $("#tbodyClientes").append(div);
     for (var i = 0; i < cliente.length; i++) {
         var linha = $("<tr>");
         var coluna = "";
@@ -173,7 +139,6 @@ function editarCliente(indice) {
     document.getElementById("cadastrar").value = "atualizar";
 }
 
-
 function excluirCliente(td, idCli) {
     linha = td.parentElement.parentElement;
     document.getElementById("tableClientes").deleteRow(linha.rowIndex-1);
@@ -181,37 +146,18 @@ function excluirCliente(td, idCli) {
     console.log(idCli);
     $.ajax({
         type: 'GET',
-        url: '../CadastroClienteServlet?acao=excluir&id=' + idCli,
+        url: '../notestore?controller=Cliente&acao=excluir&id=' +idCli,
         headers: {
             Accept: "application/json; charset=utf-8",
             "Content-Type": "application/json; charset=utf-8"
         },
+        error: function (jqXHR, textStatus, errorThrown) {
+             alert("Erro ao excluir cliente");
+        },
         success: function (result) {
             console.log(result);
-            alert("Excluido com sucesso");
+            alert(result);
         }});
-}
-
-function consultaTB() {
-    var template = document.querySelector("#tbClientes");
-    var corpo_tabela = document.querySelector("#tableClientes");
-    lista_td = template.content.querySelectorAll("td");
-    for (var i = 0; i < cliente.length; i++) {
-        lista_td[0].textContent = cliente[i].nome;
-        lista_td[1].textContent = cliente[i].cpf;
-        lista_td[2].textContent = cliente[i].nascimento;
-        lista_td[3].textContent = cliente[i].sexo;
-        lista_td[4].textContent = cliente[i].telefone;
-        lista_td[5].textContent = cliente[i].email;
-        lista_td[6].textContent = cliente[i].uf;
-        lista_td[7].textContent = cliente[i].cep;
-        lista_td[8].textContent = cliente[i].cidade;
-        lista_td[9].textContent = cliente[i].numero;
-        // template.appendChild('<td><img class="imgDel" src="../icons/baseline_delete_forever_black_18dp.png" onClick="excluirCli('+ cliente[i].id +')"></td>');
-        //lista_td.create() ('<td><img class="imgDel" src="../icons/outline_edit_black_18dp.png" onClick="editarCli(' + i + ')"></td>');
-    }
-    var nova_linha = document.importNode(template.content, true);
-    corpo_tabela.appendChild(nova_linha);
 }
 
 function dataAtualFormatada(data) {

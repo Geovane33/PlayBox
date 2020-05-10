@@ -39,11 +39,10 @@ public class CadastroProdutoServlet extends HttpServlet {
             e.getMessage();
         }
 
-        List<Produto> produtos = produtoDAO.consultarProduto("", "TODOS");
+        List<Produto> produtos = produtoDAO.consultarProduto("", "nome");
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        System.out.println("data"+produtos.get(0).getDataDeEntrada());
         out.write(gson.toJson(produtos));
         out.flush();
         out.close();

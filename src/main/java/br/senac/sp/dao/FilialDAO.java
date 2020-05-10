@@ -81,13 +81,10 @@ public class FilialDAO {
         try {
             conexao = ConexaoDB.getConexao();
             if (!values.equals("") && tipo.equals("nome")) {
-                System.out.println("COnsultar NOME");
                 ps = conexao.prepareStatement("SELECT * FROM filial where nome_filial like '%" + values + "%';");
-            } else if (tipo.equals("ID")) {
-                System.out.println("COnsultar ID");
+            } else if (!values.equals("") && tipo.equals("ID")) {
                 ps = conexao.prepareStatement("SELECT * FROM filial WHERE id_filial = " + Integer.parseInt(values));
-            } else if (tipo.equals("todos")) {
-                System.out.println("COnsultar TODOS");
+            } else if (tipo.equals("TODOS")) {
                 ps = conexao.prepareStatement("SELECT * FROM filial ");
             }
 

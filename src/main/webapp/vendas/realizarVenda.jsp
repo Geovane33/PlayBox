@@ -4,9 +4,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Realizar venda</title>
-
-        <link rel="stylesheet" href="..\cssMedio.css" media="screen and (min-width:900px)">
-        <link rel="stylesheet" href="..\cssGrande.css" media="screen and (min-width:900px)">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="realizarVenda.js"></script>
+        <link rel="stylesheet" href="../style/cssMedio.css" media="screen and (min-width:900px)">
+        <!--<link rel="stylesheet" href="../style/cssPequeno.css" media="screen and (min-width:900px)">-->
     </head>
     <body>
         <h1>Realizar venda</h1>
@@ -16,35 +17,40 @@
                     <td class="cadastro">
                         <form action="CadastroProdutoServlet" autocomplete="off" method="POST">
                             <div>
-                                <label>CPF Cliente </label><label class="validation-error hide" id="fullNameValidationError"></label>
-                                <input type="text" name="nome" id="nome">
+                                <label>CLIENTE</label><label class="validation-error hide" id="fullNameValidationError"></label>
+                                <!--<input type="text" placeholder="consulte um cliente"value="" id="teste">-->
+                                <select id="listarClientes">
+                                    <option value="n">---</option>
+                                </select>
                             </div>
                             <div>
-                                <label>Produto </label>
-                                <input type="text" name="produto" id="produto">
+                                <label>PRODUTO </label>
+                                <select id="listarProdutos" onchange="getValorProd()">
+                                     <option value="n">---</option>
+                                </select>
                             </div>
                             <div>
                                 <label>Quantidade </label>
-                                <input type="number" name="quantidade" id="quantidade">
+                                <input type="number" value="" onchange="getTotalVenda()" name="quantidade" min="0" max="0" id="quantidade">
                             </div>
                             <br>
                             <div>
-                                <label>Valor unidade: R$ ###,## </label>
+                                <label id="valorUnitario">Valor Unidade: R$ 0</label>
                             </div>
                             <br>
                             <div>
-                                <label>Valor total: R$ #.###,##</label>
+                                <label id="valorTotal">Valor Total: R$ 0</label>
                             </div>
                             <br>
                             <div>
                                 <hr>
                                 <br>
-                                <label>Total carrinho: R$ #.###,##</label>
+                                <label>Total Carrinho: R$ 0</label>
                                 <br>
                                 <br>
                             </div>
                             <div>
-                                <input type="button" value="Adicionar ao carrinho">
+                                <input type="button" onclick="adicionarProduto()" value="Adicionar ao carrinho">
                                 <input type="reset" value="Apagar">
                                 <input type="button" value="Comprar">
                             </div>

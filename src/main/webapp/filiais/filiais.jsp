@@ -5,14 +5,11 @@
         <title>Inicio</title>
         <meta content="text/html; charset=UTF-8" >
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src='filiais.js'></script>
+        <script src="filiais/filiais.js"></script>
     </head>
     <body>
-        <%
-            String filial = request.getParameter("filial");
-        %>
 
-        <h1 id='idFilial'>${filial}</h1>
+        <h1 id='idFilial'></h1>
         <form action="cadastroCliente=idFiliaRecebida">
             <a href="cadastroCliente/cadastroCliente.jsp">Clientes</a>
             <a href="cadastroProduto/cadastroProduto.jsp">Produtos</a>
