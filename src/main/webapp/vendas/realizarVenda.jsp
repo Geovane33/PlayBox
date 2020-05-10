@@ -1,5 +1,3 @@
-
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -7,18 +5,18 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Realizar venda</title>
 
-        <link rel="stylesheet" href="cssMedio.css" media="screen and (min-width:900px)">
-        <link rel="stylesheet" href="cssGrande.css" media="screen and (min-width:900px)">
+        <link rel="stylesheet" href="..\cssMedio.css" media="screen and (min-width:900px)">
+        <link rel="stylesheet" href="..\cssGrande.css" media="screen and (min-width:900px)">
     </head>
     <body>
         <h1>Realizar venda</h1>
         <section>
             <table>
                 <tr>
-                    <td class="venda">
-                        <form action="VendarServlet" autocomplete="off" method="POST">
+                    <td class="cadastro">
+                        <form action="CadastroProdutoServlet" autocomplete="off" method="POST">
                             <div>
-                                <label>Cliente </label><label class="validation-error hide" id="fullNameValidationError"></label>
+                                <label>CPF Cliente </label><label class="validation-error hide" id="fullNameValidationError"></label>
                                 <input type="text" name="nome" id="nome">
                             </div>
                             <div>
@@ -54,7 +52,7 @@
                     </td>
 
                     <td class="tabela">
-                        <table class="carrinho" id="carrinhoCompras">
+                        <table class="list" id="listaCadastros">
                             <thead>
                                 <tr class="desc">
                                     <th>Produto</th>

@@ -38,7 +38,6 @@ public class CadastroClienteServlet extends HttpServlet {
         }
         
         List<Cliente> clientes = clienteDAO.consultarCliente("", "TODOS");
-        request.setAttribute("cliente", gson.toJson(clientes));
         response.setContentType("application/json");
         out.write(gson.toJson(clientes));
         out.flush();
@@ -57,13 +56,14 @@ public class CadastroClienteServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         String url = "";
         String acao = request.getParameter("acao");
         ClienteDAO clienteDAO = new ClienteDAO();
          Conversor data = new Conversor();
         if (acao.equals("salvar")) {
             String nome = request.getParameter("nome");
-            Date dataNascimento = data.parseData(request.getParameter("dataNascimento"), "dd-MM-yyyy");
+            Date dataNascimento = data.parseData(request.getParameter("nascimento"), "yyyy-MM-dd");
             String sexo = request.getParameter("sexo");
             String telefone = request.getParameter("telefone");
             String email = request.getParameter("email");

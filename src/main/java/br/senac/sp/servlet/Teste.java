@@ -81,7 +81,7 @@ public class Teste {
 
         ArrayList<Cliente> clientes = clienteDAO.consultarCliente("", "TODOS");
 
-        ArrayList<Produto> produtos = produtoDAO.consultarProduto("note");
+        ArrayList<Produto> produtos = produtoDAO.consultarProduto("","TODOS");
 //        
 //        if(produtoDAO.salvarProduto(produto)){
 //            System.out.println("PRODUTO salvo");

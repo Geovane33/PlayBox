@@ -3,7 +3,7 @@
 
 <html lang="pt-br">
     <head>
-        <meta charset="UTF-8">
+          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title> NoteStore </title>
 
@@ -12,7 +12,6 @@
         <link rel="stylesheet" href="CadastroCliente.css" type="text/css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="cadastroCliente.js"></script>
-        <script> function gettoday() { var today = new Date(); var dd = today.getDate(); var mm = today.getMonth() + 1; //January is 0! var yyyy = today.getFullYear(); if (dd < 10) { dd = '0' + dd; } if (mm < 10) { mm = '0' + mm; } var today = dd + '/' + mm + '/' + yyyy; return today; } document.getElementById('test').innerHTML= gettoday(); </script>
     </head>
     <body>
         <header>
@@ -24,7 +23,7 @@
                 <tr>
                     <td class="cadastro">
                         <!-- Compos para preencher -->
-                        <form action="CadastroClienteServlet" autocomplete="off" method="POST">
+                        <form action="CadastroClienteServlet" method="POST">
                             <div>
                                 <label>idFilial</label><label class="validation-error hide" id="fullNameValidationError"></label>
                                 <input type="text" name="idFilial" id="idFilial" placeholder="id da filial">
@@ -39,7 +38,7 @@
                             </div>
                             <div>
                                 <label>Nascimento</label>
-                                <input type="date" name="nascimento" id="nascimento" value="<fmt:formatDate value='${dataNascimento}' pattern='yyyy/MM/dd'/>"/>
+                                <input type="date" name="nascimento"/>
                             </div>
                             <div>
                                 <label>Sexo</label>
@@ -75,7 +74,7 @@
                                 <input type="number" name="numero" id="numero" placeholder="numero da sua casa" >
                             </div>
                             <div>
-                                <button value="salvar" id="cadastrar" name="acao"type="submit" >cadastrar</button>
+                                <button value="salvar" id="cadastrar" name="acao" type="submit" >cadastrar</button>
                             </div>
                         </form>
                         <a id="consultarCli">consultar</a>
@@ -110,6 +109,5 @@
 
         <footer>
         </footer>
-        <script src="script.js"></script>
     </body>
 </html>
