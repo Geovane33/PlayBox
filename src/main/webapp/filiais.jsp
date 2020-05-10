@@ -16,6 +16,8 @@
         <form action="cadastroCliente=idFiliaRecebida">
             <a href="cadastroCliente.jsp">Cadastro de Cliente</a>
             <a href="cadastroProduto.jsp">Cadastro de Produto</a>
+            <a href="vendas\realizarVenda.jsp">Realizar Venda</a>
+
         </form>
     </body>
 </html>
