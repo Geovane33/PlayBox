@@ -30,7 +30,7 @@ public class VendaDAO {
     private void atualizarQuantidadeProdutos(Venda venda) {
 
         for (Produto produto : venda.getProdutos()) {
-
+            
             produto.setQuantidade(produto.getQuantidade() - produto.getQuantidadeNaVenda());
             produtoDAO.atualizarProduto(produto);
 
@@ -94,14 +94,14 @@ public class VendaDAO {
 
             if (linhasAfetadas > 0) {
 
-                ResultSet generatedKeys = instrucaoSQL.getGeneratedKeys(); //Recupero o ID do cliente
+                ResultSet generatedKeys = instrucaoSQL.getGeneratedKeys(); //Recupero o ID
                 if (generatedKeys.next()) {
                     venda.setId(generatedKeys.getInt(1));
                     atualizarQuantidadeProdutos(venda);
                     atualizarProdutoVenda(venda);
                     return true;
                 } else {
-                    throw new SQLException("Falha ao obter o ID do cliente.");
+                    throw new SQLException("Falha ao obter o ID.");
                 }
             }
             return true;

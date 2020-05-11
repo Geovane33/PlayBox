@@ -9,6 +9,11 @@
     padding-left: 1px;
 
 }
+
+table.list{
+    width: 610px;
+}
+
 .imgDel{
     cursor: pointer;
 }

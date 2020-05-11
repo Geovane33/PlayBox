@@ -1,48 +1,44 @@
-///*
-// * To change this license header, choose License Headers in Project Properties.
-// * To change this template file, choose Tools | Templates
-// * and open the template in the editor.
-// */
-//package br.senac.sp.servlet;
-//
-//import br.senac.sp.dao.VendaDAO;
-//import br.senac.sp.entidade.Produto;
-//import br.senac.sp.entidade.Venda;
-//import java.io.IOException;
-//import java.io.PrintWriter;
-//import java.util.Date;
-//import javax.servlet.RequestDispatcher;
-//import javax.servlet.ServletException;
-//import javax.servlet.http.HttpServlet;
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.http.HttpServletResponse;
-//
-///**
-// *
-// * @author Wellington
-// */
-//public class VendaServlet implements ControllerLogica {
-//
-//    @Override
-//    public String adicionar(HttpServletRequest request, HttpServletResponse response) {
-//        return "adicionar";
-//    }
-//
-//    @Override
-//    public String atualizar(HttpServletRequest request, HttpServletResponse response) {
-//        return "atualizar";
-//    }
-//
-//    @Override
-//    public String excluir(HttpServletRequest request, HttpServletResponse response) {
-//        return "excluir";
-//    }
-//
-//    @Override
-//    public String consultar(HttpServletRequest request, HttpServletResponse response) {
-//        return "consultar";
-//    }
-//
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package br.senac.sp.servlet;
+
+import br.senac.sp.dao.VendaDAO;
+import br.senac.sp.entidade.Venda;
+import com.google.gson.Gson;
+import java.util.Date;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ *
+ * @author Wellington
+ */
+public class ControllerVenda implements Controller {
+
+    @Override
+    public void adicionar(HttpServletRequest request, HttpServletResponse response) {
+        Gson gson = new Gson();
+        VendaDAO vendaDAO = new VendaDAO();
+        Venda venda = gson.fromJson(request.getHeader("X-Venda"), Venda.class);
+        venda.setDataVenda(new Date());
+        vendaDAO.salvarVenda(venda);
+    }
+
+    @Override
+    public void atualizar(HttpServletRequest request, HttpServletResponse response) {
+    }
+
+    @Override
+    public void excluir(HttpServletRequest request, HttpServletResponse response) {
+    }
+
+    @Override
+    public void consultar(HttpServletRequest request, HttpServletResponse response) {
+    }
+
 //    @Override
 //    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //
@@ -73,6 +69,5 @@
 //            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
 //            dispatcher.forward(request, response);
 //        }
-//
 //    }
-//}
+}
