@@ -29,7 +29,7 @@
                         <div>
 
                             <!--<label type="hidden" >idFilial</label><label class="validation-error hide" id="fullNameValidationError"></label>-->
-                            <input type="text" value="0" name="idFilial" id="idFilial" placeholder="id da filial">
+                            <input type="hidden"  value="0" name="idFilial" id="idFilial" placeholder="id da filial">
                         </div>
                         <div>
                             <label>Nome </label><label class="validation-error hide" id="fullNameValidationError"></label>
