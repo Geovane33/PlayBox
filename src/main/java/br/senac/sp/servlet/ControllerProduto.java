@@ -7,11 +7,10 @@ package br.senac.sp.servlet;
 
 import br.senac.sp.dao.ProdutoDAO;
 import br.senac.sp.entidade.Produto;
-import br.senac.sp.utils.Conversor;
+import br.senac.sp.utils.BuilderProduto;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Jonathan
  */
-public class CadastroProdutoServlet extends HttpServlet {
+public class ControllerProduto extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -53,35 +52,33 @@ public class CadastroProdutoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Conversor data = new Conversor();
         String acao = request.getParameter("acao");
         String url = "";
         ProdutoDAO produtoDAO = new ProdutoDAO();
-        if (acao.equals("Cadastrar")) {
-            String nome = request.getParameter("nome");
-            String marca = request.getParameter("marca");
-            String descricao = request.getParameter("desc");
-            int quantidade = Integer.parseInt(request.getParameter("qtd"));
-            double valor = Double.parseDouble(request.getParameter("valor"));
-            Date dataDeEntrada = data.parseData(request.getParameter("dataEnt"), "dd/MM/yyyy");
-            int idFilial = Integer.parseInt(request.getParameter("idFilial"));
-
-            Produto produto = new Produto(idFilial, nome, marca, descricao, quantidade, valor, dataDeEntrada);
-            boolean ok = produtoDAO.salvarProduto(produto);
+        if (acao.equals("Cadastrar") || acao.equals("atualizar")) {
+            BuilderProduto builderProduto = new BuilderProduto();
+            boolean ok;
+            Produto produto = builderProduto.getObjProduto(request);
+            
+            if(acao.equals("Cadastrar")){
+            
+            ok = produtoDAO.salvarProduto(produto); 
+            }else{
+                ok = produtoDAO.atualizarProduto(produto);
+            }
             PrintWriter out = response.getWriter();
-
+      
             if (ok) {
-                url = "/sucesso.jsp";
+                out.write("cliente cadastrado com sucesso");
+//                url = "/sucesso.jsp";
             } else {
-                url = "/erro.jsp";
+//                url = "/erro.jsp";
             }
 
-        } else if (acao.equals("excluir")) {
-            int id = Integer.parseInt(request.getParameter("id"));
         }
 
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
-        dispatcher.forward(request, response);
+//        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
+//        dispatcher.forward(request, response);
     }
 
     /**

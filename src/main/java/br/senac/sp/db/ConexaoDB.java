@@ -10,7 +10,7 @@ public class ConexaoDB {
 
     private static String STATUS = "Não conectado";
     private final static String DRIVER = "com.mysql.cj.jdbc.Driver";                
-    private static String DB_ADDRESS = "jdbc:mysql://localhost:3305/notestore";
+    private static String DB_ADDRESS = "jdbc:mysql://localhost:3307/notestore";
     private static String USER = "root";
     private static String PASSWORD = "";
     private static Connection CONEXAO = null;

@@ -1,12 +1,17 @@
+<%-- 
+    Document   : relatorioProduto
+    Created on : 11/05/2020, 19:16:51
+    Author     : Wellington
+--%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Cadastrado com sucesso</title>
+        <title>JSP Page</title>
     </head>
     <body>
-        <h1>Sucesso!</h1>
-        <a href="index.html">Início</a>
+        <h1>Hello World!</h1>
     </body>
 </html>

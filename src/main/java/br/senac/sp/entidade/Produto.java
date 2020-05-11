@@ -24,51 +24,31 @@ public class Produto {
     }
 
     /**
-     * construtor para cadastrar produto
+     * construtor para produto
      *
      * @param idFilial int
      * @param nome String
      * @param marca String
      * @param descricao String
      * @param quantidade int
-     * @param preco double
+     * @param valor double
      * @param dataDeEntrada Date
      *
      */
-    public Produto(int idFilial, String nome, String marca, String descricao, int quantidade, double preco, Date dataDeEntrada) {
+    public Produto(int id, int idFilial, String nome, String marca, String descricao, int quantidade, double valor, Date dataDeEntrada) {
+        this.id = id;
         this.idFilial = idFilial;
         this.nome = nome;
         this.marca = marca;
         this.descricao = descricao;
         this.quantidade = quantidade;
-        this.valor = preco;
+        this.valor = valor;
         this.dataDeEntrada = dataDeEntrada;
-    }
-
-    /**
-     * construtor para atualizar dados do produto
-     *
-     * @param nome String
-     * @param marca String
-     * @param descricao String
-     * @param quantidade int
-     * @param preco double
-     * @param dataDeEntrada Date
-     * @param id int
-     */
-    public Produto(String nome, String marca, String descricao, int quantidade, double preco, Date dataDeEntrada, int id) {
-        this.nome = nome;
-        this.marca = marca;
-        this.descricao = descricao;
-        this.quantidade = quantidade;
-        this.valor = preco;
-        this.dataDeEntrada = dataDeEntrada;
-        this.id = id;
     }
 
     /**
      * Construtor para adicionar produto na lista de venda
-     * 
+     *
      * @param produto
      */
     public Produto(Produto produto) {

@@ -44,7 +44,7 @@ public class ProcessController extends HttpServlet {
             //executa o metodo e recebe o tipo de opereção realizada
             String operacao = (String) metodo.invoke(controlador, request, response);
 
-            request.getRequestDispatcher(operacao)
+            request.getRequestDispatcher("sucesso.jps")
                     .forward(request, response);
         } catch (ServletException
                 | IOException

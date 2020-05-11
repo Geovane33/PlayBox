@@ -142,8 +142,6 @@ function editarCliente(indice) {
 function excluirCliente(td, idCli) {
     linha = td.parentElement.parentElement;
     document.getElementById("tableClientes").deleteRow(linha.rowIndex-1);
-    console.log(td);
-    console.log(idCli);
     $.ajax({
         type: 'GET',
         url: '../notestore?controller=Cliente&acao=excluir&id=' +idCli,

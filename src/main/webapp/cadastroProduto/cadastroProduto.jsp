@@ -23,7 +23,11 @@
                 <tr>
                     <td class="cadastro">
                         <!-- Compos para preencher -->
-                        <form action="../CadastroProdutoServlet" method="POST">
+                        <form action="../ControllerProduto" method="POST">
+                            <div>
+                                <label></label><label class="validation-error hide" id="fullNameValidationError"></label>
+                                <input value="0" type="hidden" name="id" id="id">
+                            </div>
                             <div>
                                 <label>Nome </label><label class="validation-error hide" id="fullNameValidationError"></label>
                                 <input type="text" name="nome" id="nome">
@@ -71,10 +75,8 @@
                                     <th></th>
                                     <th></th>
                                 </tr>
-                                <tr id="tableProd">
-                                <tr>
                             </thead>
-                            <tbody>
+                            <tbody id =tableProd >
                             </tbody>
                         </table>
                     </td>

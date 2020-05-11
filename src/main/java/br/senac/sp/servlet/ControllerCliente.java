@@ -29,6 +29,7 @@ public class ControllerCliente implements Controller {
             PrintWriter out = response.getWriter();
             if (clienteDAO.salvarCliente(cliente)) {
                 out.write("cliente adicionado com sucesso");
+
             } else {
                 out.write("erro ao adicionar cliente");
             }
@@ -38,7 +39,8 @@ public class ControllerCliente implements Controller {
             System.out.println("Message: " + ex.getMessage());
             System.out.println("Class: " + ex.getClass());
         }
-        return "adicionar";
+
+        return "/sucesso.jsp";
 
     }
 
