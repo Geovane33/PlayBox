@@ -38,8 +38,8 @@ public class CadastroProdutoServlet extends HttpServlet {
         } catch (Exception e) {
             e.getMessage();
         }
-
-        List<Produto> produtos = produtoDAO.consultarProduto("", "nome");
+        String idFilial = request.getParameter("idFilial");
+        List<Produto> produtos = produtoDAO.consultarProduto(idFilial, "FILIAL");
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

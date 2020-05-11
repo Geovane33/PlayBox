@@ -5,7 +5,6 @@
  */
 package br.senac.sp.utils;
 
-import br.senac.sp.servlet.ControllerCliente;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,7 +25,7 @@ public class Conversor {
             return formatar.parse(data);
         } catch (ParseException ex) {
             System.out.println("Erro ao converte data - data:\"" + data + "\" formato: \"" + formato+"\"");
-            Logger.getLogger(ControllerCliente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Conversor.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }

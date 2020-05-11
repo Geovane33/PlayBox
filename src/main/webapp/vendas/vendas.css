@@ -9,21 +9,19 @@
     padding-left: 1px;
 
 }
-
-table.list{
-    width: 610px;
-}
-
 .imgDel{
     cursor: pointer;
 }
 #consulTipo{
     position: absolute;
-    
+
     margin-left: 64px;
     margin-top: -23px;
 }
 .inputConsult{
     margin-left: 1049px;
 }
- /*84px*/
+td.cadastro {
+    display: table-cell !important;
+}
+/*84px*/

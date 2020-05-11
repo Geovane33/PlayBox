@@ -6,6 +6,7 @@
         <title>Realizar venda</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="realizarVenda.js"></script>
+        <link rel="stylesheet" href="vendas.css" >
         <link rel="stylesheet" href="../style/cssMedio.css" media="screen and (min-width:900px)">
         <!--<link rel="stylesheet" href="../style/cssPequeno.css" media="screen and (min-width:900px)">-->
     </head>
@@ -17,16 +18,17 @@
                     <td class="cadastro">
                         <form action="CadastroProdutoServlet" autocomplete="off" method="POST">
                             <div>
-                                <label>CLIENTE</label><label class="validation-error hide" id="fullNameValidationError"></label>
+                                <label id="cliSelecionado">CLIENTE</label><label class="validation-error hide" id="fullNameValidationError"></label>
                                 <!--<input type="text" placeholder="consulte um cliente"value="" id="teste">-->
                                 <select id="listarClientes">
                                     <option value="n">---</option>
                                 </select>
+
                             </div>
                             <div>
                                 <label>PRODUTO </label>
                                 <select id="listarProdutos" onchange="getValorProd()">
-                                     <option value="n">---</option>
+
                                 </select>
                             </div>
                             <div>
@@ -45,14 +47,14 @@
                             <div>
                                 <hr>
                                 <br>
-                                <label>Total Carrinho: R$ 0</label>
+                                <label id="totalCarrinho">Total Carrinho: R$ 0</label>
                                 <br>
                                 <br>
                             </div>
                             <div>
                                 <input type="button" onclick="adicionarProduto()" value="Adicionar ao carrinho">
-                                <input type="reset" value="Apagar">
-                                <input type="button" value="Comprar">
+                                <input type="button" onclick="gerarVenda()" value="Finalizar">
+                                 <input type="reset" onclick="window.location.reload()" value="cancelar">
                             </div>
                         </form>
                     </td>
@@ -62,13 +64,13 @@
                             <thead>
                                 <tr class="desc">
                                     <th>Produto</th>
+                                    <th>Valor Unitário</th>
                                     <th>Quantidade</th>
-                                    <th>Data da compra</th>
-                                    <th>Valor</th>         
+                                    <th>Total Por Produto</th>         
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody  id="tableCarrinho">
 
                             </tbody>
                         </table>

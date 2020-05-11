@@ -43,11 +43,6 @@ public class Venda {
         }
         return soma;
     }
-    
-    public void removerProduto(Produto produto){
-        produtos.remove(produto);
-        total = calculaTotal();
-    }
 
     /**
      * @return id

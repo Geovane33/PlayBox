@@ -13,16 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 public class ControllerCliente implements Controller {
 
     /**
-     * Realiza consultas
+     * Salva clientes
      *
      * @param request
      * @param response
-     * @return tipo de acao
      */
     @Override
-    public String adicionar(HttpServletRequest request, HttpServletResponse response) {
+    public void adicionar(HttpServletRequest request, HttpServletResponse response) {
         try {
-            request.setCharacterEncoding("UTF-8");
             BuilderCliente builderCliente = new BuilderCliente(request.getParameterMap());
             ClienteDAO clienteDAO = new ClienteDAO();
             Cliente cliente = builderCliente.getObjCliente();
@@ -38,15 +36,19 @@ public class ControllerCliente implements Controller {
             System.out.println("Message: " + ex.getMessage());
             System.out.println("Class: " + ex.getClass());
         }
-        return "adicionar";
-
+   
     }
-
+    
+       /**
+     * atualiza clientes
+     *
+     * @param request
+     * @param response
+     */
     @Override
-    public String atualizar(HttpServletRequest request, HttpServletResponse response) {
+    public void atualizar(HttpServletRequest request, HttpServletResponse response) {
 
         try {
-            request.setCharacterEncoding("UTF-8");
             BuilderCliente builderCliente = new BuilderCliente(request.getParameterMap());
             ClienteDAO clienteDAO = new ClienteDAO();
             Cliente cliente = builderCliente.getObjCliente();
@@ -61,12 +63,17 @@ public class ControllerCliente implements Controller {
             System.out.println("Message: " + ex.getMessage());
             System.out.println("Class: " + ex.getClass());
         }
-        return "atualizar";
 
     }
 
+       /**
+     * Exclui clientes
+     *
+     * @param request
+     * @param response
+     */
     @Override
-    public String excluir(HttpServletRequest request, HttpServletResponse response) {
+    public void excluir(HttpServletRequest request, HttpServletResponse response) {
         try {
             ClienteDAO clienteDAO = new ClienteDAO();
             int id = Integer.parseInt(request.getParameter("id"));
@@ -81,11 +88,16 @@ public class ControllerCliente implements Controller {
             System.out.println("Message: " + ex.getMessage());
             System.out.println("Class: " + ex.getClass());
         }
-        return "excluir";
     }
 
+    /**
+     * Realiza consultas
+     *
+     * @param request
+     * @param response
+     */
     @Override
-    public String consultar(HttpServletRequest request, HttpServletResponse response) {
+    public void consultar(HttpServletRequest request, HttpServletResponse response) {
         try {
             String consulta = request.getHeader("X-Consulta");
             String consultaTipo = request.getHeader("X-ConsultaTipo");
@@ -104,6 +116,5 @@ public class ControllerCliente implements Controller {
             System.out.println("Class: " + ex.getClass());
         }
 
-        return "consultar";
     }
 }
