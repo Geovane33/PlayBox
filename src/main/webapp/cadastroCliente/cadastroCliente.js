@@ -1,10 +1,27 @@
-
+//variaveis globais
 var cliente = null;
 var dataNascimento = null;
 var consultaTipo = 'nome';
+var filial;
+
 
 $(document).ready(function () {
+    init();
+    $('#consultarCli').click(getCli => {
+        consultarClientes();
+    });
+});
+
+function init() {
+    getFilial();
+    setMask();
+    consultarClientes();
+    enviarFomulario();
+}
+
+function setMask() {
     $('#nascimento').mask("00/00/0000", {placeholder: "dd/mm/aaaa"});
+
     $('#telefone').mask('(ZZ) Z-ZZZZ-ZZZZ', {
         translation: {
             'Z': {
@@ -13,6 +30,7 @@ $(document).ready(function () {
         },
         placeholder: "(__) _ - ____ - ____"
     });
+
     $('#CEP').mask('ZZZZZ-ZZZ', {
         translation: {
             'Z': {
@@ -21,6 +39,7 @@ $(document).ready(function () {
         },
         placeholder: "_____-___"
     });
+
     $('#CPF').mask('ZZZ.ZZZ.ZZZ-ZZ', {
         translation: {
             'Z': {
@@ -29,29 +48,36 @@ $(document).ready(function () {
         },
         placeholder: "___.___.___-__"
     });
+}
 
-    $('#consultarCli').click(function () {
-        consulta = $("#campo").val();
-        $.ajax({
-            type: 'GET',
-            url: '../notestore?controller=Cliente&acao=consultar',
+function getFilial() {
+    filial = JSON.parse(sessionStorage.getItem('filial'));
+    document.getElementById("idFilial").value = filial.id;
+}
 
-            headers: {
-                Accept: "application/json; charset=utf-8",
-                "Content-Type": "application/json; charset=utf-8"
-            }, beforeSend: function (xhr) {
-                xhr.setRequestHeader('X-Consulta', consulta);
-                xhr.setRequestHeader('X-ConsultaTipo', consultaTipo);
+function consultarClientes() {
+    consulta = $("#campo").val();
+    $.ajax({
+        type: 'GET',
+        url: '../notestore?controller=Cliente&acao=consultar',
 
-            },
-            success: function (result) {
-                cliente = result;
-                console.log("primeiro carregamento");
-                carregaTabela();
-            }});
-    }
-    );
-});
+        headers: {
+            Accept: "application/json; charset=utf-8",
+            "Content-Type": "application/json; charset=utf-8"
+        }, beforeSend: function (xhr) {
+            xhr.setRequestHeader('X-Consulta', consulta);
+            xhr.setRequestHeader('X-ConsultaTipo', consultaTipo);
+
+        }, error: function (jqXHR, textStatus, errorThrown) {
+            alert("error");
+        },
+        success: function (result) {
+            cliente = result;
+            carregaTabela();
+        }});
+}
+
+
 
 function buttonRadio(tipo) {
     this.consultaTipo = tipo;
@@ -69,31 +95,10 @@ function buttonRadio(tipo) {
         $("#campo").attr("placeholder", "nome");
         $("#campo").attr("pattern", "[A-Za-z]{4,20}");
     }
-
-    console.log(this.consultaTipo);
-}
-
-function criarColuna() {
-    var coluna = $("tr");
-    var nome = "";
-    nome += '<th>NOME</th>';
-    nome += '<th>CPF</th>';
-    nome += '<th>NASCIMENTO</th>';
-    nome += '<th>SEXO</th>';
-    nome += '<th>TELEFONE</th>';
-    nome += '<th>E-MAIL</th>';
-    nome += '<th>UF</th>';
-    nome += '<th>CEP</th>';
-    nome += '<th>CIDADE</th>';
-    nome += '<th>AÇÃO</th>';
-    coluna.append(nome);
-    $("#tableClientes").append(coluna);
 }
 
 function removeLinha() {
-
     i = document.querySelectorAll('tr').length - 2;
-    console.log(i);
     for (; i > 0; i--) {
         document.getElementById('tableClientes').getElementsByTagName('tr')[0].remove();
     }
@@ -141,19 +146,18 @@ function editarCliente(indice) {
 
 function excluirCliente(td, idCli) {
     linha = td.parentElement.parentElement;
-    document.getElementById("tableClientes").deleteRow(linha.rowIndex-1);
+    document.getElementById("tableClientes").deleteRow(linha.rowIndex - 1);
     $.ajax({
         type: 'GET',
-        url: '../notestore?controller=Cliente&acao=excluir&id=' +idCli,
+        url: '../notestore?controller=Cliente&acao=excluir&id=' + idCli,
         headers: {
             Accept: "application/json; charset=utf-8",
             "Content-Type": "application/json; charset=utf-8"
         },
         error: function (jqXHR, textStatus, errorThrown) {
-             alert("Erro ao excluir cliente");
+            alert("Erro ao excluir cliente");
         },
         success: function (result) {
-            console.log(result);
             alert(result);
         }});
 }
@@ -168,3 +172,8 @@ function dataAtualFormatada(data) {
     return dia + "/" + mes + "/" + anoF;
 }
 
+function enviarFomulario() {
+    consultarClientes();
+    $("#cadastrar").submit();
+//        e.preventDefault();
+}

@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Cadastrado com sucesso</title>
+        <title>JSP Page</title>
     </head>
     <body>
         <h1>Sucesso!</h1>

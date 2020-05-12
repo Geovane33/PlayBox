@@ -5,10 +5,8 @@
  */
 package br.senac.sp.servlet;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -41,19 +39,17 @@ public class ProcessController extends HttpServlet {
             // chama o método de forma dinamica
             Method metodo = controlador.getClass().getMethod(acao, paramTypes);
 
-            //executa o metodo e recebe o tipo de opereção realizada
-            String operacao = (String) metodo.invoke(controlador, request, response);
+            //executa o metodo da classe correspondente ao recebido do front
+            metodo.invoke(controlador, request, response);
 
-            request.getRequestDispatcher("sucesso.jps")
-                    .forward(request, response);
-        } catch (ServletException
-                | IOException
-                | ClassNotFoundException
+        } catch (ClassNotFoundException
                 | InstantiationException
                 | IllegalAccessException
                 | NoSuchMethodException
                 | InvocationTargetException ex) {
-            ex.printStackTrace(System.err);
+            System.out.println("Erro no ProcessCotroller");
+            System.out.println("Message: " + ex.getMessage());
+            System.out.println("Class: " + ex.getClass());
         }
     }
 }

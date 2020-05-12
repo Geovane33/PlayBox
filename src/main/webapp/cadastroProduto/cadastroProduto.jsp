@@ -23,7 +23,7 @@
                 <tr>
                     <td class="cadastro">
                         <!-- Compos para preencher -->
-                        <form action="../ControllerProduto" method="POST">
+                        <form action="../notestore?controller=Produto" method="POST">
                             <div>
                                 <label></label><label class="validation-error hide" id="fullNameValidationError"></label>
                                 <input value="0" type="hidden" name="id" id="id">
@@ -57,7 +57,7 @@
                                 <input type="number" name="idFilial" id="idFilial" placeholder="digite o id da filial" >
                             </div>
                             <div>
-                                <button value="Cadastrar" id="cadastrar" name="acao" >cadastrar</button>
+                                <button value="adicionar" id="cadastrar" name="acao" >cadastrar</button>
                             </div>
                         </form>
                         <a id="consultarProd">consultar</a>

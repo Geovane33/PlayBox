@@ -34,7 +34,7 @@ public class BuilderProduto {
         int quantidade = Integer.parseInt(request.getParameter("qtd"));
         double valor = Double.parseDouble(request.getParameter("valor"));
         Date dataDeEntrada = data.parseData(request.getParameter("dataEnt"), "dd/MM/yyyy");
-
+        
         //constroi um objeto produto com as informações obtidas no request
         Produto produto = new Produto(id, idFilial, nome, marca, descricao, quantidade, valor, dataDeEntrada);
 

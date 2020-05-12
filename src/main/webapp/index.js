@@ -1,5 +1,13 @@
+$(document).ready(function () {
+    init();
+});
 
-var filiais = null;
+var filiais = [];
+
+
+function init() {
+    obterFiliais();
+}
 
 function atribuiFilial(idFilial) {
     filiais = filiais[idFilial].nome;
@@ -8,11 +16,8 @@ function atribuiFilial(idFilial) {
     $("#idFilial").html(fi);
 }
 
-
-$(document).ready(function () {
-    console.log(filiais);
-    console.log(document);
-    if (filiais === null) {
+function obterFiliais() {
+    if (filiais.length === 0) {
         $.ajax({
             type: 'GET',
             url: 'notestore?controller=Filial&acao=consultar',
@@ -23,12 +28,12 @@ $(document).ready(function () {
             },
             success: function (result) {
                 filiais = result;
-                console.log("primeiro carregamento");
                 carregarFiliais();
             }});
     }
 }
-);
+
+
 function carregarFiliais() {
     $("#formFiliais").html("<h3>Carregando filiais</h3>");
     var filial = $("<h3>");
@@ -37,7 +42,7 @@ function carregarFiliais() {
     } else {
         for (var i = 0; i < filiais.length; i++) {
             console.log(filiais[i]);
-            filial.append('<input type=button  value="'+ filiais[i].nome + '" onClick=enviarFilial('+i+')>');
+            filial.append('<input type=button  value="' + filiais[i].nome + '" onClick=enviarFilial(' + i + ')>');
         }
         $("#formFiliais").html(filial);
     }
@@ -57,7 +62,6 @@ function submitFilial(idFilial) {
         },
         success: function (result) {
             filiais = result;
-            console.log("primeiro carregamento");
             carregarFiliais();
         }
     });

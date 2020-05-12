@@ -1,9 +1,8 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
 <html lang="pt-br">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset='UTF-8'">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title> NoteStore </title>
 
@@ -25,12 +24,12 @@
                     <form action="../notestore?controller=Cliente" method="POST">
                         <div>
                             <label></label><label class="validation-error hide" id="fullNameValidationError"></label>
-                            <input  value="0" type="text" id="id" name="id">
+                            <input  type="hidden" value="0" type="text" id="id" name="id">
                         </div>
                         <div>
-                            <!--type="hidden"-->
-                            <label>idFilial</label><label class="validation-error hide" id="fullNameValidationError"></label>
-                            <input type="text" name="idFilial" id="idFilial" placeholder="id da filial">
+
+                            <!--<label type="hidden" >idFilial</label><label class="validation-error hide" id="fullNameValidationError"></label>-->
+                            <input type="hidden"  value="0" name="idFilial" id="idFilial" placeholder="id da filial">
                         </div>
                         <div>
                             <label>Nome </label><label class="validation-error hide" id="fullNameValidationError"></label>
@@ -78,7 +77,7 @@
                             <input type="text" name="numero" id="numero" placeholder="numero da sua casa" >
                         </div>
                         <div>
-                            <button value="adicionar" id="cadastrar" name="acao" type="submit" >cadastrar</button>
+                            <input value="adicionar" id="cadastrar" name="acao" onclick="enviarFomulario()"type="button">
                         </div>
                     </form>
                 </td>
@@ -91,38 +90,30 @@
                 <input type="text" id="campo" placeholder="nome">
                 <input type="button" value="consultar" id="consultarCli">
             </div>  
-            <input type="button" onclick="removeLinha()" value="reset"> 
-            <td class="tabela">
-                <table class="list" id="listaCadastros">
-                    <thead>
-                        <tr class="desc">
-                            <th>NOME</th>
-                            <th>CPF</th>
-                            <th>NASCIMENTO</th>
-                            <th>SEXO</th>
-                            <th>TELEFONE</th>
-                            <th>E-MAIL</th>
-                            <th>UF</th>
-                            <th>CEP</th>
-                            <th>CIDADE</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                        <!--                        <tr id="tableClientes">
-                                                <tr>-->
-                    </thead>
-
-                    <tbody  id="tableClientes">
-                        <!--                    <div id="tableClientes">
-                                                
-                                            </div>-->
-                    </tbody>
-                </table>
+            <td class="tabela">  
+                    <table class="list" id="listaCadastros">
+                        <thead>
+                            <tr class="desc">
+                                <th>NOME</th>
+                                <th>CPF</th>
+                                <th>NASCIMENTO</th>
+                                <th>SEXO</th>
+                                <th>TELEFONE</th>
+                                <th>E-MAIL</th>
+                                <th>UF</th>
+                                <th>CEP</th>
+                                <th>CIDADE</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody  id="tableClientes">
+                        </tbody>
+                    </table>
             </td>
             </tr>
         </table>
     </section>
-
     <footer>
     </footer>
 </html>

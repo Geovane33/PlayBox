@@ -84,11 +84,11 @@ public class ProdutoDAO {
         try {
             conexao = ConexaoDB.getConexao();
             if (!values.equals("") && tipo.equals("nome")) {
-                ps = conexao.prepareStatement("SELECT * FROM produto where nome_produto like '%" + values + "%';");
+                ps = conexao.prepareStatement("SELECT * FROM produto WHERE nome_produto like '%" + values + "%';");
             } else if (!values.equals("") && tipo.equals("ID")) {
                 ps = conexao.prepareStatement("SELECT * FROM produto WHERE id_produto = " + Integer.parseInt(values));
-            } else if (tipo.equals("nome") || tipo.equals("ID")) {
-                ps = conexao.prepareStatement("SELECT * FROM produto ");
+            } else if (tipo.equals("nome") || tipo.equals("ID") || tipo.equals("FILIAL") ) {
+                ps = conexao.prepareStatement("SELECT * FROM produto WHERE id_filial =" + Integer.parseInt(values)+" AND produto.quantidade_produto>0");
             }
             rs = ps.executeQuery();
 
@@ -101,7 +101,6 @@ public class ProdutoDAO {
                 produto.setQuantidade(rs.getInt("quantidade_produto"));
                 produto.setValor(rs.getInt("valor_produto"));
                 produto.setDescricao(rs.getString("desc_produto"));
-//                System.out.println(data.parseData(rs.getDate("data_entrada").toString(), "yyyy-MM-dd"));
                 produto.setDataDeEntrada(data.parseData(rs.getDate("data_entrada").toString(), "yyyy-MM-dd"));
                 listaProdutos.add(produto);
             }

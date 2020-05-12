@@ -10,7 +10,7 @@ $(document).ready(function () {
     $('#consultarProd').click(function () {
         $.ajax({
             type: 'GET',
-            url: '../ControllerProduto',
+            url: '../notestore?controller=Produto&acao=consultar',
             headers: {
                 Accept: "application/json; charset=utf-8",
                 "Content-Type": "application/json; charset=utf-8"
@@ -28,7 +28,6 @@ $(document).ready(function () {
  */
 function removeLinha() {
         i = document.querySelectorAll("tr").length-2;
-        console.log(i);
         for (; i > 0; i--) {
             document.getElementById('tableProd').getElementsByTagName('tr')[0].remove();
         }
@@ -76,6 +75,8 @@ function editarProd(indice) {
 }
 /**
  * Atualiza excluir produto
+ * @param {type} name 
+ * @param {type} name 
  */
 function excluirProd(i, idProd) {
     produto.splice(i,1);
@@ -83,7 +84,7 @@ function excluirProd(i, idProd) {
 
     $.ajax({
         type: 'GET',
-        url: '../ControllerProduto?id=' + idProd,
+        url: '../notestore?controller=Produto&acao=excluir&id=' + idProd,
         headers: {
             Accept: "application/json; charset=utf-8",
             "Content-Type": "application/json; charset=utf-8"
