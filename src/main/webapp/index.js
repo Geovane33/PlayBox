@@ -42,7 +42,7 @@ function carregarFiliais() {
     } else {
         for (var i = 0; i < filiais.length; i++) {
             console.log(filiais[i]);
-            filial.append('<input type=button  value="' + filiais[i].nome + '" onClick=enviarFilial(' + i + ')>');
+            filial.append('<input type=button  value="' + filiais[i].nome + '" onClick=enviarFilial(' + i + ')><br>');
         }
         $("#formFiliais").html(filial);
     }

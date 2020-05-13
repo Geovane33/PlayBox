@@ -7,13 +7,23 @@ public interface Controller {
 
     /**
      * Adicionar um novo objeto
+     *
      * @param request
      * @param response
      */
     void adicionar(HttpServletRequest request, HttpServletResponse response);
 
     /**
+     * Realiza consultas
+     *
+     * @param request
+     * @param response
+     */
+    void consultar(HttpServletRequest request, HttpServletResponse response);
+
+    /**
      * Atualiza informações
+     *
      * @param request
      * @param response
      */
@@ -21,15 +31,10 @@ public interface Controller {
 
     /**
      * Exclui um objeto
+     *
      * @param request
      * @param response
      */
     void excluir(HttpServletRequest request, HttpServletResponse response);
 
-    /**
-     * Realiza consultas
-     * @param request
-     * @param response
-     */
-    void consultar(HttpServletRequest request, HttpServletResponse response);
 }

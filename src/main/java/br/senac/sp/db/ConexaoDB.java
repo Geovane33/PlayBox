@@ -52,9 +52,10 @@ public class ConexaoDB {
 
     /**
      * fechar conexão do banco de dados
+     * @param CONEXAO 
      * @return boolean - true: conexão fechada com sucesso false: erro ao fechar conexão
      */
-    public static boolean fecharConexao(){
+    public static boolean fecharConexao(Connection CONEXAO){
         try {
             if (CONEXAO != null) {
                 if (!CONEXAO.isClosed()) {

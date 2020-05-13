@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html hidden>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Realizar venda</title>
@@ -66,7 +66,7 @@
                                     <th>Produto</th>
                                     <th>Valor Unitário</th>
                                     <th>Quantidade</th>
-                                    <th>Total Por Produto</th>         
+                                    <th>Total</th>         
                                     <th></th>
                                 </tr>
                             </thead>

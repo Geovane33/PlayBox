@@ -12,7 +12,6 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -37,13 +36,13 @@ public class ControllerProduto implements Controller {
             PrintWriter out = response.getWriter();
             if (produtoDAO.salvarProduto(produto)) {
                 out.write("produto cadastrado com sucesso");
-                request.getRequestDispatcher("/sucesso.jsp")
-                        .forward(request, response);
             } else {
-                out.write("erro ao cadastrar produto");
+                out.write("erro no servidor ao cadastrar produto");
             }
+            out.flush();
+            out.close();
 
-        } catch (IOException | ServletException ex) {
+        } catch (IOException ex) {
             System.out.println("Erro ao consultar produtos");
             System.out.println("Message: " + ex.getMessage());
             System.out.println("Class: " + ex.getClass());
@@ -66,17 +65,14 @@ public class ControllerProduto implements Controller {
 
             PrintWriter out = response.getWriter();
             if (produtoDAO.atualizarProduto(produto)) {
-                out.write("produto cadastrado com sucesso");
-                request.getRequestDispatcher("sucesso.jsp")
-                    .forward(request, response);
+                out.write("produto atualizado com sucesso");
             } else {
-                out.write("erro ao cadastrar produto");
+                out.write("erro ao atualizar produto");
             }
-
-            
-
-        } catch (IOException | NumberFormatException | ServletException ex) {
-            System.out.println("Erro ao consultar produtos");
+            out.flush();
+            out.close();
+        } catch (IOException ex) {
+            System.out.println("Erro ao atualizar produtos");
             System.out.println("Message: " + ex.getMessage());
             System.out.println("Class: " + ex.getClass());
         }
@@ -96,13 +92,15 @@ public class ControllerProduto implements Controller {
             int id = Integer.parseInt(request.getParameter("id"));
             PrintWriter out = response.getWriter();
             if (produtoDAO.excluirProduto(id)) {
-                out.write("produto cadastrado com sucesso");
+                out.write("Produto excluido com sucesso");
             } else {
-                out.write("erro ao cadastrar produto");
+                out.write("erro ao excluir produto");
             }
+            out.flush();
+            out.close();
 
         } catch (IOException | NumberFormatException ex) {
-            System.out.println("Erro ao consultar produtos");
+            System.out.println("Erro ao excluir produtos");
             System.out.println("Message: " + ex.getMessage());
             System.out.println("Class: " + ex.getClass());
         }
@@ -121,13 +119,15 @@ public class ControllerProduto implements Controller {
             PrintWriter out = response.getWriter();
             ProdutoDAO produtoDAO = new ProdutoDAO();
             Gson gson = new Gson();
-
-            //String idFilial = request.getParameter("idFilial"); //trocar o 1 pelo id
-            List<Produto> produtos = produtoDAO.consultarProduto("1", "FILIAL");
-
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            out.write(gson.toJson(produtos));
+            String idFilial = request.getParameter("idFilial"); 
+            List<Produto> produtos = produtoDAO.consultarProduto(idFilial, "FILIAL");
+            if (produtos.isEmpty()) {
+                out.write("");
+            } else {
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                out.write(gson.toJson(produtos));
+            }
             out.flush();
             out.close();
 

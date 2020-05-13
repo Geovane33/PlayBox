@@ -1,35 +1,66 @@
 //variaveis globais
-var cliente = null;
+var cliente = {};
 var dataNascimento = null;
 var consultaTipo = 'nome';
 var filial;
+var carregou = true;
 
 
 $(document).ready(function () {
     init();
-    $('#consultarCli').click(getCli => {
-        consultarClientes();
-    });
 });
 
+
+
 function init() {
-    getFilial();
+    form();
     setMask();
+    getFilial();
     consultarClientes();
-    enviarFomulario();
 }
+
+function form() {
+    validarForm();
+    $('form').ajaxForm({
+        onsubmit: function (event) {
+        },
+        success: function (result, textStatus, jqXHR) {
+            if (result === '200') {
+                alert('cliente cadastrado com sucesso');
+                window.location.reload();
+            } else if (result === '200-2') {
+                alert('Cliente atualizado com sucesso');
+                window.location.reload();
+            } else if (result === '2') {
+                alert('O CPF digitado ja tem cadastro');
+            } else if (result === '500') {
+                alert('erro no servidor ao cadastrar cliente');
+            } else {
+                alert('erro ao processar os dados do cliente, revise os campos');
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert('Erro ao solicitar');
+        }
+    });
+
+}
+
+
 
 function setMask() {
     $('#nascimento').mask("00/00/0000", {placeholder: "dd/mm/aaaa"});
 
-    $('#telefone').mask('(ZZ) Z-ZZZZ-ZZZZ', {
-        translation: {
-            'Z': {
-                pattern: /[0-9]/, optional: false
-            }
-        },
-        placeholder: "(__) _ - ____ - ____"
-    });
+    var trocarMask = function (val) {
+        return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+    },
+            sp = {
+                onKeyPress: function (val, e, field, options) {
+                    field.mask(trocarMask.apply({}, arguments), options);
+                }
+            };
+
+    $('#telefone').mask(trocarMask, sp);
 
     $('#CEP').mask('ZZZZZ-ZZZ', {
         translation: {
@@ -52,10 +83,17 @@ function setMask() {
 
 function getFilial() {
     filial = JSON.parse(sessionStorage.getItem('filial'));
+    if (filial === null) {
+        alert("Erro ao obter filial");
+        window.location.href = '../';
+    }
     document.getElementById("idFilial").value = filial.id;
 }
 
 function consultarClientes() {
+    $('#consultarCli').click(() => {
+        consultarClientes();
+    });
     consulta = $("#campo").val();
     $.ajax({
         type: 'GET',
@@ -72,8 +110,14 @@ function consultarClientes() {
             alert("error");
         },
         success: function (result) {
-            cliente = result;
-            carregaTabela();
+            if (result === "" && carregou) {
+                carregou = false;
+                alert("Nenhum cliente cadastrado");
+            } else {
+                carregou = false;
+                cliente = result;
+                carregaTabela();
+            }
         }});
 }
 
@@ -106,17 +150,16 @@ function removeLinha() {
 
 function carregaTabela() {
     removeLinha();
+
     for (var i = 0; i < cliente.length; i++) {
+        $('.tabela').show();
+        $('.inputConsult').show();
         var linha = $("<tr>");
         var coluna = "";
         coluna += '<td>' + cliente[i].nome + '</td>';
         coluna += '<td>' + cliente[i].cpf + '</td>';
         coluna += '<td>' + dataAtualFormatada(cliente[i].dataNascimento) + '</td>';
-        coluna += '<td>' + cliente[i].sexo + '</td>';
-        coluna += '<td>' + cliente[i].telefone + '</td>';
         coluna += '<td>' + cliente[i].email + '</td>';
-        coluna += '<td>' + cliente[i].uf + '</td>';
-        coluna += '<td>' + cliente[i].cep + '</td>';
         coluna += '<td>' + cliente[i].cidade + '</td>';
         coluna += '<td><img class="imgDel" src="../icons/baseline_delete_forever_black_18dp.png" onClick="excluirCliente(this ,' + cliente[i].id + ')"></td>';
         coluna += '<td><img class="imgDel" src="../icons/outline_edit_black_18dp.png" onClick="editarCliente(' + i + ')"></td>';
@@ -140,26 +183,30 @@ function editarCliente(indice) {
     document.getElementById("CEP").value = cliente[indice].cep;
     document.getElementById("bairro").value = cliente[indice].bairro;
     document.getElementById("numero").value = cliente[indice].numero;
-    document.getElementById("cadastrar").innerHTML = "atualizar";
     document.getElementById("cadastrar").value = "atualizar";
+    document.getElementById("enviar").value = "atualizar";
 }
 
 function excluirCliente(td, idCli) {
-    linha = td.parentElement.parentElement;
-    document.getElementById("tableClientes").deleteRow(linha.rowIndex - 1);
-    $.ajax({
-        type: 'GET',
-        url: '../notestore?controller=Cliente&acao=excluir&id=' + idCli,
-        headers: {
-            Accept: "application/json; charset=utf-8",
-            "Content-Type": "application/json; charset=utf-8"
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            alert("Erro ao excluir cliente");
-        },
-        success: function (result) {
-            alert(result);
-        }});
+    if (confirm("Deseja excluir?")) {
+        linha = td.parentElement.parentElement;
+        document.getElementById("tableClientes").deleteRow(linha.rowIndex - 1);
+        $.ajax({
+            type: 'GET',
+            url: '../notestore?controller=Cliente&acao=excluir&id=' + idCli,
+            headers: {
+                Accept: "application/json; charset=utf-8",
+                "Content-Type": "application/json; charset=utf-8"
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("Erro ao excluir cliente");
+            },
+            success: function (result) {
+                alert(result);
+            }});
+    } else {
+        alert("cancelado");
+    }
 }
 
 function dataAtualFormatada(data) {
@@ -172,8 +219,15 @@ function dataAtualFormatada(data) {
     return dia + "/" + mes + "/" + anoF;
 }
 
-function enviarFomulario() {
-    consultarClientes();
-    $("#cadastrar").submit();
-//        e.preventDefault();
+function validarForm() {
+    //Valida o formulário
+    $("#formCad").validate();
+    //apelido necessário para o cRequired com nova mensagem
+    $.validator.addMethod("cRequired", $.validator.methods.required,
+            "Campo obrigatorio");
+    // apelido cMinlength
+    $.validator.addMethod("cMinlength", $.validator.methods.minlength,
+            $.validator.format("Minimo {0} caracteres"));
+    // combina os dois, aplicando as regras nos campos que contenham a classe chamada "cliente"
+    $.validator.addClassRules("cliente", {cRequired: true, cMinlength: 2});
 }

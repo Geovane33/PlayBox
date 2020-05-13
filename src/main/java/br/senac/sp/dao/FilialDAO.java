@@ -52,7 +52,7 @@ public class FilialDAO {
                 if (ps != null) {
                     ps.close();
                 }
-                ConexaoDB.fecharConexao();
+              ConexaoDB.fecharConexao(conexao);
 
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexãoDB");
@@ -109,7 +109,7 @@ public class FilialDAO {
                 if (rs != null) {
                     rs.close();
                 }
-                ConexaoDB.fecharConexao();
+             ConexaoDB.fecharConexao(conexao);
 
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexãoDB");
@@ -162,7 +162,7 @@ public class FilialDAO {
                     ps.close();
                 }
 
-                ConexaoDB.fecharConexao();
+              ConexaoDB.fecharConexao(conexao);
 
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexãoDB");
@@ -200,7 +200,7 @@ public class FilialDAO {
                 if (ps != null) {
                     ps.close();
                 }
-                ConexaoDB.fecharConexao();
+             ConexaoDB.fecharConexao(conexao);
 
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexãoDB");

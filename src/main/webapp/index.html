@@ -3,13 +3,20 @@
     <head>
         <meta charset=UTF-8>
         <title>JSP Page</title>
-             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="style/cssMedio.css" media="screen and (min-width:900px)">
+        <link rel="stylesheet" href="../style/cssPequeno.css" media="screen and (min-width:100px)">
+        <link rel="stylesheet" href="style/index.css" media="screen and (min-width:900px)">
         <script src='index.js'></script>
     </head>
     <body>
         <h1>Filiais</h1>
-        <form id="formFiliais" action="notestore?controller=Filial&acao=consultar" method="POST">
-            <h3>Carregando Filiais</h3>
+        <form action="notestore" method="POST">
+            <div id="formFiliais" >
+                <h3>Carregando Filiais</h3>
+            </div>
+            <input type="hidden" value="Filial" name="controller">
+            <input type="hidden" value="consultar" name="acao">
         </form>
     </body>
 </html>

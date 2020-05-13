@@ -7,11 +7,12 @@ $(document).ready(function () {
 var venda = {total: 0};
 var produtoCarrinho = [];
 var cliente = [];
-
+var produto = [];
 function init() {
+    getFilial();
     listarClientes();
     listarProduto();
-    getFilial();
+    limpaForm();
 }
 
 /**
@@ -20,8 +21,10 @@ function init() {
 function getFilial() {
     venda.filial = JSON.parse(sessionStorage.getItem('filial'));
     if (venda.filial === null) {
-        alert("voce não tem acesso a essa filial");
-        window.location.href = 'https://geekprank.com/blue-death/';
+        alert("Erro ao obter filial");
+        window.location.href = '../';
+    } else {
+        $('html').show();
     }
 }
 
@@ -42,12 +45,16 @@ function listarClientes() {
             alert("erro ao carregar lista de clientes");
         },
         success: function (result) {
-            cliente = result;
-            carregarListCli();
+            if (result === undefined) {
+                alert("Nenhum cliente cadastrado: "+ venda.filial.nome);
+            } else {
+                cliente = result;
+                carregarListCli();
+            }
         }}
     );
-
 }
+
 function carregarListCli() {
     for (i = 0; i < cliente.length; i++) {
         cliente[i].dataNascimento = dataAtualFormatada(cliente[i].dataNascimento);
@@ -69,20 +76,27 @@ function listarProduto() {
         headers: {
             Accept: "application/json; charset=utf-8",
             "Content-Type": "application/json; charset=utf-8"
+        }, success: function (result) {
+            console.log(result);
+            if (result === '') {
+              alert("Nenhum produto cadastrado na filial: "+ venda.filial.nome);
+            } else {
+                produto = result;
+                carregaListaProd();
+            }
+
         },
         error: function (jqXHR, textStatus, errorThrown) {
             alert("erro ao carregar lista de produtos");
-        },
-        success: function (result) {
-            produto = result;
-            carregaListaProd();
-        }});
+        }
+    });
 }
 
 /**
  * Listar produtos adicionando cada um em uma tag option
  */
 function carregaListaProd() {
+    atualizarListaProd();
     var lista = '<option value="n">---</option>';
     $("#listarProdutos").append(lista);
     for (i = 0; i < produto.length; i++) {
@@ -123,11 +137,7 @@ function getTotalVenda() {
     $("#valorTotal").text("Valor Total: R$ " + total);
 }
 
-/**
- * adicionar produtos ao carrinho de compras, atualizar a tabela e quantidade de produtos
- */
-function adicionarProduto() {
-
+function formValido() {
     var quantidade = $("#quantidade").val();
     var indiceProd = $("#listarProdutos").val();
     var indiceClien = $("#listarClientes").val();
@@ -141,23 +151,39 @@ function adicionarProduto() {
 
     if (form !== "Selecione") {
         alert(form);
+        return false;
     } else {
+        return true;
+    }
+}
 
+/**
+ * adicionar produtos ao carrinho de compras, atualizar a tabela e quantidade de produtos
+ */
+function adicionarProduto() {
+    var quantidade = $("#quantidade").val();
+    var indiceProd = $("#listarProdutos").val();
+    var indiceClien = $("#listarClientes").val();
+    if (formValido()) {
         var totalCar = 0.0;
         for (i = 0; i < quantidade; i++) {
             totalCar += produto[indiceProd].valor;
         }
 
-        this.produto[indiceProd].quantidadeNaVenda = quantidade;
+//        this.produto[indiceProd].quantidadeNaVenda = quantidade; atualizar quantidade na hr da venda
         produtoCarrinho.push({
+
+            quantidade: quantidade,
             produto: this.produto[indiceProd],
             VlrTotalCar: totalCar
         });
         atualizaVenda(this.cliente[indiceClien], totalCar);
-
         atualizaQtdProd(indiceProd, quantidade);
+        fixarClienteComboBox();
         tabelaCarrinho();
-        carregaListaProd();
+
+        carregaListaProd();//apos atualizar a quantidade de produto local, carrega a lista de produto local.  Caso algum produto tenha sido casdastrado no momento da venda é necessário um refresh
+        limpaForm();
     }
 }
 
@@ -191,8 +217,6 @@ function atualizaQtdProd(indice, qtd) {
     if (produto[indice].quantidade === 0) {
         produto.splice(indice, 1);
     }
-    atualizarListaProd();
-    limpaForm();
 }
 
 /**
@@ -213,20 +237,26 @@ function atualizarListaProd() {
         optionProd.remove(0);
     }
 }
-;
+
 /**
  * limpar o fomulario de venda
  */
 function limpaForm() {
-    document.getElementById("listarProdutos").selectedIndex = 0;
-    $("#listarClientes").hide();
-    var indiceClien = $("#listarClientes").val();
-    $("#cliSelecionado").text("CLIENTE: " + cliente[indiceClien].nome);
-    ;
     $("#valorUnitario").text("Valor Unidade: R$ 0");
     $("#valorTotal").text("Valor Total: R$ 0");
     document.getElementById("quantidade").value = 0;
     document.getElementById("quantidade").max = 0;
+}
+
+/*
+ * 
+ * metodo para fixa cliente selecionado na comboBox
+ */
+function fixarClienteComboBox() {
+    document.getElementById("listarProdutos").selectedIndex = 0;
+    $("#listarClientes").hide();
+    var indiceClien = $("#listarClientes").val();
+    $("#cliSelecionado").text("CLIENTE: " + cliente[indiceClien].nome);
 }
 
 /**
@@ -249,7 +279,7 @@ function tabelaCarrinho() {
         var coluna = "";
         coluna += '<td>' + produtoCarrinho[i].produto.nome + '</td>';
         coluna += '<td>' + produtoCarrinho[i].produto.valor + '</td>';
-        coluna += '<td>' + produtoCarrinho[i].produto.quantidadeNaVenda + '</td>';
+        coluna += '<td>' + produtoCarrinho[i].quantidade + '</td>';
         coluna += '<td>' + produtoCarrinho[i].VlrTotalCar + '</td>';
         coluna += '<td><img class="imgDel" src="../icons/baseline_delete_forever_black_18dp.png" onclick="excluirItem(' + i + ')"></td>';
         linha.append(coluna);
@@ -263,9 +293,27 @@ function tabelaCarrinho() {
  */
 function excluirItem(i) {
     atualizaVenda(venda.cliente, -produtoCarrinho[i].VlrTotalCar);
+    restauraLstProduto(i);
     produtoCarrinho.splice(i, 1);
     tabelaCarrinho();
+    carregaListaProd();
 }
+
+/*
+ * complemento para excluir item
+ * responsavel por voltar a quantidade do produto em "estoque" e deixa o produto disponivel para venda novamente
+ */
+function restauraLstProduto(i) {
+
+    const indice = produto.indexOf(produtoCarrinho[i].produto);
+    if (indice > -1) {
+        produto[indice].quantidade += eval(produtoCarrinho[i].quantidade);
+    } else {
+        produtoCarrinho[i].produto.quantidade += eval(produtoCarrinho[i].quantidade);
+        produto.push(produtoCarrinho[i].produto);
+    }
+}
+
 
 function excluirItemCarrinho(idVenda) {
 
@@ -282,7 +330,7 @@ function excluirItemCarrinho(idVenda) {
             "Content-Type": "application/json; charset=utf-8"
         },
         success: function (result) {
-            alert("Item excluido com sucesso!")
+            alert("Item excluido com sucesso!");
         }
     });
 }
@@ -290,37 +338,57 @@ function excluirItemCarrinho(idVenda) {
 function getProdVenda() {
     venda.produtos = [];
     for (i = 0; i < produtoCarrinho.length; i++) {
-        venda.produtos.push(produtoCarrinho[i].produto);
+        const indice = venda.produtos.indexOf(produtoCarrinho[i].produto);
+        if (indice > -1) {
+            venda.produtos[indice].quantidadeNaVenda += eval(produtoCarrinho[i].quantidade);
+            console.log(venda.produtos[indice].quantidadeNaVenda);
+        } else {
+            produtoCarrinho[i].produto.quantidadeNaVenda += eval(produtoCarrinho[i].quantidade);
+            venda.produtos.push(produtoCarrinho[i].produto);
+        }
+        console.log(venda);
+
     }
+
+
 }
 
 function gerarVenda() {
-    getProdVenda();
-    getFilial();
-    $.ajax({
-        type: 'POST',
-        url: '../notestore?controller=Venda&acao=adicionar',
-        headers: {
-            accept: "application/json; charset=utf-8",
-            "Content-Type": "application/json; charset=utf-8"
-        }, beforeSend: function (xhr) {
-            xhr.setRequestHeader('X-Venda', JSON.stringify(venda));
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            alert("Erro ao finalizar venda!");
-        },
-        success: function (result) {
-            if (result === '200') {
-                alert("Venda finalizada!");
-                window.location.reload();
-            } else {
-                alert("Erro ao finalizar venda");
-            }
-
-
+    if (venda.cliente !== undefined) {
+        if (venda.total > 0) {
+            getProdVenda();
+            getFilial();
+            $.ajax({
+                type: 'POST',
+                url: '../notestore?controller=Venda&acao=adicionar',
+                headers: {
+                    accept: "application/json; charset=utf-8",
+                    "Content-Type": "application/json; charset=utf-8"
+                }, beforeSend: function (xhr) {
+                    xhr.setRequestHeader('X-Venda', JSON.stringify(venda));
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert("Erro na solicitação ao finalizar venda!");
+                },
+                success: function (result) {
+                    if (result === '200') {
+                        alert("Venda finalizada com sucesso");
+                        window.location.reload();
+                    } else if (result === '500') {
+                        alert("Erro no servidor ao finalizar venda");
+                    } else {
+                        alert("Erro no servidor ao processar venda, revise o carrinho");
+                    }
+                }
+            });
+        } else {
+            alert("Total Carrinho não pode ser 0");
         }
-    });
+    } else {
+        alert("erro ao obter cliente e produto");
+    }
 }
+
 function dataAtualFormatada(data) {
     var novaData = new Date(data),
             dia = (novaData.getDate()).toString(),

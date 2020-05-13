@@ -53,7 +53,7 @@ public class ClienteDAO {
                 if (ps != null) {
                     ps.close();
                 }
-                ConexaoDB.fecharConexao();
+              ConexaoDB.fecharConexao(conexao);
 
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexãoDB");
@@ -122,7 +122,7 @@ public class ClienteDAO {
                 if (rs != null) {
                     rs.close();
                 }
-                ConexaoDB.fecharConexao();
+             ConexaoDB.fecharConexao(conexao);
 
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexãoDB");
@@ -187,7 +187,7 @@ public class ClienteDAO {
                     ps.close();
                 }
 
-                ConexaoDB.fecharConexao();
+                 ConexaoDB.fecharConexao(conexao);
 
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexãoDB");
@@ -225,7 +225,7 @@ public class ClienteDAO {
                 if (ps != null) {
                     ps.close();
                 }
-                ConexaoDB.fecharConexao();
+                 ConexaoDB.fecharConexao(conexao);
 
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexãoDB");

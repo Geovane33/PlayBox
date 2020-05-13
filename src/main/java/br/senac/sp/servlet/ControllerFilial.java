@@ -11,37 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class ControllerFilial implements Controller {
-
-    /**
-     * Sem estrutura de codigos
-     *
-     * @param request
-     * @param response
-     */
-    @Override
-    public void adicionar(HttpServletRequest request, HttpServletResponse response) {
-    }
-
-    /**
-     * Sem estrutura de codigos
-     *
-     * @param request
-     * @param response
-     */
-    @Override
-    public void atualizar(HttpServletRequest request, HttpServletResponse response) {
-    }
-
-    /**
-     * Sem estrutura de codigos
-     *
-     * @param request
-     * @param response
-     */
-    @Override
-    public void excluir(HttpServletRequest request, HttpServletResponse response) {
-    }
-
+    
     /**
      * Realiza consultas
      *
@@ -73,4 +43,36 @@ public class ControllerFilial implements Controller {
 
         }
     }
+
+    /**
+     * Sem estrutura de codigos
+     *
+     * @param request
+     * @param response
+     */
+    @Override
+    public void adicionar(HttpServletRequest request, HttpServletResponse response) {
+    }
+
+    /**
+     * Sem estrutura de codigos
+     *
+     * @param request
+     * @param response
+     */
+    @Override
+    public void atualizar(HttpServletRequest request, HttpServletResponse response) {
+    }
+
+    /**
+     * Sem estrutura de codigos
+     *
+     * @param request
+     * @param response
+     */
+    @Override
+    public void excluir(HttpServletRequest request, HttpServletResponse response) {
+    }
+
+    
 }

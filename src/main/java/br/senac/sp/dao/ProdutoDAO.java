@@ -53,7 +53,7 @@ public class ProdutoDAO {
                 if (ps != null) {
                     ps.close();
                 }
-                ConexaoDB.fecharConexao();
+                 ConexaoDB.fecharConexao(conexao);
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexãoDB");
                 System.out.println("SQLException: " + ex.getMessage());
@@ -105,8 +105,7 @@ public class ProdutoDAO {
                 listaProdutos.add(produto);
             }
         } catch (SQLException ex) {
-            System.out.println("Erro ao consultar produto"
-                    + "");
+            System.out.println("Erro ao consultar produto");
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
@@ -116,7 +115,7 @@ public class ProdutoDAO {
                 if (rs != null) {
                     rs.close();
                 }
-                ConexaoDB.fecharConexao();
+                ConexaoDB.fecharConexao(conexao);
 
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexãoDB");
@@ -173,7 +172,7 @@ public class ProdutoDAO {
                     ps.close();
                 }
 
-                ConexaoDB.fecharConexao();
+                ConexaoDB.fecharConexao(conexao);
 
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexãoDB");
@@ -204,7 +203,7 @@ public class ProdutoDAO {
                 if (ps != null) {
                     ps.close();
                 }
-                ConexaoDB.fecharConexao();
+                ConexaoDB.fecharConexao(conexao);
 
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexãoDB");
