@@ -100,6 +100,7 @@ function editarProd(indice) {
  * @param {number} idProd
  */
 function excluirProd(i, idProd) {
+    if(confirm("Deseja excluir?")){
     produto.splice(i, 1);
     carregaTabela();
 
@@ -115,7 +116,9 @@ function excluirProd(i, idProd) {
         },
         success: function (result) {
             alert("Produto excluido com sucesso");
-        }});
+        }});}else{
+            alert("cancelado");
+        }
 }
 
 function form() {

@@ -188,21 +188,25 @@ function editarCliente(indice) {
 }
 
 function excluirCliente(td, idCli) {
-    linha = td.parentElement.parentElement;
-    document.getElementById("tableClientes").deleteRow(linha.rowIndex - 1);
-    $.ajax({
-        type: 'GET',
-        url: '../notestore?controller=Cliente&acao=excluir&id=' + idCli,
-        headers: {
-            Accept: "application/json; charset=utf-8",
-            "Content-Type": "application/json; charset=utf-8"
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            alert("Erro ao excluir cliente");
-        },
-        success: function (result) {
-            alert(result);
-        }});
+    if (confirm("Deseja excluir?")) {
+        linha = td.parentElement.parentElement;
+        document.getElementById("tableClientes").deleteRow(linha.rowIndex - 1);
+        $.ajax({
+            type: 'GET',
+            url: '../notestore?controller=Cliente&acao=excluir&id=' + idCli,
+            headers: {
+                Accept: "application/json; charset=utf-8",
+                "Content-Type": "application/json; charset=utf-8"
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("Erro ao excluir cliente");
+            },
+            success: function (result) {
+                alert(result);
+            }});
+    } else {
+        alert("cancelado");
+    }
 }
 
 function dataAtualFormatada(data) {

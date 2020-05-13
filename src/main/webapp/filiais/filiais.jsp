@@ -14,7 +14,7 @@
             <a href="cadastroCliente/cadastroCliente.jsp">Clientes</a>
             <a href="cadastroProduto/cadastroProduto.jsp">Produtos</a>
             <a href="vendas/realizarVenda.jsp">Realizar Venda</a>
-              <a href="relatorios/relatorioProduto.jsp">Relatorios</a>
+              <a href="relatorios/relatorioJ.jsp">Relatorios</a>
         </form>
     </body>
 </html>

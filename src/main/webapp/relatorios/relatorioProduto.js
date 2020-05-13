@@ -25,7 +25,7 @@ $(document).ready(() => {
 function init() {
     getFilial();
     obterRelatorio();
-    setTimeout(()=> tabela(), 500);
+    setTimeout(()=> tabela(), 100);
 
 
 }
@@ -98,74 +98,6 @@ function insereRelatorio(relatorio) {
     cell3.innerHTML = relatorio.total;
     cell4 = newRow.insertCell(3); //data da venda
     cell4.innerHTML = dataAtualFormatada(relatorio.dataVenda);
-//    cell5 = newRow.insertCell(4); // Quantidade
-//    cell5.innerHTML = relatorio.Quantidade
-//    cell6 = newRow.insertCell(5); // Preço
-//    cell6.innerHTML = relatorio.Preco
-//    cell7 = newRow.insertCell(6); // Data de entrada
-//    cell7.innerHTML = relatorio.DataDeEntrada
-
-//    cell7 = newRow.insertCell(3); // Botões ( Editar ) e ( Deletar )
-//    cell7.innerHTML = `<a onClick="onEdit(this)"> Editar </a>
-//                       <a onClick="onDelete(this)"> Deletar </a>`;
-}
-
-// Limpa os campos
-function resetForm() {
-    document.getElementById("nome").value = "";
-    document.getElementById("tipo").value = "";
-    document.getElementById("marca").value = "";
-    document.getElementById("desc").value = "";
-    document.getElementById("qtd").value = "";
-    document.getElementById("preco").value = "";
-    document.getElementById("dataEnt").value = "";
-    selectedRow = null;
-}
-
-// Responsavel por jogar os dados nos campos para serem alterados
-function onEdit(td) {
-    selectedRow = td.parentElement.parentElement;
-    document.getElementById("nome").value = selectedRow.cells[0].innerHTML;
-    document.getElementById("tipo").value = selectedRow.cells[1].innerHTML;
-    document.getElementById("marca").value = selectedRow.cells[2].innerHTML;
-    document.getElementById("desc").value = selectedRow.cells[3].innerHTML;
-    document.getElementById("qtd").value = selectedRow.cells[4].innerHTML;
-    document.getElementById("preco").value = selectedRow.cells[5].innerHTML;
-    document.getElementById("dataEnt").value = selectedRow.cells[6].innerHTML;
-}
-
-// Insere na lista o produto alterado
-function editaCadastro(produto) {
-    selectedRow.cells[0].innerHTML = produto.Nome;
-    selectedRow.cells[1].innerHTML = produto.Tipo;
-    selectedRow.cells[2].innerHTML = produto.Marca;
-    selectedRow.cells[3].innerHTML = produto.Descricao;
-    selectedRow.cells[4].innerHTML = produto.Quantidade;
-    selectedRow.cells[5].innerHTML = produto.Preco;
-    selectedRow.cells[6].innerHTML = produto.DataDeEntrada;
-}
-
-// Resonsavel por deletar o produto desejado
-function onDelete(td) {
-    if (confirm('Tem certeza que deseja deletar este produto ?')) {
-        row = td.parentElement.parentElement;
-        document.getElementById("listaCadastros").deleteRow(row.rowIndex);
-        resetForm();
-    }
-}
-
-
-function validate() {
-    isValid = true;
-    if (document.getElementById("nome").value == "") {
-        isValid = false;
-        document.getElementById("fullNameValidationError").classList.remove("hide");
-    } else {
-        isValid = true;
-        if (!document.getElementById("fullNameValidationError").classList.contains("hide"))
-            document.getElementById("fullNameValidationError").classList.add("hide");
-    }
-    return isValid;
 }
 
 function dataAtualFormatada(data) {
