@@ -7,8 +7,6 @@ function init() {
     form();
     mask();
     consultarProd();
-    gerarVenda();
-
 }
 
 

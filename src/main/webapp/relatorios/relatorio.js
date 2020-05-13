@@ -2,10 +2,10 @@
 var relatorio = {};
 var carregou = true;
 var filial = {};
-var totalFilial;
+var totalFilial = 0;
 $(document).ready(() => {
     init();
-    
+
 //    function () {
 //
 //        $("#output").pivotUI(
@@ -25,9 +25,6 @@ $(document).ready(() => {
 function init() {
     getFilial();
     obterRelatorio();
-    setTimeout(()=> tabela(), 100);
-
-
 }
 
 function getFilial() {
@@ -44,18 +41,23 @@ function getFilial() {
 function carregaTabela() {
     for (var i = 0; i < relatorio.length; i++) {
         insereRelatorio(relatorio[i]);
-//        TotalFilial();
+        calculaTotalVenda(relatorio[i]);
     }
-   
+    tabela();
+    $("#totalFilial").text("Total Venda Filial: R$ " + totalFilial);
 }
 
-function totalFilial(relatorio){
-    
+function calculaTotalVenda(relatorio) {
+    totalFilial += relatorio.total;
 }
 
 
 function tabela() {
-    $('#tabela').DataTable();
+    $('#tabela').DataTable({
+        "language": {
+            "url": "http://cdn.datatables.net/plug-ins/1.10.21/i18n/Portuguese-Brasil.json"
+        }
+    });
 }
 function obterRelatorio() {
     $('#obterRelatorio').click(() => {
@@ -103,7 +105,7 @@ function insereRelatorio(relatorio) {
 function dataAtualFormatada(data) {
     var novaData = new Date(data),
             dia = (novaData.getDate()).toString(),
-            diaF = (dia.length === 1) ? '0' + dia : dia,
+            diaF = (dia.length === 1) ? '0' + dia : '0' + dia,
             mes = (novaData.getMonth() + 1).toString(), //+1 pois no getMonth Janeiro começa com zero.
             mesF = (mes.length === 1) ? '0' + mes : mes,
             anoF = novaData.getFullYear();

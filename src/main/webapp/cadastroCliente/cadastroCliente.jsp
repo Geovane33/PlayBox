@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title> NoteStore </title>
 
-        <link rel="stylesheet" href="../style/cssPequeno.css" media="screen and (min-width:900px)">
+        <link rel="stylesheet" href="../style/cssPequeno.css" media="screen and (min-width:100px)">
         <link rel="stylesheet" href="../style/cssMedio.css" media="screen and (min-width:900px)">
         <link rel="stylesheet" href="CadastroCliente.css" type="text/css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -24,12 +24,9 @@
 
                     <form id="formCad"action="../notestore" method="POST">
                         <div>
-                            <label></label><label class="validation-error hide" id="fullNameValidationError"></label>
                             <input  type="hidden" value="0" type="text" id="id" name="id">
                         </div>
                         <div>
-
-                            <!--<label type="hidden" >idFilial</label><label class="validation-error hide" id="fullNameValidationError"></label>-->
                             <input type="hidden"  value="0" name="idFilial" id="idFilial" placeholder="id da filial">
                         </div>
                         <div>
@@ -91,7 +88,7 @@
                         <label id="labelNome" >Nome</label>
                         <input type="radio" id="radioCPF" name="consulta" value="nome" onclick="buttonRadio(this.value)"CHECKED>
                         <input type="radio" id="radioNome" name="consulta" value="CPF" onclick="buttonRadio(this.value)">
-                        <input type="text" id="campo" placeholder="nome"><br>
+                        <input type="search" id="campo" placeholder="nome"><br>
                         <input type="button" id="consultarCli"value="consultar" id="">
                         <thead>
                             <tr class="desc">

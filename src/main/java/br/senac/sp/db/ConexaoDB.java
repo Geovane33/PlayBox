@@ -52,24 +52,25 @@ public class ConexaoDB {
 
     /**
      * fechar conexão do banco de dados
+     * @param CONEXAO 
      * @return boolean - true: conexão fechada com sucesso false: erro ao fechar conexão
      */
-//    public static boolean fecharConexao(){
-//        try {
-//            if (CONEXAO != null) {
-//                if (!CONEXAO.isClosed()) {
-//                    CONEXAO.close();
-//                }
-//            }
-//            STATUS = "Não conectado";
-//            return true;
-//
-//        } catch (SQLException ex) {
-//            System.out.println("Erro ao fechar conexao do banco de dados");
-//            System.out.println("SQLException: " + ex.getMessage());
-//            System.out.println("SQLState: " + ex.getSQLState());
-//            System.out.println("VendorError: " + ex.getErrorCode());
-//            return false;
-//        }
-//    }
+    public static boolean fecharConexao(Connection CONEXAO){
+        try {
+            if (CONEXAO != null) {
+                if (!CONEXAO.isClosed()) {
+                    CONEXAO.close();
+                }
+            }
+            STATUS = "Não conectado";
+            return true;
+
+        } catch (SQLException ex) {
+            System.out.println("Erro ao fechar conexao do banco de dados");
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+            return false;
+        }
+    }
 }

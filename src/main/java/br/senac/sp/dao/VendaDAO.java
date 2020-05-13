@@ -118,7 +118,7 @@ public class VendaDAO {
                     instrucaoSQL.close();
                 }
 
-                conexao.close();
+                ConexaoDB.fecharConexao(conexao);
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexão");
                 System.out.println("SQLException: " + ex.getMessage());

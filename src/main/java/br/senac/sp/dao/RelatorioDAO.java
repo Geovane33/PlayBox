@@ -67,7 +67,7 @@ public class RelatorioDAO {
                 if (rs != null) {
                     rs.close();
                 }
-                conexao.close();
+               ConexaoDB.fecharConexao(conexao);
 
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexãoDB");
@@ -128,7 +128,7 @@ public class RelatorioDAO {
                 if (rs != null) {
                     rs.close();
                 }
-                conexao.close();
+               ConexaoDB.fecharConexao(conexao);
 
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexãoDB");
