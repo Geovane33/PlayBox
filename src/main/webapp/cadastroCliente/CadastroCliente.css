@@ -1,17 +1,9 @@
-#consultarCli {
-    cursor: pointer;
-    margin-left: 85px;
-    width: 62px;
-    height: 22px;
-    padding-bottom: 15px;
-    padding-top: 3px;
-    padding-right: 0px;
-    padding-left: 1px;
-
+#cliente{
+    margin-left: 50px;
 }
 
-table.list{
-    width: 610px;
+table.list {
+    width: 757px;
 }
 
 .imgDel{
@@ -19,11 +11,35 @@ table.list{
 }
 #consulTipo{
     position: absolute;
-    
-    margin-left: 64px;
+    margin-left: 0px;
     margin-top: -23px;
 }
 .inputConsult{
-    margin-left: 1049px;
+    position: absolute;
+    margin-top: -13px;
+    right: -58px;
 }
- /*84px*/
+#radioNome{
+    position: relative;
+    right: 42px;
+    top: 2px;
+    z-index: 0;
+    width: 10px;
+}
+
+#radioCPF{
+    position: relative;
+    right: -37px;
+    z-index: 3;
+    top: 4px;
+    width: 12px;
+}
+
+#labelCPF{
+    position: initial;
+}
+
+#labelNome{
+    position: relative;
+    right: -31px;
+}

@@ -5,9 +5,14 @@
  */
 package br.senac.sp.servlet;
 
+import br.senac.sp.dao.ProdutoDAO;
 import br.senac.sp.dao.VendaDAO;
+import br.senac.sp.entidade.Produto;
 import br.senac.sp.entidade.Venda;
 import com.google.gson.Gson;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,11 +25,32 @@ public class ControllerVenda implements Controller {
 
     @Override
     public void adicionar(HttpServletRequest request, HttpServletResponse response) {
-        Gson gson = new Gson();
-        VendaDAO vendaDAO = new VendaDAO();
-        Venda venda = gson.fromJson(request.getHeader("X-Venda"), Venda.class);
-        venda.setDataVenda(new Date());
-        vendaDAO.salvarVenda(venda);
+        try {
+            Gson gson = new Gson();
+            VendaDAO vendaDAO = new VendaDAO();
+            Venda venda = gson.fromJson(request.getHeader("X-Venda"), Venda.class);
+            venda.setDataVenda(new Date());
+            String msg = validarEstoque(venda);
+
+            PrintWriter out = response.getWriter();
+            if (msg.equals("")) {
+                if (vendaDAO.salvarVenda(venda)) {
+                    out.write("200");
+                } else {
+                    out.write("500");
+                }
+            } else {
+                out.write("Erro ao finalizar Venda, produtos sem estoque suficiente");
+                out.write(msg);
+            }
+            out.flush();
+            out.close();
+        } catch (IOException ex) {
+            System.out.println("Erro ao consultar filiais");
+            System.out.println("Message: " + ex.getMessage());
+            System.out.println("Class: " + ex.getClass());
+
+        }
     }
 
     @Override
@@ -39,35 +65,19 @@ public class ControllerVenda implements Controller {
     public void consultar(HttpServletRequest request, HttpServletResponse response) {
     }
 
-//    @Override
-//    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//
-//        String acao = request.getParameter("acao");
-//        VendaDAO vendaDAO = new VendaDAO();
-//        if (acao.equals("salvar")) {
-//            String cliente = request.getParameter("cliente");
-//            String produto = request.getParameter("produtos");
-//            String quantidade = request.getParameter("quantidadeNaVenda");
-//
-//            Venda venda = new Venda();
-//
-//            //venda.addProduto(new Produto("notebook", "produto", "acer", "notebook gamer", 10, 5000, new Date(), 0));
-//            boolean ok = true;
-//            PrintWriter out = response.getWriter();
-//            String url = "";
-//            if (ok) {
-//                url = "/sucesso.jsp";
-//            } else {
-//                url = "/erro.jsp";
-//            }
-//
-////        } else if (acao.equals("excluir")) {
-////            String cpf = request.getParameter("cpf");
-////
-////            
-////        }
-//            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
-//            dispatcher.forward(request, response);
-//        }
-//    }
+    private String validarEstoque(Venda venda) {
+        String msg = "";
+        ProdutoDAO produtoDAO = new ProdutoDAO();
+        ArrayList<Produto> produtos = produtoDAO.consultarProduto(venda.getFilial().getId() + "", "FILIAL");
+        for (Produto produto : produtos) {
+            for (Produto produto2 : venda.getProdutos()) {
+                if (produto.getId() == produto2.getId()) {
+                    if (produto2.getQuantidadeNaVenda() > produto.getQuantidade()) {
+                        msg += "\n" + produto2.getNome();
+                    }
+                }
+            }
+        }
+        return msg;
+    }
 }

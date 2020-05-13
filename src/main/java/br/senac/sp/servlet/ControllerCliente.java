@@ -1,13 +1,13 @@
 package br.senac.sp.servlet;
 
 import br.senac.sp.dao.ClienteDAO;
+import br.senac.sp.dao.VendaDAO;
 import br.senac.sp.entidade.Cliente;
 import br.senac.sp.utils.BuilderCliente;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,16 +26,19 @@ public class ControllerCliente implements Controller {
             ClienteDAO clienteDAO = new ClienteDAO();
             Cliente cliente = builderCliente.getObjCliente();
             PrintWriter out = response.getWriter();
-            if (clienteDAO.salvarCliente(cliente)) {
-                out.write("cliente adicionado com sucesso");
+            if (clienteDAO.consultarCliente(cliente.getCpf(), "CPF").isEmpty()) {
+                if (clienteDAO.salvarCliente(cliente)) {
+                    out.write("200");
+                } else {
+                    out.write("500");
+                }
 
             } else {
-                out.write("erro ao adicionar cliente");
+                out.write("2");
             }
-            request.getRequestDispatcher("sucesso.jsp")
-                    .forward(request, response);
-
-        } catch (IOException | ServletException ex) {
+            out.flush();
+            out.close();
+        } catch (IOException ex) {
             System.out.println("Erro ao adicionar cliente");
             System.out.println("Message: " + ex.getMessage());
             System.out.println("Class: " + ex.getClass());
@@ -57,10 +60,12 @@ public class ControllerCliente implements Controller {
             Cliente cliente = builderCliente.getObjCliente();
             PrintWriter out = response.getWriter();
             if (clienteDAO.atualizarCliente(cliente)) {
-                out.write("cliente atualizado com sucesso");
+                out.write("200-2");
             } else {
-                out.write("erro ao atualizar cliente");
+                out.write("500-2");
             }
+            out.flush();
+            out.close();
         } catch (IOException ex) {
             System.out.println("Erro ao atualizar cliente");
             System.out.println("Message: " + ex.getMessage());
@@ -79,13 +84,21 @@ public class ControllerCliente implements Controller {
     public void excluir(HttpServletRequest request, HttpServletResponse response) {
         try {
             ClienteDAO clienteDAO = new ClienteDAO();
+            VendaDAO vendaDAO = new VendaDAO();
             int id = Integer.parseInt(request.getParameter("id"));
             PrintWriter out = response.getWriter();
-            if (clienteDAO.excluirCliente(id)) {
-                out.write("cliente excluido com sucesso");
+            if (vendaDAO.clientePossuiVenda(id).isEmpty()) {
+                if (clienteDAO.excluirCliente(id)) {
+                    out.write("Cliente excluido com sucesso");
+                } else {
+                    out.write("Erro ao excluir cliente");
+                }
             } else {
-                out.write("erro ao excluir cliente");
+                out.write("Erro ao excluir!\nCliente possui vendas");
             }
+
+            out.flush();
+            out.close();
         } catch (IOException ex) {
             System.out.println("Erro ao excluir cliente");
             System.out.println("Message: " + ex.getMessage());
@@ -109,8 +122,13 @@ public class ControllerCliente implements Controller {
             Gson gson = new Gson();
 
             List<Cliente> clientes = clienteDAO.consultarCliente(consulta, consultaTipo);
-            response.setContentType("application/json");
-            out.write(gson.toJson(clientes));
+            if (clientes.isEmpty()) {
+                out.write("");
+            } else {
+                response.setContentType("application/json");
+                out.write(gson.toJson(clientes));
+            }
+
             out.flush();
             out.close();
         } catch (IOException ex) {

@@ -12,16 +12,17 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
         <script src="http://jqueryvalidation.org/files/dist/jquery.validate.js"></script>
+        <script src="http://malsup.github.com/jquery.form.js"></script> 
         <script src="cadastroCliente.js"></script>
     </head>
 
-    <section>
+    <section id ="cliente">
         <table>
             <tr>
                 <td class="cadastro">
                     <!-- Compos para preencher -->
 
-                    <form action="../notestore?controller=Cliente" method="POST">
+                    <form id="formCad"action="../notestore" method="POST">
                         <div>
                             <label></label><label class="validation-error hide" id="fullNameValidationError"></label>
                             <input  type="hidden" value="0" type="text" id="id" name="id">
@@ -32,76 +33,72 @@
                             <input type="hidden"  value="0" name="idFilial" id="idFilial" placeholder="id da filial">
                         </div>
                         <div>
-                            <label>Nome </label><label class="validation-error hide" id="fullNameValidationError"></label>
-                            <input type="text" name="nome" id="nome" placeholder="seu nome">
+                            <label for="nome">Nome*</label>
+                            <input class="cliente" type="text" name="nome" id="nome" minlength="2" placeholder="nome">
                         </div>
                         <div>
-                            <label>CPF</label>
-                            <input type="text"  id="CPF" name="CPF" placeholder="seu CPF">
+                            <label for="CPF">CPF*</label>
+                            <input class="cliente"type="text"  id="CPF" name="CPF" placeholder="CPF">
                         </div>
                         <div>
-                            <label>Nascimento</label>
-                            <input type="text" id="nascimento" name="nascimento"/>
+                            <label for="nascimento">Nascimento*</label>
+                            <input class="cliente" type="text" id="nascimento" name="nascimento"/>
                         </div>
                         <div>
-                            <label>Sexo</label>
-                            <input type="text" name="sexo" id="sexo" placeholder="informe seu sexo">
+                            <label for="sexo">Sexo*</label>
+                            <input class="cliente"type="text" name="sexo" id="sexo" placeholder="sexo">
                         </div>
                         <div>
-                            <label>Telefone</label>
-                            <input type="text" name="telefone" id="telefone" placeholder="seu telefone">
+                            <label for="telefone">Telefone</label>
+                            <input type="text" name="telefone" id="telefone" placeholder="telefone">
                         </div>
                         <div>
-                            <label>E-mail</label>
-                            <input type="text" name="email" id="email" placeholder="seu e-mail">
+                            <label for="email">E-mail*</label>
+                            <input class="cliente" type="email" name="email" id="email" placeholder="e-mail">
                         </div>
 
                         <div>
-                            <label>UF</label>
-                            <input type="text" name="uf" id="uf" placeholder="UF">
+                            <label for="uf">UF*</label>
+                            <input class="cliente" type="text" minlength="2" maxlength="2" name="uf" id="uf" placeholder="UF">
                         </div>
                         <div>
-                            <label>CEP</label>
+                            <label for="CEP">CEP</label>
                             <input type="text" name="CEP" id="CEP" placeholder="seu CEP">
                         </div>
                         <div>
-                            <label>Cidade</label>
-                            <input type="text" name="cidade" id="cidade" placeholder="sua cidade">
+                            <label for="cidade">Cidade*</label>
+                            <input class="cliente" type="text" name="cidade" id="cidade" placeholder="cidade"><br>
                         </div>
                         <div>
-                            <label>Bairro</label>
-                            <input type="text" name="bairro" id="bairro" placeholder="seu bairro" >
+                            <label for="bairro">Bairro</label>
+                            <input type="text" name="bairro" id="bairro" placeholder="bairro" >
                         </div>
                         <div>
-                            <label>Numero</label>
-                            <input type="text" name="numero" id="numero" placeholder="numero da sua casa" >
+                            <label for="numero">Numero</label>
+                            <input type="text" name="numero" id="numero" placeholder="numero da casa" >
+
+                            <input type="hidden" value="Cliente" name="controller">
                         </div>
                         <div>
-                            <input value="adicionar" id="cadastrar" name="acao" onclick="enviarFomulario()"type="button">
+                            <input value="adicionar" type="submit" id="cadastrar" name="acao">
+                            <input type="reset" onclick="window.location.reload()" value="cancelar">
                         </div>
                     </form>
                 </td>
-            <div class="inputConsult">
-                <p id="radio">Selecione o tipo de consulta:</p>
-                <input type="radio" name="consulta" value="nome" onclick="buttonRadio(this.value)"CHECKED>
-                <label id="consulTipo" for="nome">Nome</label>
-                <input type="radio"   name="consulta" value="CPF" onclick="buttonRadio(this.value)">
-                <label id="consulTipo" for="CPF">CPF</label>
-                <input type="text" id="campo" placeholder="nome">
-                <input type="button" value="consultar" id="consultarCli">
-            </div>  
-            <td class="tabela">  
+                <td hidden class="tabela">  
                     <table class="list" id="listaCadastros">
+                        <label id="labelCPF" >CPF</label>
+                        <label id="labelNome" >Nome</label>
+                        <input type="radio" id="radioCPF" name="consulta" value="nome" onclick="buttonRadio(this.value)"CHECKED>
+                        <input type="radio" id="radioNome" name="consulta" value="CPF" onclick="buttonRadio(this.value)">
+                        <input type="text" id="campo" placeholder="nome"><br>
+                        <input type="button" id="consultarCli"value="consultar" id="">
                         <thead>
                             <tr class="desc">
                                 <th>NOME</th>
                                 <th>CPF</th>
                                 <th>NASCIMENTO</th>
-                                <th>SEXO</th>
-                                <th>TELEFONE</th>
                                 <th>E-MAIL</th>
-                                <th>UF</th>
-                                <th>CEP</th>
                                 <th>CIDADE</th>
                                 <th></th>
                                 <th></th>
@@ -110,7 +107,7 @@
                         <tbody  id="tableClientes">
                         </tbody>
                     </table>
-            </td>
+                </td>
             </tr>
         </table>
     </section>

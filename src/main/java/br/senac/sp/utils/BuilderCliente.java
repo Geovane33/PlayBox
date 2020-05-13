@@ -42,7 +42,6 @@ public class BuilderCliente {
             cliente.setEmail(this.mapCliente.get("email")[0]);
             cliente.setCep(this.mapCliente.get("CEP")[0].trim());
             cliente.setUf(this.mapCliente.get("uf")[0]);
-            System.out.println("map:" + this.mapCliente.get("cidade")[0]);
             cliente.setCidade(this.mapCliente.get("cidade")[0]);
             cliente.setBairro(this.mapCliente.get("bairro")[0]);
             cliente.setNumero(this.mapCliente.get("numero")[0]);

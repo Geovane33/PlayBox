@@ -30,8 +30,7 @@ public class VendaDAO {
     private void atualizarQuantidadeProdutos(Venda venda) {
 
         for (Produto produto : venda.getProdutos()) {
-            
-            produto.setQuantidade(produto.getQuantidade() - produto.getQuantidadeNaVenda());
+
             produtoDAO.atualizarProduto(produto);
 
         }
@@ -49,7 +48,7 @@ public class VendaDAO {
             for (Produto produto : venda.getProdutos()) {
 
                 ps = conexao.prepareStatement("INSERT INTO venda_produto VALUES (default, ?, ?, ?)",
-                                              Statement.RETURN_GENERATED_KEYS);
+                        Statement.RETURN_GENERATED_KEYS);
 
                 ps.setInt(1, produto.getQuantidadeNaVenda());
                 ps.setInt(2, produto.getId());
@@ -119,7 +118,7 @@ public class VendaDAO {
                     instrucaoSQL.close();
                 }
 
-                ConexaoDB.fecharConexao();
+                conexao.close();
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexão");
                 System.out.println("SQLException: " + ex.getMessage());
@@ -183,14 +182,13 @@ public class VendaDAO {
                     instrucaoSQL.close();
                 }
 
-                ConexaoDB.fecharConexao();
-
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexãoDB");
                 System.out.println("SQLException: " + ex.getMessage());
                 System.out.println("SQLState: " + ex.getSQLState());
                 System.out.println("VendorError: " + ex.getErrorCode());
             }
+
         }
 
         return listaVenda;
@@ -236,6 +234,53 @@ public class VendaDAO {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
+    }
+
+    /**
+     * Busca uma List do tipo Venda obtida do banco de dados
+     *
+     * @param idCliente
+     * @return
+     */
+    public List<Venda> clientePossuiVenda(int idCliente) {
+        ResultSet rs = null;
+        Connection conexao;
+        PreparedStatement instrucaoSQL = null;
+
+        ArrayList<Venda> listaVenda = new ArrayList<>();
+
+        try {
+
+            conexao = ConexaoDB.getConexao();
+            instrucaoSQL = conexao.prepareStatement("SELECT * FROM venda WHERE id_cliente = " + idCliente);
+            rs = instrucaoSQL.executeQuery();
+
+            while (rs.next()) {
+                Venda venda = new Venda();
+                venda.setId(rs.getInt("id_venda"));
+                listaVenda.add(venda);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            //Libero os recursos da memória
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (instrucaoSQL != null) {
+                    instrucaoSQL.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println("Erro ao fechar conexãoDB");
+                System.out.println("SQLException: " + ex.getMessage());
+                System.out.println("SQLState: " + ex.getSQLState());
+                System.out.println("VendorError: " + ex.getErrorCode());
+            }
+        }
+
+        return listaVenda;
     }
 
 }
