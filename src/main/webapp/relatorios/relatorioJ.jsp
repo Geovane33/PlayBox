@@ -23,16 +23,28 @@
                     <th>Filial</th>
                     <th>Cliente</th>
                     <th>Valor</th>
+                     <th>Data</th>
                 </tr>
             </thead>
             <!---->
-            <tbody id="tabelaRelatorio">
-                <tr>
-                    <td id="filial"></td>
-                    <td id="cliente"></td>
-                    <td id="valor"></td>
+            <tbody id="tabela">
+<!--                <tr>
+                    <td>teste1</td>
+                    <td>teste1</td>
+                    <td>teste1</td>
                 </tr>
+                <tr>
+                    <td>teste2</td>
+                    <td>teste2</td>
+                    <td>teste2</td>
+                </tr>
+                <tr>
+                    <td>teste3</td>
+                    <td>teste3</td>
+                    <td>teste3</td>
+                </tr>-->
             </tbody>
         </table>
+        <label id="totalFilial">Total Venda Filial: </label>
     </body>
 </html>

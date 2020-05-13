@@ -2,9 +2,10 @@
 var relatorio = {};
 var carregou = true;
 var filial = {};
+var totalFilial;
 $(document).ready(() => {
     init();
-
+    
 //    function () {
 //
 //        $("#output").pivotUI(
@@ -21,21 +22,11 @@ $(document).ready(() => {
 //    ;
 });
 
-/**
- * metodo manter a tabela "atualizada" remove todas as linhas a cada vez que atualiza a linhasTBV
- */
-//function removeLinha() {
-//    i = document.querySelectorAll("tr").length - 2;
-//    for (; i > 0; i--) {
-//        document.getElementById('tableProd').getElementsByTagName('tr')[0].remove();
-//    }
-//}
-
-
 function init() {
     getFilial();
     obterRelatorio();
-    tabela();
+    setTimeout(()=> tabela(), 500);
+
 
 }
 
@@ -51,20 +42,15 @@ function getFilial() {
 }
 
 function carregaTabela() {
-//    removeLinha();
     for (var i = 0; i < relatorio.length; i++) {
-        insereCadastro(relatorio[i]);
-//        var linha = $("<tr>");
-//        var coluna = "";
-//        coluna += '<td>' + relatorio[i].filial.nome + '</td>';
-//        coluna += '<td>' + relatorio[i].cliente.nome + '</td>';
-//        coluna += '<td>' + relatorio[i].total + '</td>';
-////        coluna += '<td>' + dataAtualFormatada(relatorio[i].dataVenda) + '</td>';
-////        coluna += '<td><img class="imgDel" src="../icons/baseline_delete_forever_black_18dp.png" onClick="excluirProd(' + i + ', ' + produto[i].id + ')"></td>';
-////        coluna += '<td><img class="imgDel" src="../icons/outline_edit_black_18dp.png" onClick="editarProd(' + i + ')"></td>';
-//        linha.append(coluna);
-//        $("#tabelaRelatorio").append(linha);
+        insereRelatorio(relatorio[i]);
+//        TotalFilial();
     }
+   
+}
+
+function totalFilial(relatorio){
+    
 }
 
 
@@ -75,7 +61,7 @@ function obterRelatorio() {
     $('#obterRelatorio').click(() => {
 //        consultarClientes();
     });
-    consulta = $("#campo").val();
+//    consulta = $("#campo").val();
     $.ajax({
         type: 'GET',
         url: '../notestore?controller=Relatorio&acao=consultar&idFilial=' + filial.id,
@@ -99,53 +85,19 @@ function obterRelatorio() {
         }});
 }
 
-
-var selectedRow = null
-
-function cadastrar() {
-    if (validate()) {
-        var produto = leiaDados();
-        
-        if (selectedRow == null) {
-            insereCadastro(produto);
-
-        } else {
-            editaCadastro(produto);
-        }
-        resetForm(); 
-    }
-}
-
-// Cria um objeto produto com os dados preenchidos
-function leiaDados() {
-    var produto = {}; // Criando o objeto
-
-    // Inserindo seus atributos
-    produto["Nome"] = document.getElementById("nome").value;
-    produto["Tipo"] = document.getElementById("tipo").value;
-    produto["Marca"] = document.getElementById("marca").value;
-    produto["Descricao"] = document.getElementById("desc").value;
-    produto["Quantidade"] = document.getElementById("qtd").value;
-    produto["Preco"] = "R$ "+document.getElementById("preco").value;
-    produto["DataDeEntrada"] = document.getElementById("dataEnt").value;
-    // ---
-
-    return produto;
-}
-
 // Insere os dados na Tabela
-function insereCadastro( relatorio ) {
+function insereRelatorio(relatorio) {
     var table = document.getElementById("tabela").getElementsByTagName('tbody')[0];
     var newRow = table.insertRow(table.length);
 
     cell1 = newRow.insertCell(0); // Nome
     cell1.innerHTML = relatorio.filial.nome;
-    cell2 = newRow.insertCell(1); // Tipo
+    cell2 = newRow.insertCell(1); // nome do cliente
     cell2.innerHTML = relatorio.cliente.nome;
-    cell3 = newRow.insertCell(2); // Marca
+    cell3 = newRow.insertCell(2); //total por venda
     cell3.innerHTML = relatorio.total;
-//    cell4 = newRow.insertCell(3); // Descrição
-//    cell4.innerHTML = relatorio.Descricao;
+    cell4 = newRow.insertCell(3); //data da venda
+    cell4.innerHTML = dataAtualFormatada(relatorio.dataVenda);
 //    cell5 = newRow.insertCell(4); // Quantidade
 //    cell5.innerHTML = relatorio.Quantidade
 //    cell6 = newRow.insertCell(5); // Preço
@@ -171,7 +123,7 @@ function resetForm() {
 }
 
 // Responsavel por jogar os dados nos campos para serem alterados
-function onEdit( td ) {
+function onEdit(td) {
     selectedRow = td.parentElement.parentElement;
     document.getElementById("nome").value = selectedRow.cells[0].innerHTML;
     document.getElementById("tipo").value = selectedRow.cells[1].innerHTML;
@@ -183,7 +135,7 @@ function onEdit( td ) {
 }
 
 // Insere na lista o produto alterado
-function editaCadastro( produto ) {
+function editaCadastro(produto) {
     selectedRow.cells[0].innerHTML = produto.Nome;
     selectedRow.cells[1].innerHTML = produto.Tipo;
     selectedRow.cells[2].innerHTML = produto.Marca;
@@ -194,8 +146,8 @@ function editaCadastro( produto ) {
 }
 
 // Resonsavel por deletar o produto desejado
-function onDelete( td ) {
-    if ( confirm('Tem certeza que deseja deletar este produto ?') ) {
+function onDelete(td) {
+    if (confirm('Tem certeza que deseja deletar este produto ?')) {
         row = td.parentElement.parentElement;
         document.getElementById("listaCadastros").deleteRow(row.rowIndex);
         resetForm();
@@ -214,4 +166,14 @@ function validate() {
             document.getElementById("fullNameValidationError").classList.add("hide");
     }
     return isValid;
+}
+
+function dataAtualFormatada(data) {
+    var novaData = new Date(data),
+            dia = (novaData.getDate()).toString(),
+            diaF = (dia.length === 1) ? '0' + dia : dia,
+            mes = (novaData.getMonth() + 1).toString(), //+1 pois no getMonth Janeiro começa com zero.
+            mesF = (mes.length === 1) ? '0' + mes : mes,
+            anoF = novaData.getFullYear();
+    return dia + "/" + mes + "/" + anoF;
 }
