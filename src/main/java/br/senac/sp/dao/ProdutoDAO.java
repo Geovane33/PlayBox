@@ -105,8 +105,7 @@ public class ProdutoDAO {
                 listaProdutos.add(produto);
             }
         } catch (SQLException ex) {
-            System.out.println("Erro ao consultar produto"
-                    + "");
+            System.out.println("Erro ao consultar produto");
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
