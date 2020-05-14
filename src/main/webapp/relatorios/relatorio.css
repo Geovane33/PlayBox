@@ -126,3 +126,15 @@ table .total td {
     text-align: center;
     text-align-last: start;
 }
+
+/*.labels{
+    position: absolute;
+    left: 443px;
+    top: 210px;
+}
+
+.divTabela{
+    top: -485px;
+    left: 440px;
+    position: relative;
+}*/

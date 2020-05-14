@@ -19,8 +19,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Relatorios</title>
     </head>
-    <body>
-        <table id="tabela" class="display" style="width:100%" border="1" width="1" cellspacing="2">
+    <body hidden>
+        <table id="tabela"  class="display" style="width:100%" border="1" width="1" cellspacing="2">
             <thead>
                 <tr>
                     <th>Filial</th>
@@ -33,21 +33,11 @@
             <tbody id="tabelaLinhas">
             </tbody>
         </table>
-        <label id="totalFilial">Total Venda Filial: R$ 0</label>
         <div class="divTabela">
-<!--            <table id="tabela2" class="display" style="width:100%" border="1" width="1" cellspacing="2">
-                <thead>
-                    <tr>
-                        <th>Cliente</th>
-                        <th>Nome</th>
-                        <th>Marca</th>
-                        <th>Quantidade</th>
-                        <th>Preço</th>
-                    </tr>
-                </thead>
-                <tbody id="tabelaLinhasProd">
-                </tbody>
-            </table>-->
+        </div>
+        <div class="labels">
+        <label id="totalFilial">Valor Bruto Das Vendas: R$ 0</label><br>
+        <label id="qtdVendas">Quantidade De Vendas Realizadas: 0</label><br>
         </div>
     </body>
 </html>

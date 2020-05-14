@@ -130,7 +130,7 @@ public class ControllerCliente implements Controller {
             PrintWriter out = response.getWriter();
             if (vendaDAO.clientePossuiVenda(id).isEmpty()) {
                 if (clienteDAO.excluirCliente(id)) {
-                    out.write("Cliente excluido com sucesso");
+                    out.write("200");
                 } else {
                     out.write("Erro ao excluir cliente");
                 }
