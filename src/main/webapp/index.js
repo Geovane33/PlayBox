@@ -40,35 +40,27 @@ function carregarFiliais() {
     if (filiais.length < 1) {
         $("#formFiliais").html("<h3> Nenhuma filial cadastrada</h3>");
     } else {
+
         for (var i = 0; i < filiais.length; i++) {
             console.log(filiais[i]);
             filial.append('<input type=button  value="' + filiais[i].nome + '" onClick=enviarFilial(' + i + ')><br>');
         }
+        filial.append('<input type=button  value="Relatorio Geral" onClick=relatorioGeral()><br>');
         $("#formFiliais").html(filial);
     }
 }
 
-//function submitFilial(idFilial) {
-//    $.ajax({
-//        type: 'GET',
-//        url: 'notestore?controller=Filial&acao=consultar&filiais=' + idFilial,
-//        contentType: 'application/json;charset=UTF-8',
-//        headers: {
-//            Accept: "application/json;charset=UTF-8",
-//            "Content-Type": "application/json;charset=UTF-8"
-//        },
-//        error: function (jqXHR, textStatus, errorThrown) {
-//            alert("erro ao carregar filial");
-//        },
-//        success: function (result) {
-//            filiais = result;
-//            carregarFiliais();
-//        }
-//    });
-//}
-
 function enviarFilial(indice) {
     var filial = JSON.stringify(filiais[indice]);
     sessionStorage.setItem('filial', filial);
+    $('form').submit();
+}
+
+function relatorioGeral() {
+    var filial = {};
+    filial.id = 0;
+    filial.nome = 'Relatório Geral';
+    filial.estado = 'Relatório Geral';
+    sessionStorage.setItem('filial', JSON.stringify(filial));
     $('form').submit();
 }
