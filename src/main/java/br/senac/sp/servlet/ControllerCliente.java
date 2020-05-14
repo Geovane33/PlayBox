@@ -5,6 +5,7 @@ import br.senac.sp.dao.VendaDAO;
 import br.senac.sp.entidade.Cliente;
 import br.senac.sp.utils.BuilderCliente;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -45,6 +46,41 @@ public class ControllerCliente implements Controller {
         }
     }
 
+       /**
+     * Realiza consultas
+     *
+     * @param request
+     * @param response
+     */
+    @Override
+    public void consultar(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String consulta = request.getHeader("X-Consulta");
+            String consultaTipo = request.getHeader("X-ConsultaTipo");
+            PrintWriter out = response.getWriter();
+            ClienteDAO clienteDAO = new ClienteDAO();
+            Gson gson = new GsonBuilder()
+                    .setDateFormat("dd/MM/yyyy")
+                    .create();
+
+            List<Cliente> clientes = clienteDAO.consultarCliente(consulta, consultaTipo);
+            if (clientes.isEmpty()) {
+                out.write("");
+            } else {
+                response.setContentType("application/json");
+                out.write(gson.toJson(clientes));
+            }
+
+            out.flush();
+            out.close();
+        } catch (IOException ex) {
+            System.out.println("Erro ao consultar clientes");
+            System.out.println("Message: " + ex.getMessage());
+            System.out.println("Class: " + ex.getClass());
+        }
+
+    }
+    
     /**
      * atualiza clientes
      *
@@ -59,11 +95,16 @@ public class ControllerCliente implements Controller {
             ClienteDAO clienteDAO = new ClienteDAO();
             Cliente cliente = builderCliente.getObjCliente();
             PrintWriter out = response.getWriter();
-            if (clienteDAO.atualizarCliente(cliente)) {
-                out.write("200-2");
+            if (clienteDAO.consultarCliente(cliente.getId()+"", cliente.getCpf()).isEmpty()) {
+                if (clienteDAO.atualizarCliente(cliente)) {
+                    out.write("200-2");
+                } else {
+                    out.write("500-2");
+                }
             } else {
-                out.write("500-2");
+                out.write("2");
             }
+
             out.flush();
             out.close();
         } catch (IOException ex) {
@@ -106,36 +147,5 @@ public class ControllerCliente implements Controller {
         }
     }
 
-    /**
-     * Realiza consultas
-     *
-     * @param request
-     * @param response
-     */
-    @Override
-    public void consultar(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            String consulta = request.getHeader("X-Consulta");
-            String consultaTipo = request.getHeader("X-ConsultaTipo");
-            PrintWriter out = response.getWriter();
-            ClienteDAO clienteDAO = new ClienteDAO();
-            Gson gson = new Gson();
-
-            List<Cliente> clientes = clienteDAO.consultarCliente(consulta, consultaTipo);
-            if (clientes.isEmpty()) {
-                out.write("");
-            } else {
-                response.setContentType("application/json");
-                out.write(gson.toJson(clientes));
-            }
-
-            out.flush();
-            out.close();
-        } catch (IOException ex) {
-            System.out.println("Erro ao consultar clientes");
-            System.out.println("Message: " + ex.getMessage());
-            System.out.println("Class: " + ex.getClass());
-        }
-
-    }
+ 
 }

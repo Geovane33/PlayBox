@@ -83,8 +83,8 @@ public class ProdutoDAO {
 
         try {
             conexao = ConexaoDB.getConexao();
-            if (!values.equals("") && tipo.equals("nome")) {
-                ps = conexao.prepareStatement("SELECT * FROM produto WHERE nome_produto like '%" + values + "%';");
+            if (!values.equals("") && tipo.equals("venda")) {
+                ps = conexao.prepareStatement("SELECT * FROM venda_produto vp, produto WHERE vp.id_produto = '" + values + "';");
             } else if (!values.equals("") && tipo.equals("ID")) {
                 ps = conexao.prepareStatement("SELECT * FROM produto WHERE id_produto = " + Integer.parseInt(values));
             } else if (tipo.equals("nome") || tipo.equals("ID") || tipo.equals("FILIAL") ) {
@@ -101,7 +101,7 @@ public class ProdutoDAO {
                 produto.setQuantidade(rs.getInt("quantidade_produto"));
                 produto.setValor(rs.getInt("valor_produto"));
                 produto.setDescricao(rs.getString("desc_produto"));
-                produto.setDataDeEntrada(data.parseData(rs.getDate("data_entrada").toString(), "yyyy-MM-dd"));
+                produto.setDataDeEntrada(rs.getTimestamp("data_entrada"));
                 listaProdutos.add(produto);
             }
         } catch (SQLException ex) {

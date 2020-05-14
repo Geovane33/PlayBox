@@ -31,19 +31,20 @@
                         </div>
                         <div>
                             <label for="nome">Nome*</label>
-                            <input class="cliente" type="text" name="nome" id="nome" minlength="2" placeholder="nome">
+                            <input class="NOME" type="text" name="nome" id="nome" minlength="2" placeholder="nome">
                         </div>
                         <div>
                             <label for="CPF">CPF*</label>
-                            <input class="cliente"type="text"  id="CPF" name="CPF" placeholder="CPF">
+                            <input class="CPF"ype="text"  id="CPF" name="CPF" placeholder="CPF">
                         </div>
                         <div>
                             <label for="nascimento">Nascimento*</label>
-                            <input class="cliente" type="text" id="nascimento" name="nascimento"/>
+                            <input class="NASCIMENTO" type="text" id="nascimento" name="nascimento"/>
                         </div>
                         <div>
                             <label for="sexo">Sexo*</label>
-                            <input class="cliente"type="text" name="sexo" id="sexo" placeholder="sexo">
+                            <input class="SEXO"type="text" name="sexo" id="sexo" placeholder="sexo">
+                            <option></option>
                         </div>
                         <div>
                             <label for="telefone">Telefone</label>
@@ -51,12 +52,40 @@
                         </div>
                         <div>
                             <label for="email">E-mail*</label>
-                            <input class="cliente" type="email" name="email" id="email" placeholder="e-mail">
+                            <input class="EMAIL" type="email" name="email" id="email" placeholder="e-mail">
                         </div>
-
                         <div>
-                            <label for="uf">UF*</label>
-                            <input class="cliente" type="text" minlength="2" maxlength="2" name="uf" id="uf" placeholder="UF">
+                            <label class="UF" for="uf">UF*</label>
+                            <select class="UF" id="uf" name="uf">
+                                <option value="">---</option>
+                                <option value="AC">AC</option>
+                                <option value="AL">AL</option>
+                                <option value="AP">AP</option>
+                                <option value="AM">AM</option>
+                                <option value="BA">BA</option>
+                                <option value="CE">CE</option>
+                                <option value="DF">DF</option>
+                                <option value="ES">ES</option>
+                                <option value="GO">GO</option>
+                                <option value="MA">MA</option>
+                                <option value="MT">MT</option>
+                                <option value="MS">MS</option>
+                                <option value="MG">MG</option>
+                                <option value="PR">PR</option>
+                                <option value="PB">PB</option>
+                                <option value="PA">PA</option>
+                                <option value="PE">PE</option>
+                                <option value="PI">PI</option>
+                                <option value="RJ">RJ</option>
+                                <option value="RN">RN</option>
+                                <option value="RS">RS</option>
+                                <option value="RO">RO</option>
+                                <option value="RR">RR</option>
+                                <option value="SC">SC</option>
+                                <option value="SE">SE</option>
+                                <option value="SP">SP</option>
+                                <option value="TO">TO</option>
+                            </select>
                         </div>
                         <div>
                             <label for="CEP">CEP</label>
@@ -64,7 +93,7 @@
                         </div>
                         <div>
                             <label for="cidade">Cidade*</label>
-                            <input class="cliente" type="text" name="cidade" id="cidade" placeholder="cidade"><br>
+                            <input class="CIDADE" type="text" name="cidade" id="cidade" placeholder="cidade"><br>
                         </div>
                         <div>
                             <label for="bairro">Bairro</label>
@@ -72,7 +101,7 @@
                         </div>
                         <div>
                             <label for="numero">Numero</label>
-                            <input type="text" name="numero" id="numero" placeholder="numero da casa" >
+                            <input type="text" pattern="[0-9]+$" required name="numero" id="numero" placeholder="numero" >
 
                             <input type="hidden" value="Cliente" name="controller">
                         </div>

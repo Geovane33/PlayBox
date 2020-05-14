@@ -25,6 +25,10 @@ public class BuilderCliente {
         this.mapCliente = mapCliente;
     }
 
+    /**
+     * Obeter um objeto Cliente
+     * @return Cliente
+     */
     public Cliente getObjCliente() {
 
         Cliente cliente = new Cliente();

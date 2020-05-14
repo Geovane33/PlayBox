@@ -44,12 +44,22 @@ public class RelatorioDAO {
                     + "		INNER JOIN\n"
                     + "	cliente AS c on v.id_cliente = c.id_cliente\n"
                     + "        AND f.id_filial =" + idFilial);
+            if (idFilial == 0) {
+                ps = conexao.prepareStatement("SELECT \n"
+                        + "    *\n"
+                        + "FROM\n"
+                        + "    filial AS f\n"
+                        + "        INNER JOIN\n"
+                        + "    venda AS v ON f.id_filial = v.id_filial\n"
+                        + "		INNER JOIN\n"
+                        + "	cliente AS c on v.id_cliente = c.id_cliente\n");
+            }
             rs = ps.executeQuery();
             while (rs.next()) {
                 Venda venda = new Venda();
                 venda.setId(rs.getInt("id_venda"));
                 venda.setTotal(rs.getInt("total_venda"));
-                venda.setDataVenda(data.parseData(rs.getDate("data_venda").toString(), "yyyy-MM-dd"));
+                venda.setDataVenda(rs.getTimestamp("data_venda"));
                 venda.setFilial(obterFilial(rs));
                 venda.setCliente(obterCliente(rs));
                 venda.setProdutos(produtosDaVenda(venda.getId()));
@@ -67,7 +77,7 @@ public class RelatorioDAO {
                 if (rs != null) {
                     rs.close();
                 }
-               ConexaoDB.fecharConexao(conexao);
+                ConexaoDB.fecharConexao(conexao);
 
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexãoDB");
@@ -82,7 +92,7 @@ public class RelatorioDAO {
     /**
      * metodo que realiza pesquisa de produto por nome
      *
-     * @param idVenda 
+     * @param idVenda
      * @return listaProdutos
      */
     private List<Produto> produtosDaVenda(int idVenda) {
@@ -113,7 +123,7 @@ public class RelatorioDAO {
                 produto.setQuantidade(rs.getInt("quantidade_produto"));
                 produto.setValor(rs.getInt("valor_produto"));
                 produto.setDescricao(rs.getString("desc_produto"));
-                produto.setDataDeEntrada(data.parseData(rs.getDate("data_entrada").toString(), "yyyy-MM-dd"));
+                produto.setDataDeEntrada(rs.getTimestamp("data_entrada"));
                 listaProdutos.add(produto);
             }
         } catch (SQLException ex) {
@@ -128,7 +138,7 @@ public class RelatorioDAO {
                 if (rs != null) {
                     rs.close();
                 }
-               ConexaoDB.fecharConexao(conexao);
+                ConexaoDB.fecharConexao(conexao);
 
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexãoDB");
@@ -147,7 +157,7 @@ public class RelatorioDAO {
         cliente.setIdFilial(rs.getInt("id_filial"));
         cliente.setNome(rs.getString("nome_cliente"));
         cliente.setCpf(rs.getString("cpf_cliente"));
-        cliente.setDataNascimento(data.parseData(rs.getDate("nasc_cliente").toString(), "yyyy-MM-dd"));
+        cliente.setDataNascimento(rs.getTimestamp("nasc_cliente"));
         cliente.setSexo(rs.getString("sexo_cliente"));
         cliente.setTelefone(rs.getString("telefone_cliente"));
         cliente.setEmail(rs.getString("email_cliente"));
@@ -166,29 +176,5 @@ public class RelatorioDAO {
         filial.setEstado(rs.getString("estado_filial"));
         return filial;
     }
-    
+
 }
-
-/*
-
-SELECT 
-    *
-FROM
-    filial AS f
-        INNER JOIN
-    venda AS v ON f.id_filial = v.id_filial
-		INNER JOIN
-	cliente AS c on v.id_cliente = c.id_cliente
-        AND f.id_filial = '1';
-
-SELECT 
-    v.id_venda, vp.id_produto, p.nome_produto, p.valor_produto
-FROM
-    venda v
-        INNER JOIN
-    venda_produto vp ON v.id_venda = vp.id_venda
-        INNER JOIN
-    produto p ON vp.id_produto = p.id_produto
-        AND v.id_venda = '1';
-
- */

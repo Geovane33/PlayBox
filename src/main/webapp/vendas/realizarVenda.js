@@ -57,7 +57,6 @@ function listarClientes() {
 
 function carregarListCli() {
     for (i = 0; i < cliente.length; i++) {
-        cliente[i].dataNascimento = dataAtualFormatada(cliente[i].dataNascimento);
         var lista = "";
         lista += '<option value="' + i + '">' + cliente[i].nome + '</option>';
         $("#listarClientes").append(lista);
@@ -356,6 +355,7 @@ function getProdVenda() {
 function gerarVenda() {
     if (venda.cliente !== undefined) {
         if (venda.total > 0) {
+            venda.dataVenda = new Date();
             getProdVenda();
             getFilial();
             $.ajax({
@@ -387,14 +387,4 @@ function gerarVenda() {
     } else {
         alert("erro ao obter cliente e produto");
     }
-}
-
-function dataAtualFormatada(data) {
-    var novaData = new Date(data),
-            dia = (novaData.getDate()).toString(),
-            diaF = (dia.length === 1) ? '0' + dia : dia,
-            mes = (novaData.getMonth() + 1).toString(), //+1 pois no getMonth Janeiro começa com zero.
-            mesF = (mes.length === 1) ? '0' + mes : mes,
-            anoF = novaData.getFullYear();
-    return dia + "" + mes + "" + anoF;
 }

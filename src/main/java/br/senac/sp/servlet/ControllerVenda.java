@@ -10,6 +10,7 @@ import br.senac.sp.dao.VendaDAO;
 import br.senac.sp.entidade.Produto;
 import br.senac.sp.entidade.Venda;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -26,10 +27,11 @@ public class ControllerVenda implements Controller {
     @Override
     public void adicionar(HttpServletRequest request, HttpServletResponse response) {
         try {
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder()
+                    .setDateFormat("dd/MM/yyyy")
+                    .create();
             VendaDAO vendaDAO = new VendaDAO();
             Venda venda = gson.fromJson(request.getHeader("X-Venda"), Venda.class);
-            venda.setDataVenda(new Date());
             String msg = validarEstoque(venda);
 
             PrintWriter out = response.getWriter();
@@ -52,17 +54,35 @@ public class ControllerVenda implements Controller {
 
         }
     }
+    
+      /**
+     * Sem estrutura de codigos
+     *
+     * @param request
+     * @param response
+     */
+    @Override
+    public void consultar(HttpServletRequest request, HttpServletResponse response) {
+    }
 
+    /**
+     * Sem estrutura de codigos
+     *
+     * @param request
+     * @param response
+     */
     @Override
     public void atualizar(HttpServletRequest request, HttpServletResponse response) {
     }
 
+    /**
+     * Sem estrutura de codigos
+     *
+     * @param request
+     * @param response
+     */
     @Override
     public void excluir(HttpServletRequest request, HttpServletResponse response) {
-    }
-
-    @Override
-    public void consultar(HttpServletRequest request, HttpServletResponse response) {
     }
 
     private String validarEstoque(Venda venda) {

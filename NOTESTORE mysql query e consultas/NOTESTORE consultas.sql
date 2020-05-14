@@ -157,17 +157,3 @@ FROM
     filial f
 WHERE
     f.id_filial = '2';
-    
-    
--- query que eu estava fazendo para pegar o valor de todas as compras eu ia ver o valor do produto para fazer a soma dps kkk
--- valor de todas as vendas
-SELECT 
-    *
-FROM
-    filial AS F
-        INNER JOIN
-    venda AS V ON F.id_filial = v.id_filial
-        INNER JOIN
-    venda_produto AS vp ON v.id_venda = vp.id_venda
-        INNER JOIN
-    produto AS p ON p.id_filial = f.id_filial;

@@ -62,22 +62,12 @@ function carregaTabela() {
         coluna += '<td>' + produto[i].descricao + '</td>';
         coluna += '<td>' + produto[i].quantidade + '</td>';
         coluna += '<td>' + produto[i].valor + '</td>';
-        coluna += '<td>' + dataAtualFormatada(produto[i].dataDeEntrada) + '</td>';
+        coluna += '<td>' + produto[i].dataDeEntrada + '</td>';
         coluna += '<td><img class="imgDel" src="../icons/baseline_delete_forever_black_18dp.png" onClick="excluirProd(' + i + ', ' + produto[i].id + ')"></td>';
         coluna += '<td><img class="imgDel" src="../icons/outline_edit_black_18dp.png" onClick="editarProd(' + i + ')"></td>';
         linha.append(coluna);
         $("#listaCadastros").append(linha);
     }
-}
-
-function dataAtualFormatada(data) {
-    var novaData = new Date(data),
-            dia = (novaData.getDate()).toString(),
-            diaF = (dia.length === 1) ? '0' + dia : dia,
-            mes = (novaData.getMonth() + 1).toString(), //+1 pois no getMonth Janeiro começa com zero.
-            mesF = (mes.length === 1) ? '0' + mes : mes,
-            anoF = novaData.getFullYear();
-    return diaF + "/" + mesF + "/" + anoF;
 }
 
 function editarProd(indice) {
@@ -87,7 +77,7 @@ function editarProd(indice) {
     document.getElementById("desc").value = produto[indice].descricao;
     document.getElementById("qtd").value = produto[indice].quantidade;
     document.getElementById("valor").value = produto[indice].valor;
-    document.getElementById("dataEnt").value = dataAtualFormatada(produto[indice].dataDeEntrada);
+    document.getElementById("dataEnt").value = produto[indice].dataDeEntrada;
     document.getElementById("idFilial").value = produto[indice].idFilial;
     document.getElementById("cadastrar").innerHTML = "atualizar";
     document.getElementById("cadastrar").value = "atualizar";
@@ -150,6 +140,11 @@ function validarForm() {
             $.validator.format("Minimo {0} caracteres"));
     // combina os dois, aplicando as regras nos campos que contenham a classe chamada "cliente"
     $.validator.addClassRules("produto", {cRequired: true, cMinlength: 2});
+    
+     $.validator.addMethod("cMinlength", $.validator.methods.minlength,
+            $.validator.format("Minimo {0} caracteres"));
+    // combina os dois, aplicando as regras nos campos que contenham a classe chamada "cliente"
+    $.validator.addClassRules("quantidade", {cRequired: true, cMinlength: 1});
 }
 function getFilial() {
     filial = JSON.parse(sessionStorage.getItem('filial'));

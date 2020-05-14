@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 public interface Controller {
 
     /**
-     * Adicionar um novo objeto
+     * Adicionar
      *
      * @param request
      * @param response

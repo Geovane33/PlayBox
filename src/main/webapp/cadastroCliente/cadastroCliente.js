@@ -4,8 +4,6 @@ var dataNascimento = null;
 var consultaTipo = 'nome';
 var filial;
 var carregou = true;
-
-
 $(document).ready(function () {
     init();
 });
@@ -121,8 +119,6 @@ function consultarClientes() {
         }});
 }
 
-
-
 function buttonRadio(tipo) {
     this.consultaTipo = tipo;
     if (consultaTipo === 'CPF') {
@@ -158,7 +154,7 @@ function carregaTabela() {
         var coluna = "";
         coluna += '<td>' + cliente[i].nome + '</td>';
         coluna += '<td>' + cliente[i].cpf + '</td>';
-        coluna += '<td>' + dataAtualFormatada(cliente[i].dataNascimento) + '</td>';
+        coluna += '<td>' + cliente[i].dataNascimento + '</td>';
         coluna += '<td>' + cliente[i].email + '</td>';
         coluna += '<td>' + cliente[i].cidade + '</td>';
         coluna += '<td><img class="imgDel" src="../icons/baseline_delete_forever_black_18dp.png" onClick="excluirCliente(this ,' + cliente[i].id + ')"></td>';
@@ -166,7 +162,6 @@ function carregaTabela() {
         linha.append(coluna);
         $("#tableClientes").append(linha);
     }
-
 }
 
 function editarCliente(indice) {
@@ -174,7 +169,7 @@ function editarCliente(indice) {
     document.getElementById("idFilial").value = cliente[indice].idFilial;
     document.getElementById("nome").value = cliente[indice].nome;
     document.getElementById("CPF").value = cliente[indice].cpf;
-    document.getElementById("nascimento").value = dataAtualFormatada(cliente[indice].dataNascimento);
+    document.getElementById("nascimento").value = cliente[indice].dataNascimento;
     document.getElementById("sexo").value = cliente[indice].sexo;
     document.getElementById("telefone").value = cliente[indice].telefone;
     document.getElementById("email").value = cliente[indice].email;
@@ -189,8 +184,6 @@ function editarCliente(indice) {
 
 function excluirCliente(td, idCli) {
     if (confirm("Deseja excluir?")) {
-        linha = td.parentElement.parentElement;
-        document.getElementById("tableClientes").deleteRow(linha.rowIndex - 1);
         $.ajax({
             type: 'GET',
             url: '../notestore?controller=Cliente&acao=excluir&id=' + idCli,
@@ -202,32 +195,78 @@ function excluirCliente(td, idCli) {
                 alert("Erro ao excluir cliente");
             },
             success: function (result) {
-                alert(result);
+                if (result === '200') {
+                    alert('Cliente excluido com sucesso');
+                    linha = td.parentElement.parentElement;
+                    document.getElementById("tableClientes").deleteRow(linha.rowIndex - 1);
+                } else {
+                    alert(result);
+                }
             }});
     } else {
         alert("cancelado");
     }
 }
 
-function dataAtualFormatada(data) {
-    var novaData = new Date(data),
-            dia = (novaData.getDate()).toString(),
-            diaF = (dia.length === 1) ? '0' + dia : dia,
-            mes = (novaData.getMonth() + 1).toString(), //+1 pois no getMonth Janeiro começa com zero.
-            mesF = (mes.length === 1) ? '0' + mes : mes,
-            anoF = novaData.getFullYear();
-    return dia + "/" + mes + "/" + anoF;
-}
-
 function validarForm() {
     //Valida o formulário
     $("#formCad").validate();
-    //apelido necessário para o cRequired com nova mensagem
-    $.validator.addMethod("cRequired", $.validator.methods.required,
-            "Campo obrigatorio");
-    // apelido cMinlength
-    $.validator.addMethod("cMinlength", $.validator.methods.minlength,
+    //personalizar mensagens
+    $.validator.addMethod("NOME", $.validator.methods.required,
+            "NOME obrigatorio");
+
+    $.validator.addMethod("CPF", $.validator.methods.required,
+            "CPF obrigatorio");
+
+    $.validator.addMethod("NASCIMENTO", $.validator.methods.required,
+            "NASCIMENTO obrigatorio");
+
+    $.validator.addMethod("SEXO", $.validator.methods.required,
+            "SEXO obrigatorio");
+
+    $.validator.addMethod("EMAIL", $.validator.methods.required,
+            "EMAIL obrigatorio");
+
+    $.validator.addMethod("UF", $.validator.methods.required,
+            "UF obrigatorio");
+
+    $.validator.addMethod("CIDADE", $.validator.methods.required,
+            "CIDADE obrigatorio");
+
+
+    // personalizar tamanho e mensagens dos cmapos
+    $.validator.addMethod("NOME2", $.validator.methods.minlength,
             $.validator.format("Minimo {0} caracteres"));
-    // combina os dois, aplicando as regras nos campos que contenham a classe chamada "cliente"
-    $.validator.addClassRules("cliente", {cRequired: true, cMinlength: 2});
+    // combina os dois, aplicando as regras nos campos que contenham a classe "NOME"
+    $.validator.addClassRules("NOME", {NOME: true, NOME2: 3});//NOME REQUERIDO --- NOME2 MININO DE CARACTERES
+
+
+    $.validator.addMethod("CPF2", $.validator.methods.minlength,
+            $.validator.format("Minimo 11 caracteres"));
+    $.validator.addClassRules("CPF", {CPF: true, CPF2: 14});
+
+
+    $.validator.addMethod("NASCIMENTO2", $.validator.methods.minlength,
+            $.validator.format("Minimo 8 caracteres"));
+    $.validator.addClassRules("NASCIMENTO", {NASCIMENTO: true, NASCIMENTO2: 10});
+
+
+    $.validator.addMethod("SEXO2", $.validator.methods.minlength,
+            $.validator.format("Minimo 4 caracteres"));
+    $.validator.addClassRules("SEXO", {SEXO: true, SEXO2: 4});
+
+
+    $.validator.addMethod("EMAIL2", $.validator.methods.minlength,
+            $.validator.format("Minimo 5 caracteres"));
+    $.validator.addClassRules("EMAIL", {EMAIL: true, EMAIL2: 5});
+
+
+    $.validator.addMethod("UF2", $.validator.methods.maxlength,
+            $.validator.format("Selecione o UF"));
+    $.validator.addClassRules("UF", {UF: true, UF2: 2});
+
+
+    $.validator.addMethod("CIDADE2", $.validator.methods.minlength,
+            $.validator.format("Minimo 4 caracteres"));
+    $.validator.addClassRules("CIDADE", {CIDADE: true, CIDADE2: 4});
 }
