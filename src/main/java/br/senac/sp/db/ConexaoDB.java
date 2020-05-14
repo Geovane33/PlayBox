@@ -36,7 +36,7 @@ public class ConexaoDB {
      * é retornado uma Connection
      */
     public static Connection getConexao() {
-        String dbURL = DB_ADDRESS + "?useTimezone=true&serverTimezone=UTC";
+        String dbURL = DB_ADDRESS + "?useTimezone=true&serverTimezone=GMT-3";
 
         try {
             CONEXAO = DriverManager.getConnection(dbURL, USER, PASSWORD);

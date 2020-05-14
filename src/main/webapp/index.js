@@ -48,24 +48,24 @@ function carregarFiliais() {
     }
 }
 
-function submitFilial(idFilial) {
-    $.ajax({
-        type: 'GET',
-        url: 'notestore?controller=Filial&acao=consultar&filiais=' + idFilial,
-        contentType: 'application/json;charset=UTF-8',
-        headers: {
-            Accept: "application/json;charset=UTF-8",
-            "Content-Type": "application/json;charset=UTF-8"
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            alert("erro ao carregar filial");
-        },
-        success: function (result) {
-            filiais = result;
-            carregarFiliais();
-        }
-    });
-}
+//function submitFilial(idFilial) {
+//    $.ajax({
+//        type: 'GET',
+//        url: 'notestore?controller=Filial&acao=consultar&filiais=' + idFilial,
+//        contentType: 'application/json;charset=UTF-8',
+//        headers: {
+//            Accept: "application/json;charset=UTF-8",
+//            "Content-Type": "application/json;charset=UTF-8"
+//        },
+//        error: function (jqXHR, textStatus, errorThrown) {
+//            alert("erro ao carregar filial");
+//        },
+//        success: function (result) {
+//            filiais = result;
+//            carregarFiliais();
+//        }
+//    });
+//}
 
 function enviarFilial(indice) {
     var filial = JSON.stringify(filiais[indice]);

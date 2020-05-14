@@ -9,6 +9,7 @@ import br.senac.sp.dao.ProdutoDAO;
 import br.senac.sp.entidade.Produto;
 import br.senac.sp.utils.BuilderProduto;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -31,9 +32,11 @@ public class ControllerProduto implements Controller {
     public void adicionar(HttpServletRequest request, HttpServletResponse response) {
         try {
             ProdutoDAO produtoDAO = new ProdutoDAO();
-            BuilderProduto builderProduto = new BuilderProduto();
-            Produto produto = builderProduto.getObjProduto(request);
+            BuilderProduto builderProduto = new BuilderProduto(request.getParameterMap());
+            Produto produto = builderProduto.getObjProduto();
+
             PrintWriter out = response.getWriter();
+
             if (produtoDAO.salvarProduto(produto)) {
                 out.write("produto cadastrado com sucesso");
             } else {
@@ -50,6 +53,42 @@ public class ControllerProduto implements Controller {
     }
 
     /**
+     * Realiza consultas
+     *
+     * @param request
+     * @param response
+     */
+    @Override
+    public void consultar(HttpServletRequest request, HttpServletResponse response
+    ) {
+
+        try {
+            PrintWriter out = response.getWriter();
+            ProdutoDAO produtoDAO = new ProdutoDAO();
+            Gson gson = new GsonBuilder()
+                    .setDateFormat("dd/MM/yyyy")
+                    .create();
+            String idFilial = request.getParameter("idFilial");
+            List<Produto> produtos = produtoDAO.consultarProduto(idFilial, "FILIAL");
+            if (produtos.isEmpty()) {
+                out.write("");
+            } else {
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                out.write(gson.toJson(produtos));
+            }
+            out.flush();
+            out.close();
+
+        } catch (IOException ex) {
+            System.out.println("Erro ao consultar produtos");
+            System.out.println("Message: " + ex.getMessage());
+            System.out.println("Class: " + ex.getClass());
+
+        }
+    }
+
+    /**
      * Sem estrutura de codigos
      *
      * @param request
@@ -58,14 +97,14 @@ public class ControllerProduto implements Controller {
     @Override
     public void atualizar(HttpServletRequest request, HttpServletResponse response) {
         try {
-            BuilderProduto builderProduto = new BuilderProduto();
-            Produto produto = builderProduto.getObjProduto(request);
-
+            BuilderProduto builderProduto = new BuilderProduto(request.getParameterMap());
+            Produto produto = builderProduto.getObjProduto();
             ProdutoDAO produtoDAO = new ProdutoDAO();
 
             PrintWriter out = response.getWriter();
+
             if (produtoDAO.atualizarProduto(produto)) {
-                out.write("produto atualizado com sucesso");
+                out.write("Produto atualizado com sucesso");
             } else {
                 out.write("erro ao atualizar produto");
             }
@@ -86,15 +125,27 @@ public class ControllerProduto implements Controller {
      * @param response
      */
     @Override
-    public void excluir(HttpServletRequest request, HttpServletResponse response) {
+    public void excluir(HttpServletRequest request, HttpServletResponse response
+    ) {
         ProdutoDAO produtoDAO = new ProdutoDAO();
         try {
             int id = Integer.parseInt(request.getParameter("id"));
             PrintWriter out = response.getWriter();
-            if (produtoDAO.excluirProduto(id)) {
-                out.write("Produto excluido com sucesso");
+            List<Produto> produtos = produtoDAO.consultarProduto(id + "", "venda");
+            if (produtos.isEmpty()) {
+                if (produtoDAO.excluirProduto(id)) {
+                    out.write("Produto excluido com sucesso");
+                } else {
+                    out.write("erro ao excluir produto");
+                }
             } else {
-                out.write("erro ao excluir produto");
+                Produto p = produtos.get(0);
+                p.setQuantidade(0);
+                if (produtoDAO.atualizarProduto(p)) {
+                    out.write("Produto excluido com sucesso");
+                } else {
+                    out.write("Erro ao excluir produto, verifique se esta em venda ativa");
+                }
             }
             out.flush();
             out.close();
@@ -106,36 +157,4 @@ public class ControllerProduto implements Controller {
         }
     }
 
-    /**
-     * Realiza consultas
-     *
-     * @param request
-     * @param response
-     */
-    @Override
-    public void consultar(HttpServletRequest request, HttpServletResponse response) {
-
-        try {
-            PrintWriter out = response.getWriter();
-            ProdutoDAO produtoDAO = new ProdutoDAO();
-            Gson gson = new Gson();
-            String idFilial = request.getParameter("idFilial"); 
-            List<Produto> produtos = produtoDAO.consultarProduto(idFilial, "FILIAL");
-            if (produtos.isEmpty()) {
-                out.write("");
-            } else {
-                response.setContentType("application/json");
-                response.setCharacterEncoding("UTF-8");
-                out.write(gson.toJson(produtos));
-            }
-            out.flush();
-            out.close();
-
-        } catch (IOException ex) {
-            System.out.println("Erro ao consultar produtos");
-            System.out.println("Message: " + ex.getMessage());
-            System.out.println("Class: " + ex.getClass());
-
-        }
-    }
 }

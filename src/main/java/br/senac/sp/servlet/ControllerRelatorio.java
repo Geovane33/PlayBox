@@ -8,6 +8,7 @@ package br.senac.sp.servlet;
 import br.senac.sp.dao.RelatorioDAO;
 import br.senac.sp.entidade.Venda;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -31,12 +32,14 @@ public class ControllerRelatorio implements Controller {
     public void consultar(HttpServletRequest request, HttpServletResponse response) {
         RelatorioDAO relatorioDAO = new RelatorioDAO();
         List<Venda> relatorio = new ArrayList();
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder()
+                .setDateFormat("dd/MM/yyyy")
+                .create();
         try {
             PrintWriter out = response.getWriter();
             try {
                 int idFilial = Integer.parseInt(request.getParameter("idFilial"));
-               relatorio = relatorioDAO.obterRalatorio(idFilial);
+                relatorio = relatorioDAO.obterRalatorio(idFilial);
             } catch (NumberFormatException ex) {
                 System.out.println("Erro em obter filial ao gerar relatorio");
                 System.out.println("Message: " + ex.getMessage());
@@ -58,19 +61,34 @@ public class ControllerRelatorio implements Controller {
         }
     }
 
+    /**
+     * Sem estrutura de codigos
+     *
+     * @param request
+     * @param response
+     */
     @Override
     public void adicionar(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     * Sem estrutura de codigos
+     *
+     * @param request
+     * @param response
+     */
     @Override
     public void atualizar(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     * Sem estrutura de codigos
+     *
+     * @param request
+     * @param response
+     */
     @Override
     public void excluir(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

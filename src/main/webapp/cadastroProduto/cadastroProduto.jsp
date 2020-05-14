@@ -44,7 +44,7 @@
                             </div>
                             <div>
                                 <label>Quantidade</label>
-                                <input type="number"class="produto" name="qtd" id="qtd">
+                                <input type="number" class="quantidade" name="qtd" id="qtd">
                             </div>
                             <div>
                                 <label>Preço</label>

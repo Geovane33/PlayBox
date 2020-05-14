@@ -1,5 +1,5 @@
- -- create database notestore;
- -- use notestore;
+CREATE DATABASE notestore;
+USE notestore;
 
 CREATE TABLE filial (
     id_filial INT AUTO_INCREMENT PRIMARY KEY,
@@ -24,7 +24,7 @@ CREATE TABLE cliente (
     id_cliente INT AUTO_INCREMENT PRIMARY KEY,
     id_filial INT,
     nome_cliente VARCHAR(30) NOT NULL,
-    cpf_cliente VARCHAR(15)  NOT NULL,
+    cpf_cliente VARCHAR(15) UNIQUE NOT NULL,
     nasc_cliente DATE NOT NULL,
     sexo_cliente VARCHAR(10),
     telefone_cliente VARCHAR(16)  NOT NULL,
@@ -60,7 +60,6 @@ CREATE TABLE venda_produto (
     FOREIGN KEY (id_venda)
         REFERENCES venda (id_venda)
 );
-
 insert into filial values(default, 'SÃO PAULO', 'SP');
 insert into filial values(default, 'RIO DE JANEIRO', 'RJ');
 insert into filial values(default, 'MINAS GERAIS', 'MG');

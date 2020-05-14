@@ -32,11 +32,11 @@ public class Funcionario extends Pessoa{
      * @param bairro
      * @param numero
      */
-//    public Funcionario(String funcao, long salario, int idFilial, String nome, String cpf, Date dataNascimento, String sexo, String telefone, String email, String uf, String cidade, String cep, String bairro, String numero) {
-//        super(idFilial, nome, cpf, dataNascimento, sexo, telefone, email, uf, cidade, cep, bairro, numero);
-//        this.funcao = funcao;
-//        this.salario = salario;
-//    }
+    public Funcionario(String funcao, long salario, int idFilial, String nome, String cpf, Date dataNascimento, String sexo, String telefone, String email, String uf, String cidade, String cep, String bairro, String numero) {
+        super(idFilial, nome, cpf, dataNascimento, sexo, telefone, email, uf, cidade, cep, bairro, numero);
+        this.funcao = funcao;
+        this.salario = salario;
+    }
 
     /**
      * Obter função
