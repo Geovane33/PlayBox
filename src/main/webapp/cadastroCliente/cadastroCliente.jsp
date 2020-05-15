@@ -101,7 +101,7 @@
                         </div>
                         <div>
                             <label for="numero">Numero</label>
-                            <input type="text" pattern="[0-9]+$" required name="numero" id="numero" placeholder="numero" >
+                            <input type="text" name="numero" id="numero" placeholder="numero" >
 
                             <input type="hidden" value="Cliente" name="controller">
                         </div>
