@@ -14,11 +14,11 @@
     <body>
 
         <h1 id='idFilial'></h1>
-        <form id="form" action="cadastroCliente">
+        <form id="form" hidden action="cadastroCliente">
             <a value="Clientes" href="cadastroCliente/cadastroCliente.jsp"><input type="button" value="Clientes"></a><br>
             <a type="button" value="Produtos" href="cadastroProduto/cadastroProduto.jsp"><input type="button" value="Produtos"></a><br>
             <a type="button" value="Vendas" href="vendas/realizarVenda.jsp"><input type="button" value="Vendas"></a><br>
+            <a type="button" value="Relatórios" href="relatorios/relatorio.jsp"><input type="button" value="Relatorios"><a/>
         </form>
-         <a type="button" value="Relatórios" href="relatorios/relatorio.jsp"><input type="button" value="Relatorios"><a/>
     </body>
 </html>

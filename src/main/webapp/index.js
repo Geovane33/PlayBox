@@ -62,5 +62,5 @@ function relatorioGeral() {
     filial.nome = 'Relatório Geral';
     filial.estado = 'Relatório Geral';
     sessionStorage.setItem('filial', JSON.stringify(filial));
-    $('form').submit();
+    window.location.href = 'relatorios/relatorio.jsp';
 }

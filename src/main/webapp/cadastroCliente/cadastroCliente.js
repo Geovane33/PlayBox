@@ -4,6 +4,7 @@ var dataNascimento = null;
 var consultaTipo = 'nome';
 var filial;
 var carregou = true;
+var consultar = true;
 $(document).ready(function () {
     init();
 });
@@ -92,31 +93,36 @@ function consultarClientes() {
     $('#consultarCli').click(() => {
         consultarClientes();
     });
-    consulta = $("#campo").val();
-    $.ajax({
-        type: 'GET',
-        url: '../notestore?controller=Cliente&acao=consultar',
+    if (consultar) {
+        consultar = false;
+        consulta = $("#campo").val();
+        $.ajax({
+            type: 'GET',
+            url: '../notestore?controller=Cliente&acao=consultar',
 
-        headers: {
-            Accept: "application/json; charset=utf-8",
-            "Content-Type": "application/json; charset=utf-8"
-        }, beforeSend: function (xhr) {
-            xhr.setRequestHeader('X-Consulta', consulta);
-            xhr.setRequestHeader('X-ConsultaTipo', consultaTipo);
-
-        }, error: function (jqXHR, textStatus, errorThrown) {
-            alert("error");
-        },
-        success: function (result) {
-            if (result === "" && carregou) {
-                carregou = false;
-                alert("Nenhum cliente cadastrado");
-            } else {
-                carregou = false;
-                cliente = result;
-                carregaTabela();
-            }
-        }});
+            headers: {
+                Accept: "application/json; charset=utf-8",
+                "Content-Type": "application/json; charset=utf-8"
+            }, beforeSend: function (xhr) {
+                xhr.setRequestHeader('X-Consulta', consulta);
+                xhr.setRequestHeader('X-ConsultaTipo', consultaTipo);
+            }, error: function (jqXHR, textStatus, errorThrown) {
+                consultar = true;
+                alert("error");
+                window.location.reload();
+            },
+            success: function (result) {
+                consultar = true;
+                if (result === "" && carregou) {
+                    carregou = false;
+                    alert("Nenhum cliente cadastrado");
+                } else {
+                    carregou = false;
+                    cliente = result;
+                    carregaTabela();
+                }
+            }});
+    }
 }
 
 function buttonRadio(tipo) {
@@ -214,6 +220,7 @@ function validarForm() {
     //personalizar mensagens
     $.validator.addMethod("NOME", $.validator.methods.required,
             "NOME obrigatorio");
+    1
 
     $.validator.addMethod("CPF", $.validator.methods.required,
             "CPF obrigatorio");

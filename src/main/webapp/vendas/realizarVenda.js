@@ -307,8 +307,10 @@ function restauraLstProduto(i) {
     const indice = produto.indexOf(produtoCarrinho[i].produto);
     if (indice > -1) {
         produto[indice].quantidade += eval(produtoCarrinho[i].quantidade);
+        produto[indice].quantidadeNaVenda = 0;
     } else {
         produtoCarrinho[i].produto.quantidade += eval(produtoCarrinho[i].quantidade);
+        produtoCarrinho[i].produto.quantidadeNaVenda=0;
         produto.push(produtoCarrinho[i].produto);
     }
 }
@@ -376,7 +378,9 @@ function gerarVenda() {
                         window.location.reload();
                     } else if (result === '500') {
                         alert("Erro no servidor ao finalizar venda");
-                    } else {
+                    } else if(result !== "") {
+                        alert(result);
+                    }else{
                         alert("Erro no servidor ao processar venda, revise o carrinho");
                     }
                 }

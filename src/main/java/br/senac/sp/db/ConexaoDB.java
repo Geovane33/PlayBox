@@ -9,10 +9,11 @@ import java.util.logging.Logger;
 public class ConexaoDB {
 
     private static String STATUS = "Não conectado";
-    private final static String DRIVER = "com.mysql.cj.jdbc.Driver";                
-    private static String DB_ADDRESS = "jdbc:mysql://localhost:3307/notestore";
-    private static String USER = "root";
-    private static String PASSWORD = "";
+    private static String DRIVER = "com.mysql.cj.jdbc.Driver";
+
+    private static String DB_ADDRESS = "jdbc:mysql://bruyqfsn8vz3jybe8dvq-mysql.services.clever-cloud.com:20427/bruyqfsn8vz3jybe8dvq";
+    private static String USER = "us3mx7ihsy2fmstp";      
+    private static String PASSWORD = "M247nAGxTfrgmOdvXLxJ";
     private static Connection CONEXAO = null;
 
     static {
@@ -36,7 +37,7 @@ public class ConexaoDB {
      * é retornado uma Connection
      */
     public static Connection getConexao() {
-        String dbURL = DB_ADDRESS + "?useTimezone=true&serverTimezone=GMT-3";
+        String dbURL = DB_ADDRESS + "?useTimezone=true&serverTimezone=GMT-3&useSSL=false";
 
         try {
             CONEXAO = DriverManager.getConnection(dbURL, USER, PASSWORD);

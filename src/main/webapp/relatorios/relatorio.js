@@ -18,13 +18,8 @@ function init() {
 function getFilial() {
     filial = JSON.parse(sessionStorage.getItem('filial'));
     if (filial === null) {
-        $('#tabelaRelatorio').hide();
-         $('body').hide();
         alert("Erro ao obter filial");
         window.location.href = '../';
-    } else {
-        $('#tabelaRelatorio').show();
-        $('body').show();
     }
 }
 
@@ -33,7 +28,6 @@ function calculaTotalVenda(relatorio) {
 }
 
 function carregaTabela() {
-
     for (var i = 0; i < relatorio.length; i++) {
         calculaTotalVenda(relatorio[i]);
         var linha = $("<tr>");
@@ -108,6 +102,7 @@ function tabelaDinamica() {
             "url": "../jsons/vendas.json"
         }
     });
+     $('body').show();
 }
 
 function obterRelatorio() {
