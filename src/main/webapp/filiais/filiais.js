@@ -5,9 +5,6 @@ var nomeFilial;
 
 $(document).ready(function () {
     recebeFilial();
-    if (filial.id === 0) {
-        $("#form").hide();
-    }
 }
 );
 function carregarFiliais() {
@@ -28,4 +25,5 @@ function carregarFiliais() {
 function recebeFilial() {
     filial = JSON.parse(sessionStorage.getItem('filial'));
     $("#idFilial").append(filial.nome);
+    $("#form").show();
 }

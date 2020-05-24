@@ -20,15 +20,14 @@ public class ControllerFilial implements Controller {
      */
     @Override
     public void consultar(HttpServletRequest request, HttpServletResponse response) {
-        ArrayList<Filial> testeFiliais;
+        ArrayList<Filial> filiais;
         try {
             if (request.getMethod().equalsIgnoreCase("GET")) {
-                testeFiliais = new FilialDAO().consultarFiliais("", "TODOS");
+                filiais = new FilialDAO().consultarFiliais("", "TODOS");
                 PrintWriter out = response.getWriter();
                 Gson gson = new Gson();
-                response.addHeader("teste", "teste");
                 response.setContentType("application/json");
-                out.write(gson.toJson(testeFiliais));
+                out.write(gson.toJson(filiais));
                 out.flush();
                 out.close();
             } else {
