@@ -7,17 +7,25 @@
         <link rel="stylesheet" href="style/cssMedio.css" media="screen and (min-width:900px)">
         <link rel="stylesheet" href="style/cssPequeno.css" media="screen and (min-width:100px)">
         <link rel="stylesheet" href="style/index.css" media="screen and (min-width:900px)">
+        <link rel="stylesheet" href="style/botoes.css">
+
         <script src='index.js'></script>
     </head>
     <body>
-        <h1>NoteStore</h1>
-        <h2>Filiais</h2>
-        <form action="notestore" method="POST">
-            <div id="formFiliais" >
-                <h3>Carregando Filiais</h3>
-            </div>
-            <input type="hidden" value="Filial" name="controller">
-            <input type="hidden" value="consultar" name="acao">
-        </form>
+        <header>
+            <br>
+            <br>
+            <h1>NoteStore</h1>
+            <br>
+            <h2>Filiais</h2>
+            <br>
+            <form action="notestore" method="POST">
+                <div id="formFiliais" >
+                    <h3>Carregando Filiais</h3>
+                </div>
+                <input type="hidden" value="Filial" name="controller">
+                <input type="hidden" value="consultar" name="acao">
+            </form>
+        </header>
     </body>
 </html>

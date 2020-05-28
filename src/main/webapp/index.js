@@ -43,9 +43,9 @@ function carregarFiliais() {
 
         for (var i = 0; i < filiais.length; i++) {
             console.log(filiais[i]);
-            filial.append('<input type=button  value="' + filiais[i].nome + '" onClick=enviarFilial(' + i + ')><br>');
+            filial.append('<a class="btn" onclick="enviarFilial(' + i + ')">' + filiais[i].nome + '</a><br>');
         }
-        filial.append('<input type=button  value="Relatorio Geral" onClick=relatorioGeral()><br>');
+        filial.append('<a class="btn" onclick="relatorioGeral()">Relatório Geral</a><br>');
         $("#formFiliais").html(filial);
     }
 }
