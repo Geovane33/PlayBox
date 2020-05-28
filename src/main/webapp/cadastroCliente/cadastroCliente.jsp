@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="../style/cssPequeno.css" media="screen and (min-width:100px)">
         <link rel="stylesheet" href="../style/cssMedio.css" media="screen and (min-width:900px)">
         <link rel="stylesheet" href="CadastroCliente.css" type="text/css">
+        <link rel="stylesheet" href="style/botoes.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
         <script src="../plugins/jqueryValidate.js"></script>
@@ -16,11 +17,14 @@
         <script src="cadastroCliente.js"></script>
     </head>
 
+    <h1>Cadastro de Cliente</h1>
+    <hr>
+
     <section id ="cliente">
         <table>
             <tr>
                 <td class="cadastro">
-                    <!-- Compos para preencher -->
+                    <!-- Campos para preencher -->
 
                     <form id="formCad"action="../notestore" method="POST">
                         <div>
@@ -106,8 +110,8 @@
                             <input type="hidden" value="Cliente" name="controller">
                         </div>
                         <div>
-                            <input value="adicionar" type="submit" id="cadastrar" name="acao">
-                            <input type="reset" onclick="window.location.reload()" value="cancelar">
+                            <a class="btn" value="adicionar" type="submit" id="cadastrar" name="acao">Adicionar</a>
+                            <a class="btn" type="reset" onclick="window.location.reload()" value="cancelar" id="cancelar">Cancelar</a>
                         </div>
                     </form>
                 </td>
@@ -118,7 +122,7 @@
                         <input type="radio" id="radioCPF" name="consulta" value="nome" onclick="buttonRadio(this.value)"CHECKED>
                         <input type="radio" id="radioNome" name="consulta" value="CPF" onclick="buttonRadio(this.value)">
                         <input type="search" id="campo" placeholder="nome"><br>
-                        <input type="button" id="consultarCli"value="consultar" id="">
+                        <a class="btn" type="button" id="consultarCli"value="consultar" id="consultarCli">Consultar</a>
                         <thead>
                             <tr class="desc">
                                 <th>NOME</th>

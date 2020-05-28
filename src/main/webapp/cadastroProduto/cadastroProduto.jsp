@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="../style/cssPequeno.css" media="screen and (min-width:100px)">
         <link rel="stylesheet" href="../style/cssMedio.css" media="screen and (min-width:900px)">
         <link rel="stylesheet" href="CadastroProduto.css">
+        <link rel="stylesheet" href="style/botoes.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
         <script src="../plugins/jqueryValidate.js"></script>
@@ -16,9 +17,12 @@
         <script src="cadastroProduto.js"></script>
     </head>
     <body>
+
         <header>
-            <h1>Cadastro de produto</h1>
+            <h1>Cadastro de Produto</h1>
         </header>
+        
+        <hr>
 
         <section>
             <table>
@@ -59,8 +63,8 @@
                             </div>
                             <div>
                                 <input type="hidden"  value="Produto" type="submit" name="controller" >
-                                <input type="submit" value="adicionar" id="cadastrar" name="acao">
-                                <input type="reset" onclick="window.location.reload()" value="cancelar">
+                                <a class="btn" type="submit" value="adicionar" id="cadastrar" name="acao">Adicionar</a>
+                                <a class="btn" type="reset" onclick="window.location.reload()" value="cancelar" id="cancelar">Cancelar</a>
                             </div>
                         </form>
                     </td>
@@ -68,7 +72,7 @@
                     <td hidden class="tabela">
                         <table class="list" id="listaCadastros">
                             <thead>
-                            <input type="button" value="consultar" id="consultarProd">
+                            <a class="btn" value="Consultar" id="consultarProd">Consultar</a>
                             <tr class="desc">
                                 <th>Nome</th>
                                 <th>Marca</th>
