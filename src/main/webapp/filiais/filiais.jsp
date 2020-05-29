@@ -10,22 +10,15 @@
         <link rel="stylesheet" href="style/cssPequeno.css" media="screen and (min-width:100px)">
         <link rel="stylesheet" href="style/index.css" media="screen and (min-width:400px)">
         <link rel="stylesheet" href="filiais/filiais.css">
-        <link rel="stylesheet" href="style/botoes.css">
-
     </head>
     <body>
-        <header>
-            <br>
-            <br>
-            <h1 id='idFilial'></h1>
-            <hr>
-            <form id="form" hidden action="cadastroCliente">
 
-                <a href="cadastroCliente/cadastroCliente.jsp" class="btn">Clientes</a><br>
-                <a href="cadastroProduto/cadastroProduto.jsp" class="btn">Produtos</a><br>
-                <a type="button" value="Vendas" href="vendas/realizarVenda.jsp" class="btn">Vendas</a><br>
-                <a type="button" value="Relatórios" href="relatorios/relatorio.jsp" class="btn">Relatório</a><br>
-                </header>
-            </form>
+        <h1 id='idFilial'></h1>
+        <form id="form" hidden action="cadastroCliente">
+            <a value="Clientes" href="cadastroCliente/cadastroCliente.jsp"><input type="button" value="Clientes"></a><br>
+            <a type="button" value="Produtos" href="cadastroProduto/cadastroProduto.jsp"><input type="button" value="Produtos"></a><br>
+            <a type="button" value="Vendas" href="vendas/realizarVenda.jsp"><input type="button" value="Vendas"></a><br>
+            <a type="button" value="Relatórios" href="relatorios/relatorio.jsp"><input type="button" value="Relatorios"><a/>
+        </form>
     </body>
 </html>
