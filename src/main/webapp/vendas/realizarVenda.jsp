@@ -11,7 +11,7 @@
         <!--<link rel="stylesheet" href="../style/cssPequeno.css" media="screen and (min-width:900px)">-->
     </head>
     <body>
-        <h1>Realizar Venda</h1>
+        <h1>Realizar venda</h1>
         <section>
             <table>
                 <tr>
@@ -52,11 +52,9 @@
                                 <br>
                             </div>
                             <div>
-                                <header>
-                                    <a class="btn" type="button" onclick="adicionarProduto()" value="Adicionar ao carrinho" id="adcCarrinho">Adicionar ao carrinho</a>
-                                    <a class="btn" type="button" onclick="gerarVenda()" value="Finalizar" id="finalizar">Finalizar</a>
-                                    <a class="btn" type="reset" onclick="window.location.reload()" value="cancelar" id="cancelar">Cancelar</a>
-                                </header>
+                                <input type="button" onclick="adicionarProduto()" value="Adicionar ao carrinho">
+                                <input type="button" onclick="gerarVenda()" value="Finalizar">
+                                 <input type="reset" onclick="window.location.reload()" value="cancelar">
                             </div>
                         </form>
                     </td>
