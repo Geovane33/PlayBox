@@ -22,7 +22,7 @@ public class ProcessController extends HttpServlet {
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) {
 
-        String acao = request.getParameter("acao");
+        String acao = request.getParameter("acao").toLowerCase();
         String controller = request.getParameter("controller");
 
         String nomeClasse = "br.senac.sp.servlet.Controller" + controller;

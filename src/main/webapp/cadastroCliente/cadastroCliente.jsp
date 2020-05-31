@@ -109,10 +109,12 @@
 
                             <input type="hidden" value="Cliente" name="controller">
                         </div>
-                        <div>
-                            <a class="btn" value="adicionar" type="submit" id="cadastrar" name="acao">Adicionar</a>
-                            <a class="btn" type="reset" onclick="window.location.reload()" value="cancelar" id="cancelar">Cancelar</a>
-                        </div>
+                        <header>
+                            <div>
+                                <input class="btnInput" value="Adicionar" type="submit" id="cadastrar" name="acao">
+                                <a class="btn" type="reset" onclick="window.location.reload()" value="cancelar" id="cancelar">Cancelar</a>
+                            </div>
+                        </header>
                     </form>
                 </td>
                 <td hidden class="tabela">  

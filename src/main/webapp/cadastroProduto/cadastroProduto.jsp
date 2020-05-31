@@ -21,7 +21,7 @@
         <header>
             <h1>Cadastro de Produto</h1>
         </header>
-        
+
         <hr>
 
         <section>
@@ -61,11 +61,13 @@
                             <div>
                                 <input type="hidden" minlength="1"  name="idFilial" id="idFilial" placeholder="digite o id da filial" >
                             </div>
-                            <div>
-                                <input type="hidden"  value="Produto" type="submit" name="controller" >
-                                <a class="btn" type="submit" value="adicionar" id="cadastrar" name="acao">Adicionar</a>
-                                <a class="btn" type="reset" onclick="window.location.reload()" value="cancelar" id="cancelar">Cancelar</a>
-                            </div>
+                            <header>
+                                <div>
+                                    <input type="hidden"  value="Produto" type="submit" name="controller" >
+                                    <input class="btn" type="submit" value="Adicionar" id="cadastrar" name="acao">
+                                    <a class="btn" type="reset" onclick="window.location.reload()" value="cancelar" id="cancelar">Cancelar</a>
+                                </div>
+                            </header>
                         </form>
                     </td>
 
