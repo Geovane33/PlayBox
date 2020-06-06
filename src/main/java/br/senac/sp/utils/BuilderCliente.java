@@ -34,8 +34,6 @@ public class BuilderCliente {
         Cliente cliente = new Cliente();
         Conversor data = new Conversor();
 
-        try {
-
             cliente.setId(Integer.valueOf(this.mapCliente.get("id")[0]));
             cliente.setIdFilial(Integer.valueOf(this.mapCliente.get("idFilial")[0]));
             cliente.setNome(this.mapCliente.get("nome")[0]);
@@ -49,13 +47,6 @@ public class BuilderCliente {
             cliente.setCidade(this.mapCliente.get("cidade")[0]);
             cliente.setBairro(this.mapCliente.get("bairro")[0]);
             cliente.setNumero(this.mapCliente.get("numero")[0]);
-
-        } catch (NumberFormatException ex) {
-            System.out.println("Erro ao obter objeto Cliente");
-            System.out.println("Message: " + ex.getMessage());
-            System.out.println("Class: " + ex.getClass());
-            cliente = null;
-        }
 
         return cliente;
     }

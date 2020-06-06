@@ -27,8 +27,8 @@ public class ControllerCliente implements Controller {
             ClienteDAO clienteDAO = new ClienteDAO();
             Cliente cliente = builderCliente.getObjCliente();
             PrintWriter out = response.getWriter();
-            if (clienteDAO.consultarCliente(cliente.getCpf(), "CPF").isEmpty()) {
-                if (clienteDAO.salvarCliente(cliente)) {
+            if (clienteDAO.consultar(cliente.getCpf(), "CPF").isEmpty()) {
+                if (clienteDAO.salvar(cliente)) {
                     out.write("200");
                 } else {
                     out.write("500");
@@ -63,7 +63,7 @@ public class ControllerCliente implements Controller {
                     .setDateFormat("dd/MM/yyyy")
                     .create();
 
-            List<Cliente> clientes = clienteDAO.consultarCliente(consulta, consultaTipo);
+            List<Cliente> clientes = clienteDAO.consultar(consulta, consultaTipo);
             if (clientes.isEmpty()) {
                 out.write("");
             } else {
@@ -95,8 +95,8 @@ public class ControllerCliente implements Controller {
             ClienteDAO clienteDAO = new ClienteDAO();
             Cliente cliente = builderCliente.getObjCliente();
             PrintWriter out = response.getWriter();
-            if (clienteDAO.consultarCliente(cliente.getId()+"", cliente.getCpf()).isEmpty()) {
-                if (clienteDAO.atualizarCliente(cliente)) {
+            if (clienteDAO.consultar(cliente.getId()+"", cliente.getCpf()).isEmpty()) {
+                if (clienteDAO.atualizar(cliente)) {
                     out.write("200-2");
                 } else {
                     out.write("500-2");
@@ -129,7 +129,7 @@ public class ControllerCliente implements Controller {
             int id = Integer.parseInt(request.getParameter("id"));
             PrintWriter out = response.getWriter();
             if (vendaDAO.clientePossuiVenda(id).isEmpty()) {
-                if (clienteDAO.excluirCliente(id)) {
+                if (clienteDAO.excluir(id)) {
                     out.write("200");
                 } else {
                     out.write("Erro ao excluir cliente");

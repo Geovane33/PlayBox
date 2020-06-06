@@ -14,7 +14,6 @@ import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -36,7 +35,7 @@ public class ControllerVenda implements Controller {
 
             PrintWriter out = response.getWriter();
             if (msg.equals("")) {
-                if (vendaDAO.salvarVenda(venda)) {
+                if (vendaDAO.salvar(venda)) {
                     out.write("200");
                 } else {
                     out.write("500");
@@ -88,7 +87,7 @@ public class ControllerVenda implements Controller {
     private String validarEstoque(Venda venda) {
         String msg = "";
         ProdutoDAO produtoDAO = new ProdutoDAO();
-        ArrayList<Produto> produtos = produtoDAO.consultarProduto(venda.getFilial().getId() + "", "FILIAL");
+        ArrayList<Produto> produtos = produtoDAO.consultar(venda.getFilial().getId() + "", "FILIAL");
         for (Produto produto : produtos) {
             for (Produto produto2 : venda.getProdutos()) {
                 if (produto.getId() == produto2.getId()) {
