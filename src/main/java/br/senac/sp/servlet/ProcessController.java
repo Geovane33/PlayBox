@@ -7,7 +7,6 @@ package br.senac.sp.servlet;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,13 +15,12 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Geovane
  */
-@WebServlet(name = "notestore", urlPatterns = {"/notestore"})
 public class ProcessController extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) {
 
-        String acao = request.getParameter("acao");
+        String acao = request.getParameter("acao").toLowerCase();
         String controller = request.getParameter("controller");
 
         String nomeClasse = "br.senac.sp.servlet.Controller" + controller;
@@ -30,7 +28,7 @@ public class ProcessController extends HttpServlet {
             // Cria uma instância(classe) com o nome da classe passada no request
             Class<?> classe = Class.forName(nomeClasse);
 
-            //instancia a classe implementando a interface ControllerLogica
+            //instancia a classe implementando a interface Controller
             Controller controlador = (Controller) classe.newInstance();
 
             //parametros para o metodo a ser chamado

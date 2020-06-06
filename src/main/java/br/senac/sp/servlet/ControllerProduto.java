@@ -37,7 +37,7 @@ public class ControllerProduto implements Controller {
 
             PrintWriter out = response.getWriter();
 
-            if (produtoDAO.salvarProduto(produto)) {
+            if (produtoDAO.salvar(produto)) {
                 out.write("produto cadastrado com sucesso");
             } else {
                 out.write("erro no servidor ao cadastrar produto");
@@ -69,7 +69,7 @@ public class ControllerProduto implements Controller {
                     .setDateFormat("dd/MM/yyyy")
                     .create();
             String idFilial = request.getParameter("idFilial");
-            List<Produto> produtos = produtoDAO.consultarProduto(idFilial, "FILIAL");
+            List<Produto> produtos = produtoDAO.consultar(idFilial, "FILIAL");
             if (produtos.isEmpty()) {
                 out.write("");
             } else {
@@ -103,7 +103,7 @@ public class ControllerProduto implements Controller {
 
             PrintWriter out = response.getWriter();
 
-            if (produtoDAO.atualizarProduto(produto)) {
+            if (produtoDAO.atualizar(produto)) {
                 out.write("Produto atualizado com sucesso");
             } else {
                 out.write("erro ao atualizar produto");
@@ -131,9 +131,9 @@ public class ControllerProduto implements Controller {
         try {
             int id = Integer.parseInt(request.getParameter("id"));
             PrintWriter out = response.getWriter();
-            List<Produto> produtos = produtoDAO.consultarProduto(id + "", "venda");
+            List<Produto> produtos = produtoDAO.consultar(id + "", "venda");
             if (produtos.isEmpty()) {
-                if (produtoDAO.excluirProduto(id)) {
+                if (produtoDAO.excluir(id)) {
                     out.write("Produto excluido com sucesso");
                 } else {
                     out.write("erro ao excluir produto");
@@ -141,7 +141,7 @@ public class ControllerProduto implements Controller {
             } else {
                 Produto p = produtos.get(0);
                 p.setQuantidade(0);
-                if (produtoDAO.atualizarProduto(p)) {
+                if (produtoDAO.atualizar(p)) {
                     out.write("Produto excluido com sucesso");
                 } else {
                     out.write("Erro ao excluir produto, verifique se esta em venda ativa");

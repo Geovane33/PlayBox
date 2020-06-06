@@ -23,7 +23,7 @@ public class ProdutoDAO {
      * @param produto
      * @return true: salvo com sucesso e false: erro ao salvar
      */
-    public boolean salvarProduto(Produto produto) {
+    public boolean salvar(Produto produto) {
         boolean ok = false;
         Connection conexao = null;
         PreparedStatement ps = null;
@@ -68,18 +68,16 @@ public class ProdutoDAO {
     /**
      * metodo que realiza pesquisa de produto por nome
      *
-     * @param tipo recebe o tipo de consulta
+     * @param tipo recebe o tipo de consultar
      * @param values recebe o nome do produto como parâmetro
      * @return listaProdutos
      */
-    public ArrayList<Produto> consultarProduto(String values, String tipo) {
+    public ArrayList<Produto> consultar(String values, String tipo) {
         ResultSet rs = null;
         Connection conexao = null;
         PreparedStatement ps = null;
 
         ArrayList<Produto> listaProdutos = new ArrayList<>();
-
-        Conversor data = new Conversor();
 
         try {
             conexao = ConexaoDB.getConexao();
@@ -136,7 +134,7 @@ public class ProdutoDAO {
      * @return true caso o produto seja atulizado com sucesso e false caso de
      * erro ao atualizar o produto
      */
-    public boolean atualizarProduto(Produto produto) {
+    public boolean atualizar(Produto produto) {
         Connection conexao = null;
         PreparedStatement ps = null;
 
@@ -183,7 +181,7 @@ public class ProdutoDAO {
         }
     }
 
-    public boolean excluirProduto(int id) {
+    public boolean excluir(int id) {
         Connection conexao = null;
         PreparedStatement ps = null;
         try {

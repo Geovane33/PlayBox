@@ -31,7 +31,7 @@ public class VendaDAO {
 
         for (Produto produto : venda.getProdutos()) {
 
-            produtoDAO.atualizarProduto(produto);
+            produtoDAO.atualizar(produto);
 
         }
 
@@ -71,7 +71,7 @@ public class VendaDAO {
      * @param venda
      * @return true: venda realizar com sucesso, false: erro ao realivar venda
      */
-    public boolean salvarVenda(Venda venda) {
+    public boolean salvar(Venda venda) {
         Connection conexao = null;
         PreparedStatement instrucaoSQL = null;
         try {
@@ -130,7 +130,7 @@ public class VendaDAO {
 
     private void adicionaClienteVenda(Venda venda, int clienteId) {
 
-        ArrayList<Cliente> cliente = clienteDAO.consultarCliente("ID", clienteId + "");
+        List<Cliente> cliente = clienteDAO.consultar("ID", clienteId + "");
 
         venda.setCliente(cliente.get(0));
     }
@@ -142,7 +142,7 @@ public class VendaDAO {
      * @param fim
      * @return
      */
-    public List<Venda> consultarVendas(java.util.Date inicio, java.util.Date fim) {
+    public List<Venda> consultar(java.util.Date inicio, java.util.Date fim) {
         ResultSet rs = null;
         Connection conexao;
         PreparedStatement instrucaoSQL = null;

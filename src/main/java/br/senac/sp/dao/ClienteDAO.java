@@ -9,17 +9,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.List;
 
 public class ClienteDAO {
 
     /**
      * Salvar clientes
      *
-     * @param cliente recebe uma entidade cliente
+     * @param object recebe um objeto cliente
      * @return true: salvo com sucesso false: erro ao salvar
      */
-    public boolean salvarCliente(Cliente cliente) {
+    public boolean salvar(Object object) {
+        Cliente cliente = (Cliente) object;
         boolean ok = false;
         Connection conexao = null;
         PreparedStatement ps = null;
@@ -75,7 +76,7 @@ public class ClienteDAO {
      * realizada
      * @return listaClientes
      */
-    public ArrayList<Cliente> consultarCliente(String values, String tipo) {
+    public List<Cliente> consultar(String values, String tipo) {
         ResultSet rs = null;
         Connection conexao = null;
         PreparedStatement ps = null;
@@ -146,7 +147,7 @@ public class ClienteDAO {
      * @return true: Cliente atulizado com sucesso false: Erro ao atualizar o
      * Cliente
      */
-    public boolean atualizarCliente(Cliente cliente) {
+    public boolean atualizar(Cliente cliente) {
         Connection conexao = null;
         PreparedStatement ps = null;
 
@@ -208,7 +209,7 @@ public class ClienteDAO {
      * excluir
      * @return boolean - true: excluido com sucesso false: erro ao excluir
      */
-    public boolean excluirCliente(int id) {
+    public boolean excluir(int id) {
         Connection conexao = null;
         PreparedStatement ps = null;
         try {

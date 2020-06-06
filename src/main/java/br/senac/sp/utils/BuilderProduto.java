@@ -6,9 +6,7 @@
 package br.senac.sp.utils;
 
 import br.senac.sp.entidade.Produto;
-import java.util.Date;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -34,6 +32,7 @@ public class BuilderProduto {
     public Produto getObjProduto() {
         Conversor data = new Conversor();
         Produto produto = new Produto();
+        
         //constroi um objeto produto com as informações obtidas no request
         produto.setId(Integer.valueOf(this.mapProdutos.get("id")[0]));
         produto.setIdFilial(Integer.valueOf(this.mapProdutos.get("idFilial")[0]));

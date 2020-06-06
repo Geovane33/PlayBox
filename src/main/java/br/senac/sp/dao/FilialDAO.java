@@ -13,20 +13,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Geovane
  */
-public class FilialDAO {
+public class FilialDAO implements DAO {
 
     /**
      * Salvar filial
      *
-     * @param filial recebe uma entidade filial
+     * @param object recebe um objeto filial
      * @return true: salvo com sucesso false: erro ao salvar
      */
-    public boolean salvarFilial(Filial filial) {
+    @Override
+    public boolean salvar(Object object) {
+        Filial filial = (Filial) object;
         boolean ok = false;
         Connection conexao = null;
         PreparedStatement ps = null;
@@ -52,7 +55,7 @@ public class FilialDAO {
                 if (ps != null) {
                     ps.close();
                 }
-              ConexaoDB.fecharConexao(conexao);
+                ConexaoDB.fecharConexao(conexao);
 
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexãoDB");
@@ -73,11 +76,11 @@ public class FilialDAO {
      * realizada --> nome, ID ou todos
      * @return listaFiliais
      */
-    public ArrayList<Filial> consultarFiliais(String values, String tipo) {
+    public List<Filial> consultarFilial(String values, String tipo) {
         ResultSet rs = null;
         Connection conexao = null;
         PreparedStatement ps = null;
-        ArrayList<Filial> listaClientes = new ArrayList<>();
+        List<Filial> listFiliais = new ArrayList<>();
         try {
             conexao = ConexaoDB.getConexao();
             if (!values.equals("") && tipo.equals("nome")) {
@@ -96,7 +99,7 @@ public class FilialDAO {
                 filial.setNome(rs.getString("nome_filial"));
                 filial.setEstado(rs.getString("estado_filial"));
 
-                listaClientes.add(filial);
+                listFiliais.add(filial);
             }
         } catch (SQLException ex) {
             System.out.println("Erro ao consultar filial");
@@ -109,7 +112,7 @@ public class FilialDAO {
                 if (rs != null) {
                     rs.close();
                 }
-             ConexaoDB.fecharConexao(conexao);
+                ConexaoDB.fecharConexao(conexao);
 
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexãoDB");
@@ -119,17 +122,20 @@ public class FilialDAO {
             }
 
         }
-        return listaClientes;
+
+        return listFiliais;
     }
 
     /**
      * Atualizar dados do Filial
      *
-     * @param filial recebe uma entidade filial
+     * @param object recebe uma entidade filial
      * @return true: Filial atulizado com sucesso false: Erro ao atualizar o
      * Filial
      */
-    public boolean atualizarFilial(Filial filial) {
+    @Override
+    public boolean atualizar(Object object) {
+        Filial filial = (Filial) object;
         Connection conexao = null;
         PreparedStatement ps = null;
 
@@ -162,7 +168,7 @@ public class FilialDAO {
                     ps.close();
                 }
 
-              ConexaoDB.fecharConexao(conexao);
+                ConexaoDB.fecharConexao(conexao);
 
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexãoDB");
@@ -180,7 +186,8 @@ public class FilialDAO {
      * excluir
      * @return boolean - true: excluido com sucesso false: erro ao excluir
      */
-    public boolean excluirCliente(int id) {
+    @Override
+    public boolean excluir(int id) {
         Connection conexao = null;
         PreparedStatement ps = null;
         try {
@@ -200,7 +207,7 @@ public class FilialDAO {
                 if (ps != null) {
                     ps.close();
                 }
-             ConexaoDB.fecharConexao(conexao);
+                ConexaoDB.fecharConexao(conexao);
 
             } catch (SQLException ex) {
                 System.out.println("Erro ao fechar conexãoDB");
@@ -211,4 +218,10 @@ public class FilialDAO {
             }
         }
     }
+
+    @Override
+    public List<Object> consultar(String values, String tipo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
