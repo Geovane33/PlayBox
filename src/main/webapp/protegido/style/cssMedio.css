@@ -1,0 +1,132 @@
+*{
+    font-family: 'Century-Gothic', sans-serif;
+
+}
+
+body > table{
+    width: 80%;
+}
+
+body{
+    background-color:#65B3AA;
+}
+table.list{
+    width: 910px;
+}
+
+h1{
+
+    color: #fff;
+}
+
+hr{
+    border:1px solid #fff;
+}
+
+header input{
+    width: 100%;
+    text-decoration: none;
+    color:#fff;
+    background-color: #51918a;
+    display:inline-block;
+    padding:15px 20px; 
+    margin: 8px 0;
+    border-radius:5px;
+    border: 0px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 16px;
+}
+
+header input:hover{
+    background-color: #3b706a;
+    color: #fff;
+    box-shadow: 0 2px 3px #777;
+}
+
+.btnInput{
+    transition: .5s;
+    cursor: pointer;
+}
+
+td a{
+    width: 100%;
+    text-decoration: none;
+    color:#fff;
+    background-color: #51918a;
+    display:inline-block;
+    padding:15px 20px; 
+    margin: 8px 0;
+    border-radius:5px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+td a:hover{
+    background-color: #3b706a;
+    color: #fff;
+    box-shadow: 0 2px 3px #777;
+}
+.btn{
+    transition: .5s;
+}
+
+td, th {
+    border: 2px solid #fff;
+    border-radius: 4px;
+    text-align: left;
+    padding: 8px;
+}
+
+td.tabela{
+    float: right;
+}
+td.cadastro{
+    display: inline-block;
+}
+
+tr.desc {
+    width: auto;
+    background-color: #dddddd;
+}
+
+label{
+    color: #fff;
+}
+
+/*input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    font-size: 17px;
+    color: black;
+    background-color: #fff;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-sizing: border-box;
+}*/
+
+input.btnSalvar[type="button"]{
+    color: black;
+}
+
+#cadastrar{
+    cursor: pointer;
+}
+
+#cancelar{
+    cursor: pointer;
+}
+
+#consultarCli{
+    cursor: pointer;
+}
+
+#adcCarrinho{
+    cursor: pointer;
+}
+
+#finalizar{
+    cursor: pointer;
+}
