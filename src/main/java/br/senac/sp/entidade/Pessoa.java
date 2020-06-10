@@ -30,7 +30,7 @@ public abstract class Pessoa {
     /**
      * Contrutos vazio
      */
-    public Pessoa() {
+    protected Pessoa() {
     }
 
     /**
@@ -49,7 +49,7 @@ public abstract class Pessoa {
      * @param bairro String
      * @param numero String
      */
-    public Pessoa(int idFilial, String nome, String cpf, Date dataNascimento, String sexo, String telefone, String email, String uf, String cidade, String cep, String bairro, String numero) {
+    protected Pessoa(int idFilial, String nome, String cpf, Date dataNascimento, String sexo, String telefone, String email, String uf, String cidade, String cep, String bairro, String numero) {
         this.idFilial = idFilial;
         this.nome = nome;
         this.cpf = cpf;
@@ -82,14 +82,14 @@ public abstract class Pessoa {
     /**
      * @return idFilial
      */
-    public int getIdFilial() {
+    public int getIdUnidade() {
         return this.idFilial;
     }
 
     /**
      * @param idFilial idFilial para set
      */
-    public void setIdFilial(int idFilial) {
+    public void setIdUnidade(int idFilial) {
         this.idFilial = idFilial;
     }
 

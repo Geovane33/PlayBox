@@ -21,7 +21,7 @@ a {
     width: 12% !important;
     text-align: center;
 }
-header{
+#divBtns{
     position:fixed;
     width:100%;
     height:100%;
@@ -30,7 +30,7 @@ header{
     left:0;
     text-align: center;
 }
-header input{
+#divBtns input{
     text-decoration: none;
     color:#fff;
     display:inline-block;
@@ -39,12 +39,12 @@ header input{
     border:3px solid #fff;
     border-radius:5px;
 }
-header input:hover{
+#divBtns input:hover{
     background-color: #fff;
     color: #777;
     box-shadow: 0 2px 3px #777;
 }
-header a{
+#divBtns a{
     text-decoration: none;
     color:#fff;
     display:inline-block;
@@ -53,7 +53,7 @@ header a{
     border:3px solid #fff;
     border-radius:5px;
 }
-header a:hover{
+#divBtns a:hover{
     background-color: #fff;
     color: #777;
     box-shadow: 0 2px 3px #777;

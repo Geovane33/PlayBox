@@ -2,6 +2,11 @@
     margin-left: 1px;
 }
 
+body{
+    position: relative;
+    left: 59px;
+}
+
 table.list {
     width: 757px;
 }

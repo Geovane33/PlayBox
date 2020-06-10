@@ -1,0 +1,175 @@
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url(https://getbootstrap.com/fonts/glyphicons-halflings-regular.eot);
+}
+body {
+  font-family: "Segoe UI";
+  font-size: 14px;
+  font-weight: 100;
+}
+.icon {
+  color: white;
+  position: relative;
+  display: inline-block;
+  font-family: "Glyphicons Halflings";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  box-sizing: border-box;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.icon.collapse:before {
+  content: "\e097";
+}
+.icon.home:before {
+  content: "\e021";
+}
+.icon.clientes:before {
+  content: "\e022";
+}
+.icon.produtos:before {
+  content: "\e116";
+}
+.icon.vendas:before {
+  content: "\e040";
+}
+.icon.funcionarios:before {
+  content: "\e008";
+}
+.icon.filiais:before {
+  content: "\e012";
+}
+.icon.senha:before {
+  content: "\e019";
+}
+.icon.relatorios:before {
+  content: "\e032";
+}
+.icon.logout:before {
+  content: "\e017";
+}
+
+* {
+  transition: 0.3s;
+}
+.nav-menu.expanded {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 270px;
+  background-color: #1f5d56;
+  box-shadow: 5px 0 10px #828282;
+}
+.nav-menu.expanded .menu-header {
+  padding: 5px;
+  box-sizing: border-box;
+  height: 50px;
+  border-top: 1px solid #282828;
+  border-bottom: 1px solid #65b3aa;
+  box-shadow: 0 2px 10px #646464;
+  margin-bottom: 20px;
+}
+.nav-menu.expanded .menu-header .menu-title {
+  margin-left: 15px;
+  margin-top: 10px;
+  font-size: 16px;
+  text-transform: uppercase;
+  color: white;
+  float: left;
+}
+.nav-menu.expanded .menu-header .menu-toggle {
+  margin-top: 10px;
+  margin-right: 5px;
+  float: right;
+}
+.nav-menu.expanded .menu-items {
+  padding: 0;
+  margin: 0;
+}
+.nav-menu.expanded .menu-items .list {
+  list-display: none;
+  padding: 0;
+  margin: 0;
+}
+.nav-menu.expanded .menu-items .list li {
+  padding: 0;
+  margin: 0;
+}
+.nav-menu.expanded .menu-items .list a {
+  text-decoration: none;
+  color: #FFF;
+}
+.nav-menu.expanded .menu-items .list .menu-item {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+  font-size: 16px;
+  line-height: 25px;
+  transition: 0.4s;
+}
+.nav-menu.expanded .menu-items .list .menu-item:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.nav-menu.collapsed {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  background-color: #1f5d56;
+  box-shadow: 5px 0 10px #828282;
+}
+.nav-menu.collapsed .menu-header {
+  padding: 5px;
+  box-sizing: border-box;
+  height: 35px;
+  border-top: 1px solid #282828;
+  border-bottom: 1px solid #65b3aa;
+  box-shadow: 0 2px 10px #646464;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.nav-menu.collapsed .menu-header .menu-title {
+  display: none;
+}
+.nav-menu.collapsed .menu-header .menu-toggle {
+  margin: 0 auto;
+  text-align: center;
+}
+.nav-menu.collapsed .menu-header .menu-toggle .icon.collapse:before {
+  content: "\e096";
+}
+.nav-menu.collapsed .menu-items {
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+.nav-menu.collapsed .menu-items .list {
+  list-display: none;
+  padding: 0;
+  margin: 0;
+}
+.nav-menu.collapsed .menu-items .list li {
+  padding: 0;
+  margin: 0;
+}
+.nav-menu.collapsed .menu-items .list a {
+  text-decoration: none;
+  color: #FFF;
+}
+.nav-menu.collapsed .menu-items .list .menu-item {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 16px;
+  line-height: 25px;
+  transition: 0.4s;
+}
+.nav-menu.collapsed .menu-items .list .menu-item:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.nav-menu.collapsed .menu-items .list .menu-item span.description {
+  display: none;
+}

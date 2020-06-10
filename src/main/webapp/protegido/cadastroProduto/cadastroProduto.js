@@ -1,12 +1,17 @@
 
 var produto = [];
 var filial = {};
-
+var expan = false;
 function init() {
-    getFilial();
+    setTimeout(function () {
+        getFilial();
+        consultarProdutos();
+    }, 280);
+
+    expand();
     form();
     mask();
-    consultarProd();
+    ClickConsulta();
 }
 
 
@@ -21,25 +26,41 @@ $(document).ready(function () {
     init();
 });
 
-function consultarProd() {
+function ClickConsulta() {
     $('#consultarProd').click(() => {
-        $.ajax({
-            type: 'GET',
-            url: '../../notestore?controller=Produto&acao=consultar&idFilial=' + filial.id,
-            headers: {
-                Accept: "application/json; charset=utf-8",
-                "Content-Type": "application/json; charset=utf-8"
-            },
-            success: function (result) {
-                if (result === '') {
-                    alert("Nenhum produto cadastrado na filial: " + filial.nome);
-                } else {
-                    produto = result;
-                    carregaTabela();
-                }
-            }});
+        consultarProdutos();
     }
     );
+}
+
+function consultarProdutos() {
+    $.ajax({
+        type: 'GET',
+        url: '../../notestore?controller=Produto&acao=consultar&idFilial=' + filial.id,
+        beforeSend: function (xhr) {
+            loadMsg("Carregando!");
+        },
+        headers: {
+            Accept: "application/json; charset=utf-8",
+            "Content-Type": "application/json; charset=utf-8"
+        },
+        success: function (result) {
+            if (result === '') {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Nenhum produto cadastrado',
+                    showConfirmButton: false,
+                    timer: 1000
+                });
+            } else {
+                Swal.fire({
+                    showConfirmButton: false,
+                    timer: 1
+                });
+                produto = result;
+                carregaTabela();
+            }
+        }});
 }
 
 /**
@@ -88,43 +109,81 @@ function editarProd(indice) {
  * @param {number} idProd
  */
 function excluirProd(i, idProd) {
-    if (confirm("Deseja excluir?")) {
-        produto.splice(i, 1);
-        carregaTabela();
 
-        $.ajax({
-            type: 'GET',
-            url: '../notestore?controller=Produto&acao=excluir&id=' + idProd,
-            headers: {
-                Accept: "application/json; charset=utf-8",
-                "Content-Type": "application/json; charset=utf-8"
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                alert("Erro ao excluir Produto");
-            },
-            success: function (result) {
-                alert("Produto excluido com sucesso");
-            }});
-    } else {
-        alert("cancelado");
-    }
+    Swal.queue([{
+            title: 'Você tem certeza',
+            text: "Você não poderá reverter isso!",
+            icon: 'warning',
+            showLoaderOnConfirm: true,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim!',
+            cancelButtonText: 'Não',
+            preConfirm: () => {
+                return $.ajax({
+                    type: 'GET',
+                    url: '../../notestore?controller=Produto&acao=excluir&id=' + idProd,
+                    beforeSend: function (xhr) {
+                        loadMsg("Excluindo!");
+                    },
+                    headers: {
+                        Accept: "application/json; charset=utf-8",
+                        "Content-Type": "application/json; charset=utf-8"
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Erro ao excluir Produto',
+                            showConfirmButton: true
+                        })
+                    },
+                    success: function (result) {
+                        produto.splice(i, 1);
+                        carregaTabela();
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Produto excluído com sucesso!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }});
+            }
+        }]);
 }
 
 function form() {
     validarForm();
     $('form').ajaxForm({
         onsubmit: function (event) {
+        }, beforeSend: function (xhr) {
+            loadMsg("Enviando!");
         },
         success: function (result, textStatus, jqXHR) {
             if (result !== '') {
-                alert(result);
-                window.location.reload();
+                Swal.fire({
+                    icon: 'success',
+                    title: result,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                setTimeout(function () {
+                    window.location.reload();
+                }, 1500);
             } else {
-                alert('erro no servidor ao cadastrar produto');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'erro no servidor ao processar dados',
+                    showConfirmButton: true
+                })
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert('Erro ao solicitar');
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro ao solicitar',
+                showConfirmButton: true
+            })
         }
     });
 
@@ -150,10 +209,65 @@ function validarForm() {
 function getFilial() {
     filial = JSON.parse(sessionStorage.getItem('filial'));
     if (filial === null) {
-        alert("Erro ao obter filial");
-        window.location.href = '../../protegido/index.html';
+        let timerInterval
+        Swal.enableLoading();
+        Swal.fire({
+            icon: 'error',
+            title: 'Erro ao carregar filial!',
+            html: 'Direciando para o inicio em <b></b> milliseconds.',
+            timer: 1300,
+            showConfirmButton: false,
+            timerProgressBar: true,
+            onBeforeOpen: () => {
+                Swal.enableLoading();
+                timerInterval = setInterval(() => {
+                    Swal.enableLoading();
+                    const content = Swal.getContent()
+                    if (content) {
+                        const b = content.querySelector('b')
+                        if (b) {
+                            b.textContent = Swal.getTimerLeft()
+                        }
+                    }
+                }, 100)
+            },
+            onClose: () => {
+                clearInterval(timerInterval)
+                window.location.href = '../../protegido/index.html';
+            }
+        }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+                window.location.href = '../../protegido/index.html';
+            }
+        })
     } else {
-        $('.tabela').show();
+        $('.corpo').show();
     }
     document.getElementById("idFilial").value = filial.id;
+}
+
+function expand() {
+    $("#toggleMenu").on("click", function () {
+        var menu = $("#navMenu");
+
+        menu.toggleClass("collapsed");
+        menu.toggleClass("expanded");
+        if (expan) {
+            $("body").css("left", "59px");
+            expan = false;
+        } else {
+            $("body").css("left", "278px");
+            expan = true;
+        }
+
+    });
+}
+
+function loadMsg(msg) {
+    Swal.fire({
+        title: msg,
+        onBeforeOpen: () => {
+            Swal.showLoading();
+        }
+    });
 }

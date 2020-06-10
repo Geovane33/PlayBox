@@ -16,16 +16,36 @@ import java.util.List;
 public class Relatorio {
 
     //atributos privados
-    private int id;
-    private Date dataVenda;
+    private int qtdVenda;
     private double total;
-    private Cliente cliente;
-    private Filial filial;
-    private List<Produto> produtos = new ArrayList<>();
-    private double totalDaVenda;
-    
-    
-    public double calculaTotal() {
-        return 0;
+    private Unidade filial;
+
+    public int getQtdVenda() {
+        return qtdVenda;
     }
+
+    public void setQtdVenda(int qtdVenda) {
+        this.qtdVenda = qtdVenda;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(List<Venda> vendas) {
+        List<Double> teste;
+        for (Venda venda : vendas) {
+            venda.getId();
+        }
+        this.total = total;
+    }
+
+    public Unidade getFilial() {
+        return filial;
+    }
+
+    public void setFilial(Unidade filial) {
+        this.filial = filial;
+    }
+    
 }

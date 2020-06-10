@@ -7,6 +7,7 @@ var filiais = [];
 
 function init() {
     obterFiliais();
+    expand();
 }
 
 function atribuiFilial(idFilial) {
@@ -42,18 +43,20 @@ function carregarFiliais() {
     } else {
 
         for (var i = 0; i < filiais.length; i++) {
-            console.log(filiais[i]);
             filial.append('<a class="btn" onclick="enviarFilial(' + i + ')">' + filiais[i].nome + '</a><br>');
         }
-        filial.append('<a class="btn" onclick="relatorioGeral()">RELATORIO GERAL</a><br>');
         $("#formFiliais").html(filial);
     }
 }
 
 function enviarFilial(indice) {
-    var filial = JSON.stringify(filiais[indice]);
-    sessionStorage.setItem('filial', filial);
-    $('form').submit();
+    if (filiais[indice].id === 0) {
+        relatorioGeral();
+    } else {
+        var filial = JSON.stringify(filiais[indice]);
+        sessionStorage.setItem('filial', filial);
+        $('form').submit();
+    }
 }
 
 function relatorioGeral() {
@@ -63,4 +66,13 @@ function relatorioGeral() {
     filial.estado = 'Relatório Geral';
     sessionStorage.setItem('filial', JSON.stringify(filial));
     window.location.href = 'relatorios/relatorio.jsp';
+}
+
+function expand(){  
+  $("#toggleMenu").on("click", function(){
+      var menu = $("#navMenu");
+      
+    menu.toggleClass("collapsed");
+    menu.toggleClass("expanded");
+    });  
 }

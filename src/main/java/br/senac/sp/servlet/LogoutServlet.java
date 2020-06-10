@@ -22,12 +22,11 @@ public class LogoutServlet extends HttpServlet {
 
    
   @Override
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession sessao = request.getSession();
         sessao.invalidate();
-        response.sendRedirect(request.getContextPath() + "/protegido/index.html");
+        response.sendRedirect(request.getContextPath() + "/login.jsp");
     }
    
 

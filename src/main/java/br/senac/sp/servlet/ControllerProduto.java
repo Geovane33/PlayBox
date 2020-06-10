@@ -125,8 +125,7 @@ public class ControllerProduto implements Controller {
      * @param response
      */
     @Override
-    public void excluir(HttpServletRequest request, HttpServletResponse response
-    ) {
+    public void excluir(HttpServletRequest request, HttpServletResponse response) {
         ProdutoDAO produtoDAO = new ProdutoDAO();
         try {
             int id = Integer.parseInt(request.getParameter("id"));
@@ -144,7 +143,7 @@ public class ControllerProduto implements Controller {
                 if (produtoDAO.atualizar(p)) {
                     out.write("Produto excluido com sucesso");
                 } else {
-                    out.write("Erro ao excluir produto, verifique se esta em venda ativa");
+                    out.write("Erro ao excluir produto, verifique se o produto está em venda pendente");
                 }
             }
             out.flush();
@@ -156,5 +155,4 @@ public class ControllerProduto implements Controller {
             System.out.println("Class: " + ex.getClass());
         }
     }
-
 }

@@ -46,7 +46,7 @@ public class ControllerCliente implements Controller {
         }
     }
 
-       /**
+    /**
      * Realiza consultas
      *
      * @param request
@@ -80,7 +80,7 @@ public class ControllerCliente implements Controller {
         }
 
     }
-    
+
     /**
      * atualiza clientes
      *
@@ -95,7 +95,7 @@ public class ControllerCliente implements Controller {
             ClienteDAO clienteDAO = new ClienteDAO();
             Cliente cliente = builderCliente.getObjCliente();
             PrintWriter out = response.getWriter();
-            if (clienteDAO.consultar(cliente.getId()+"", cliente.getCpf()).isEmpty()) {
+            if (clienteDAO.consultar(cliente.getId() + "", cliente.getCpf()).isEmpty()) {
                 if (clienteDAO.atualizar(cliente)) {
                     out.write("200-2");
                 } else {
@@ -147,5 +147,4 @@ public class ControllerCliente implements Controller {
         }
     }
 
- 
 }

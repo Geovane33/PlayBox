@@ -2,7 +2,6 @@ package br.senac.sp.dao;
 
 import br.senac.sp.db.ConexaoDB;
 import br.senac.sp.entidade.Produto;
-import br.senac.sp.utils.Conversor;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -10,17 +9,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Jonathan
  */
-public class ProdutoDAO {
+public class ProdutoDAO implements DAO<Produto>{
 
     /**
      * Metodo para salvar clientes
      *
-     * @param produto
+     * @param produto objecto produto para salvar
      * @return true: salvo com sucesso e false: erro ao salvar
      */
     public boolean salvar(Produto produto) {
@@ -72,12 +72,13 @@ public class ProdutoDAO {
      * @param values recebe o nome do produto como parâmetro
      * @return listaProdutos
      */
-    public ArrayList<Produto> consultar(String values, String tipo) {
+    @Override
+    public List consultar(String values, String tipo) {
         ResultSet rs = null;
         Connection conexao = null;
         PreparedStatement ps = null;
 
-        ArrayList<Produto> listaProdutos = new ArrayList<>();
+        List<Produto> listaProdutos = new ArrayList<>();
 
         try {
             conexao = ConexaoDB.getConexao();
@@ -87,6 +88,8 @@ public class ProdutoDAO {
                 ps = conexao.prepareStatement("SELECT * FROM produto WHERE id_produto = " + Integer.parseInt(values));
             } else if (tipo.equals("nome") || tipo.equals("ID") || tipo.equals("FILIAL") ) {
                 ps = conexao.prepareStatement("SELECT * FROM produto WHERE id_filial =" + Integer.parseInt(values)+" AND produto.quantidade_produto>0");
+             } else if (tipo.equals("") || tipo.equals("TODOS") || tipo.equals("FILIAL") ) {
+                ps = conexao.prepareStatement("SELECT * FROM produto");
             }
             rs = ps.executeQuery();
 
@@ -134,6 +137,7 @@ public class ProdutoDAO {
      * @return true caso o produto seja atulizado com sucesso e false caso de
      * erro ao atualizar o produto
      */
+    @Override
     public boolean atualizar(Produto produto) {
         Connection conexao = null;
         PreparedStatement ps = null;
@@ -180,7 +184,13 @@ public class ProdutoDAO {
             }
         }
     }
-
+    
+    /**
+     * Excluir produto
+     * @param id identificação do produto a ser excluido
+     * @return boolean
+     */
+    @Override
     public boolean excluir(int id) {
         Connection conexao = null;
         PreparedStatement ps = null;

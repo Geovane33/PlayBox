@@ -14,8 +14,7 @@ table.list{
     width: 910px;
 }
 
-h1{
-
+h2{
     color: #fff;
 }
 
@@ -23,7 +22,7 @@ hr{
     border:1px solid #fff;
 }
 
-header input{
+#divBtns input{
     width: 100%;
     text-decoration: none;
     color:#fff;
@@ -38,7 +37,7 @@ header input{
     font-size: 16px;
 }
 
-header input:hover{
+#divBtns input:hover{
     background-color: #3b706a;
     color: #fff;
     box-shadow: 0 2px 3px #777;

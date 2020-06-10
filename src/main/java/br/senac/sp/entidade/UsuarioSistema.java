@@ -3,15 +3,21 @@ package br.senac.sp.entidade;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import br.senac.sp.utils.PerfilEnum;
+import java.util.Date;
 
-public class UsuarioSistema {
+public class UsuarioSistema extends Pessoa{
     
-    private long id;
-    private String nome;
     private String usuario;
     private String senha;
     private PerfilEnum perfil;
     private boolean isAdmin;
+
+    public UsuarioSistema() {
+    }
+    
+    public UsuarioSistema(int idFilial, String nome, String cpf, Date dataNascimento, String sexo, String telefone, String email, String uf, String cidade, String cep, String bairro, String numero) {
+        super(idFilial, nome, cpf, dataNascimento, sexo, telefone, email, uf, cidade, cep, bairro, numero);
+    }
     
     public String encodeSenha(String senhaAberta) {
         return BCrypt.withDefaults().hashToString(12, senhaAberta.toCharArray());
@@ -22,22 +28,6 @@ public class UsuarioSistema {
         return result.verified;
     }
     
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
     public String getSenha() {
         return senha;
     }
@@ -65,7 +55,5 @@ public class UsuarioSistema {
     public boolean isAdmin() {
         return PerfilEnum.admin.equals(this.getPerfil());
     }
-    
-    
     
 }

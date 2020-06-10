@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author Geovane
  */
-public class Funcionario extends Pessoa{
+public class Funcionario extends UsuarioSistema{
    private String funcao;
    private double salario;
 
@@ -69,6 +69,5 @@ public class Funcionario extends Pessoa{
     public void setSalario(long salario) {
         this.salario = salario;
     }
-   
 }
 

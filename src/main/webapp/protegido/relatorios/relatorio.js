@@ -1,30 +1,93 @@
+//gerargraficos
+var filialVendas = {
+    nome: "",
+    qtdVenda: 0,
+    valor: 0
+};
+var totalPorFilial = [filialVendas];
 
-var relatorio = {};
+//tabela
+var relatorio = [];
 var carregou = true;
 var filial = {};
 var totalFilial = 0;
 var controleTabela = -1;
 var tabela2;
+var expan = false;
 var idCLientes = [];
 $(document).ready(() => {
+
     init();
 });
 
 function init() {
-    getFilial();
-    obterRelatorio();
+
+    setTimeout(function () {
+        loadMsg("Carregando!");
+        expand();
+        getFilial();
+        obterRelatorio();
+
+    }, 280);
 }
 
 function getFilial() {
     filial = JSON.parse(sessionStorage.getItem('filial'));
     if (filial === null) {
-        alert("Erro ao obter filial");
-        window.location.href = '../../protegido/index.html';
+        $("body").show();
+        let timerInterval
+        Swal.enableLoading();
+        Swal.fire({
+            icon: 'error',
+            title: 'Erro ao carregar filial!',
+            html: 'Direciando para o inicio em <b></b> milliseconds.',
+            timer: 1300,
+            showConfirmButton: false,
+            timerProgressBar: true,
+            onBeforeOpen: () => {
+                Swal.enableLoading();
+                timerInterval = setInterval(() => {
+                    Swal.enableLoading();
+                    const content = Swal.getContent()
+                    if (content) {
+                        const b = content.querySelector('b')
+                        if (b) {
+                            b.textContent = Swal.getTimerLeft()
+                        }
+                    }
+                }, 100)
+            },
+            onClose: () => {
+                clearInterval(timerInterval)
+                window.location.href = '../../protegido/index.html';
+            }
+        }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+                window.location.href = '../../protegido/index.html';
+            }
+        })
     }
 }
 
 function calculaTotalVenda(relatorio) {
     totalFilial += relatorio.total;
+}
+
+function calcTotalPorFilial() {
+
+    for (var i = 0; i < relatorio.length; i++) {
+        if (totalPorFilial.indexOf(relatorio[0].filial.nome) === -1) {
+            totalPorFilial.push({nome: relatorio[i].filial.nome,
+                qtdVendas: 1,
+                valor: relatorio[i].total});
+        } else {
+            var indice = totalPorFilial.indexOf(relatorio[i].filial.nome);
+            totalPorFilial[indice].valor += relatorio[i].total;
+            totalPorFilial[indice].qtdVendas += 1;
+        }
+    }
+    console.log(relatorio.length);
+    console.log(totalPorFilial);
 }
 
 function carregaTabela() {
@@ -72,6 +135,7 @@ function criarColunas() {
 }
 
 function getProdutos(indice) {
+
     criarColunas();
     for (var i = 0; i < relatorio[indice].produtos.length; i++) {
         var linha = $("<tr>");
@@ -102,7 +166,15 @@ function tabelaDinamica() {
             "url": "../jsons/vendas.json"
         }
     });
-     $('body').show();
+    setTimeout(function () {
+        Swal.fire({
+            showConfirmButton: false,
+            timer: 1
+        })
+        $(".corpo").show();
+        $("body").show();
+    }, 1);
+
 }
 
 function obterRelatorio() {
@@ -125,6 +197,32 @@ function obterRelatorio() {
                 carregou = false;
                 relatorio = result;
                 carregaTabela();
+                calcTotalPorFilial();
             }
         }});
+}
+function loadMsg(msg) {
+    Swal.fire({
+        title: msg,
+        showConfirmButton: false,
+        onBeforeOpen: () => {
+            Swal.showLoading();
+        }
+    });
+}
+function expand() {
+    $("#toggleMenu").on("click", function () {
+        var menu = $("#navMenu");
+
+        menu.toggleClass("collapsed");
+        menu.toggleClass("expanded");
+        if (expan) {
+            $("body").css("left", "59px");
+            expan = false;
+        } else {
+            $("body").css("left", "278px");
+            expan = true;
+        }
+
+    });
 }
