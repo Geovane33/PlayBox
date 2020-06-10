@@ -439,7 +439,10 @@ function gerarVenda() {
                             icon: 'error'
                         });
                     } else if (result !== "") {
-                        alert(result);
+                                  Swal.fire({
+                            title: result,
+                            icon: 'error'
+                        });
                     } else {
                         Swal.fire({
                             title: 'Erro no servidor ao processar venda, revise o carrinho!',
