@@ -1,6 +1,5 @@
 package br.senac.sp.dao;
 
-import br.senac.sp.dao.ClienteDAO;
 import br.senac.sp.db.ConexaoDB;
 import br.senac.sp.entidade.UsuarioSistema;
 import br.senac.sp.utils.PerfilEnum;
@@ -16,7 +15,7 @@ import java.util.logging.Logger;
  * @author tscarton
  */
 public class UsuarioSistemaDAO {
-    
+
     public static UsuarioSistema getUsuarioSistemaByUsuario(String usuario) {
         UsuarioSistema usuarioSistema = null;
         Connection con;
@@ -31,16 +30,18 @@ public class UsuarioSistemaDAO {
                 String nome = rs.getString("nome");
                 String senha = rs.getString("senha");
                 String perfil = rs.getString("perfil");
+                int idUnidade = rs.getInt("id_unidade");
                 usuarioSistema.setNome(nome);
                 usuarioSistema.setUsuario(usuario);
                 usuarioSistema.setSenha(senha);
                 usuarioSistema.setPerfil(PerfilEnum.valueOf(perfil));
+                usuarioSistema.setIdUnidade(idUnidade);
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-       return usuarioSistema;
+        return usuarioSistema;
     }
-    
+
 }

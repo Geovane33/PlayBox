@@ -1,28 +1,24 @@
+<%-- 
+    Document   : graficos
+    Created on : 09/06/2020, 00:44:13
+    Author     : Geovane
+--%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Inicio</title>
-        <meta content="text/html; charset=UTF-8" >
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="protegido/filiais/filiais.js"></script>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'>
-        <link rel="stylesheet" href="protegido/style.css">
-        <link rel="stylesheet" href="protegido/style/cssMedio.css" media="screen and (min-width:900px)">
-        <link rel="stylesheet" href="protegido/style/cssPequeno.css" media="screen and (min-width:100px)">
-        <link rel="stylesheet" href="protegido/filiais/filiais.css">
-        <link rel="stylesheet" href="protegido/style/botoes.css">
-
+        <link rel="stylesheet" href="../style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script> 
+        <script src="graficos.js"></script>
+        <title>GRÁFICOS - NOTESTORE</title>
     </head>
-    <body hidden>
-        <div id="divBtns">
-            <br>
-            <br>
-            <h1 id='idFilial'></h1>
-            <hr>
-            <form id="form" hidden action="cadastroCliente">
-            </form>
-        </div >
+    <body style="position: relative; left: 56px">
+        <canvas class="line-chart"></canvas>
+        
         <!--partial:index.partial.html--> 
         <div id="navMenu" class="nav-menu collapsed">
             <div class="menu-header">
@@ -32,9 +28,9 @@
                 </a>
             </div>
             <div class="menu-items">
-                <ul class="list">
+                <ul id="listNav" class="list">
                     <li>
-                        <a href="protegido/index.html">
+                        <a href="../index.html">
                             <div class="menu-item">        
                                 <span class="icon home"></span>
                                 <span class="description">INICIO</span>        
@@ -42,7 +38,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="protegido/cadastroCliente/cadastroCliente.jsp">
+                        <a href="../cadastroCliente/cadastroCliente.jsp">
                             <div class="menu-item">        
                                 <span class="icon clientes"></span>
                                 <span class="description">CLIENTES</span>        
@@ -50,7 +46,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="protegido/cadastroProduto/cadastroProduto.jsp">
+                        <a href="../cadastroProduto/cadastroProduto.jsp">
                             <div class="menu-item">        
                                 <span class="icon produtos"></span>
                                 <span class="description">PRODUTOS</span>        
@@ -58,15 +54,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="protegido/vendas/realizarVenda.jsp">
-                            <div class="menu-item">        
-                                <span class="icon vendas"></span>
-                                <span class="description">VENDAS</span>        
-                            </div>
-                        </a>
-                    </li>     
-                    <li>
-                        <a href="protegido/relatorios/relatorio.jsp">
+                        <a href="../relatorios/relatorio.jsp">
                             <div class="menu-item">        
                                 <span class="icon relatorios"></span>
                                 <span class="description">RELATÓRIOS</span>        
@@ -74,13 +62,13 @@
                         </a>
                     </li> 
                     <li>
-                        <a href="./logout">
+                        <a href="../../logout">
                             <div class="menu-item">        
                                 <span class="icon logout"></span>
                                 <span class="description">LOGOUT</span>        
                             </div>
                         </a>
-                    </li> 
+                    </li>    
                 </ul>
             </div>
         </div>

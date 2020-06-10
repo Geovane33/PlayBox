@@ -39,7 +39,7 @@ public class ControllerRelatorio implements Controller {
             PrintWriter out = response.getWriter();
             try {
                 int idFilial = Integer.parseInt(request.getParameter("idFilial"));
-                relatorio = relatorioDAO.obterRalatorio(idFilial);
+                relatorio = relatorioDAO.consultar(idFilial);
             } catch (NumberFormatException ex) {
                 System.out.println("Erro em obter filial ao gerar relatorio");
                 System.out.println("Message: " + ex.getMessage());

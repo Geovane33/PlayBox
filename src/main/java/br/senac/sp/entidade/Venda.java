@@ -18,7 +18,7 @@ public class Venda {
     private Date dataVenda;
     private double total;
     private Cliente cliente;
-    private Filial filial;
+    private Unidade filial;
     private List<Produto> produtos = new ArrayList<>();
     
  
@@ -103,14 +103,14 @@ public class Venda {
     /**
      * @return filial
      */
-    public Filial getFilial() {
+    public Unidade getFilial() {
         return filial;
     }
 
     /**
      * @param filial filial para set
      */
-    public void setFilial(Filial filial) {
+    public void setFilial(Unidade filial) {
         this.filial = filial;
     }
 

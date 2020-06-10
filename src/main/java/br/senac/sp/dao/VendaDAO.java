@@ -142,7 +142,7 @@ public class VendaDAO {
      * @param fim
      * @return
      */
-    public List<Venda> consultar(java.util.Date inicio, java.util.Date fim) {
+    public List consultar(java.util.Date inicio, java.util.Date fim) {
         ResultSet rs = null;
         Connection conexao;
         PreparedStatement instrucaoSQL = null;
@@ -155,7 +155,6 @@ public class VendaDAO {
             instrucaoSQL = conexao.prepareStatement("SELECT * FROM venda WHERE data_venda BETWEEN ? and ?;");
             instrucaoSQL.setDate(1, new Date(inicio.getTime()));
             instrucaoSQL.setDate(2, new Date(fim.getTime()));
-            System.out.println("teste de data, remover print depois");
 
             rs = instrucaoSQL.executeQuery();
 

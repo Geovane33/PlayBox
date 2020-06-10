@@ -35,7 +35,7 @@ public class BuilderCliente {
         Conversor data = new Conversor();
 
             cliente.setId(Integer.valueOf(this.mapCliente.get("id")[0]));
-            cliente.setIdFilial(Integer.valueOf(this.mapCliente.get("idFilial")[0]));
+            cliente.setIdUnidade(Integer.valueOf(this.mapCliente.get("idFilial")[0]));
             cliente.setNome(this.mapCliente.get("nome")[0]);
             cliente.setCpf(this.mapCliente.get("CPF")[0]);
             cliente.setDataNascimento(data.parseData(this.mapCliente.get("nascimento")[0], "dd/MM/yyyy"));

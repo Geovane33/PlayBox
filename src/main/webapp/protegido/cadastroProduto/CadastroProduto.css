@@ -1,6 +1,10 @@
 #consultarProd{
     cursor: pointer;
 }
+body{
+    position: relative;
+    left: 59px;
+}
 .imgDel{
     cursor: pointer;
 }

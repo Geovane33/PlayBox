@@ -11,16 +11,16 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClienteDAO {
+public class ClienteDAO implements DAO<Cliente>{
 
     /**
      * Salvar clientes
      *
-     * @param object recebe um objeto cliente
+     * @param cliente recebe um objeto cliente
      * @return true: salvo com sucesso false: erro ao salvar
      */
-    public boolean salvar(Object object) {
-        Cliente cliente = (Cliente) object;
+    @Override
+    public boolean salvar(Cliente cliente) {
         boolean ok = false;
         Connection conexao = null;
         PreparedStatement ps = null;
@@ -28,7 +28,7 @@ public class ClienteDAO {
             conexao = ConexaoDB.getConexao();
             String sql = "INSERT INTO cliente VALUES (default,?,?,?,?,?,?,?,?,?,?,?,?)";
             ps = conexao.prepareStatement(sql);
-            ps.setInt(1, cliente.getIdFilial());
+            ps.setInt(1, cliente.getIdUnidade());
             ps.setString(2, cliente.getNome());
             ps.setString(3, cliente.getCpf());
             ps.setDate(4, new Date(cliente.getDataNascimento().getTime()));
@@ -76,7 +76,8 @@ public class ClienteDAO {
      * realizada
      * @return listaClientes
      */
-    public List<Cliente> consultar(String values, String tipo) {
+    @Override
+    public List consultar(String values, String tipo) {
         ResultSet rs = null;
         Connection conexao = null;
         PreparedStatement ps = null;
@@ -100,7 +101,7 @@ public class ClienteDAO {
 
                 Cliente cliente = new Cliente();
                 cliente.setId(rs.getInt("id_cliente"));
-                cliente.setIdFilial(rs.getInt("id_filial"));
+                cliente.setIdUnidade(rs.getInt("id_filial"));
                 cliente.setNome(rs.getString("nome_cliente"));
                 cliente.setCpf(rs.getString("cpf_cliente"));
                 cliente.setDataNascimento(rs.getTimestamp("nasc_cliente"));
@@ -147,6 +148,7 @@ public class ClienteDAO {
      * @return true: Cliente atulizado com sucesso false: Erro ao atualizar o
      * Cliente
      */
+    @Override
     public boolean atualizar(Cliente cliente) {
         Connection conexao = null;
         PreparedStatement ps = null;
@@ -209,6 +211,7 @@ public class ClienteDAO {
      * excluir
      * @return boolean - true: excluido com sucesso false: erro ao excluir
      */
+    @Override
     public boolean excluir(int id) {
         Connection conexao = null;
         PreparedStatement ps = null;

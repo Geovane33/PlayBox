@@ -10,8 +10,9 @@ div.dataTables_wrapper {
 * {
     box-sizing: border-box;
 }
-
-body {
+body{ 
+    left: 59px;
+    position: relative !important;
     font-family: 'Lato', sans-serif;
     color: #202020;
 }

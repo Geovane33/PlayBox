@@ -4,27 +4,71 @@
 $(document).ready(function () {
     init();
 });
+var expan = false;
 var venda = {total: 0};
 var produtoCarrinho = [];
+var filiais = [];
 var cliente = [];
 var produto = [];
 function init() {
-    getFilial();
-    listarClientes();
-    listarProduto();
-    limpaForm();
+    setTimeout(function () {
+        getFilialSelecionada();
+        expand();
+        obterFiliais();
+        loadMsg("Carregando!");
+        listarClientes();
+        listarProduto();
+        setTimeout(function () {
+            Swal.fire({
+                  showConfirmButton: false,
+                timer: 1
+            })
+        }, 1000);
+
+        limpaForm();
+    }, 280);
+
 }
 
 /**
  * chamada no mesmo momento que a pagina carregar
  */
-function getFilial() {
+function getFilialSelecionada() {
     venda.filial = JSON.parse(sessionStorage.getItem('filial'));
     if (venda.filial === null) {
-        alert("Erro ao obter filial");
-        window.location.href = '../';
+        let timerInterval
+        Swal.enableLoading();
+        Swal.fire({
+            icon: 'error',
+            title: 'Erro ao carregar filial!',
+            html: 'Direciando para o inicio em <b></b> milliseconds.',
+            timer: 1300,
+            showConfirmButton: false,
+            timerProgressBar: true,
+            onBeforeOpen: () => {
+                Swal.enableLoading();
+                timerInterval = setInterval(() => {
+                    Swal.enableLoading();
+                    const content = Swal.getContent()
+                    if (content) {
+                        const b = content.querySelector('b')
+                        if (b) {
+                            b.textContent = Swal.getTimerLeft()
+                        }
+                    }
+                }, 100)
+            },
+            onClose: () => {
+                clearInterval(timerInterval)
+                window.location.href = '../index.html';
+            }
+        }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+                window.location.href = '../index.html';
+            }
+        })
     } else {
-        $('html').show();
+        $('.corpo').show();
     }
 }
 
@@ -42,11 +86,17 @@ function listarClientes() {
             xhr.setRequestHeader('X-Consulta', "");
             xhr.setRequestHeader('X-ConsultaTipo', "nome");
         }, error: function (jqXHR, textStatus, errorThrown) {
-            alert("erro ao carregar lista de clientes");
+            Swal.fire({
+                title: 'Erro ao carregar lista de clientes!',
+                icon: 'error'
+            });
         },
         success: function (result) {
             if (result === undefined) {
-                alert("Nenhum cliente cadastrado: "+ venda.filial.nome);
+                Swal.fire({
+                    title: 'Nenhum cliente cadastrado!',
+                    icon: 'warning'
+                });
             } else {
                 cliente = result;
                 carregarListCli();
@@ -68,7 +118,7 @@ function carregarListCli() {
  * resquest para receber uma lsita de produtos
  */
 function listarProduto() {
-    getFilial();
+    getFilialSelecionada();
     $.ajax({
         type: 'GET',
         url: '../../notestore?controller=Produto&acao=consultar&idFilial=' + venda.filial.id,
@@ -78,7 +128,10 @@ function listarProduto() {
         }, success: function (result) {
             console.log(result);
             if (result === '') {
-              alert("Nenhum produto cadastrado na filial: "+ venda.filial.nome);
+                Swal.fire({
+                    title: 'Nenhum produto cadastrado!',
+                    icon: 'warning'
+                });
             } else {
                 produto = result;
                 carregaListaProd();
@@ -86,7 +139,10 @@ function listarProduto() {
 
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert("erro ao carregar lista de produtos");
+            Swal.fire({
+                title: 'Erro ao carregar lista de produtos!',
+                icon: 'error'
+            });
         }
     });
 }
@@ -149,7 +205,10 @@ function formValido() {
     quantidade < 1 ? form += "\nQuantidade" : "";
 
     if (form !== "Selecione") {
-        alert(form);
+        Swal.fire({
+            title: form,
+            icon: 'error'
+        });
         return false;
     } else {
         return true;
@@ -303,37 +362,15 @@ function excluirItem(i) {
  * responsavel por voltar a quantidade do produto em "estoque" e deixa o produto disponivel para venda novamente
  */
 function restauraLstProduto(i) {
-
     const indice = produto.indexOf(produtoCarrinho[i].produto);
     if (indice > -1) {
         produto[indice].quantidade += eval(produtoCarrinho[i].quantidade);
         produto[indice].quantidadeNaVenda = 0;
     } else {
         produtoCarrinho[i].produto.quantidade += eval(produtoCarrinho[i].quantidade);
-        produtoCarrinho[i].produto.quantidadeNaVenda=0;
+        produtoCarrinho[i].produto.quantidadeNaVenda = 0;
         produto.push(produtoCarrinho[i].produto);
     }
-}
-
-
-function excluirItemCarrinho(idVenda) {
-
-    for (var i = 0; i < venda.length; i++) {
-        if (venda[i].id === idCli) {
-            venda[i] = "";
-        }
-    }
-    $.ajax({
-        type: 'GET',
-        url: 'VendaServlet?id=' + idVenda,
-        headers: {
-            accept: "application/json; charset=utf-8",
-            "Content-Type": "application/json; charset=utf-8"
-        },
-        success: function (result) {
-            alert("Item excluido com sucesso!");
-        }
-    });
 }
 
 function getProdVenda() {
@@ -354,41 +391,153 @@ function getProdVenda() {
 
 }
 
+function loadMsg(msg) {
+    Swal.fire({
+        title: msg,
+          showConfirmButton: false,
+        onBeforeOpen: () => {
+            Swal.showLoading();
+        }
+    });
+}
+
 function gerarVenda() {
     if (venda.cliente !== undefined) {
         if (venda.total > 0) {
             venda.dataVenda = new Date();
             getProdVenda();
-            getFilial();
+            getFilialSelecionada();
             $.ajax({
                 type: 'POST',
-                url: '../notestore?controller=Venda&acao=adicionar',
+                url: '../../notestore?controller=Venda&acao=adicionar',
                 headers: {
                     accept: "application/json; charset=utf-8",
                     "Content-Type": "application/json; charset=utf-8"
                 }, beforeSend: function (xhr) {
+                    loadMsg("Finalizando venda.");
                     xhr.setRequestHeader('X-Venda', JSON.stringify(venda));
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    alert("Erro na solicitação ao finalizar venda!");
+                    Swal.fire({
+                        title: 'Erro na solicitação ao finalizar venda.',
+                        icon: 'error'
+                    });
                 },
                 success: function (result) {
                     if (result === '200') {
-                        alert("Venda finalizada com sucesso");
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Venda finalizada com sucesso',
+                            showConfirmButton: false,
+                            timer: 1000
+                        })
                         window.location.reload();
                     } else if (result === '500') {
-                        alert("Erro no servidor ao finalizar venda");
-                    } else if(result !== "") {
+                        Swal.fire({
+                            title: 'Erro no servidor ao finalizar venda!',
+                            icon: 'error'
+                        });
+                    } else if (result !== "") {
                         alert(result);
-                    }else{
-                        alert("Erro no servidor ao processar venda, revise o carrinho");
+                    } else {
+                        Swal.fire({
+                            title: 'Erro no servidor ao processar venda, revise o carrinho!',
+                            icon: 'error'
+                        });
                     }
                 }
             });
         } else {
-            alert("Total Carrinho não pode ser 0");
+            Swal.fire({
+                title: 'Total Carrinho não pode ser 0!',
+                icon: 'error'
+            });
         }
     } else {
-        alert("erro ao obter cliente e produto");
+        Swal.fire({
+            title: 'Erro ao obter cliente e produto!',
+            icon: 'error'
+        });
+    }
+}
+function expand() {
+    $("#toggleMenu").on("click", function () {
+        var menu = $("#navMenu");
+
+        menu.toggleClass("collapsed");
+        menu.toggleClass("expanded");
+        if (expan) {
+            $("body").css("left", "59px");
+            expan = false;
+        } else {
+            $("body").css("left", "278px");
+            expan = true;
+        }
+
+    });
+}
+
+function carregarTelas() {
+    if (filiais.length === 1) {
+        $("#listNav").append('<li>' +
+                ' <a href="../cadastroCliente/cadastroCliente.jsp">' +
+                '<div class="menu-item"> ' +
+                ' <span class="icon clientes"></span>' +
+                '<span class="description">CLIENTES</span> ' +
+                '</div>' +
+                '</a>' +
+                ' </li>');
+    } else {
+        $("#listNav").append(
+                '<li>' +
+                ' <a href="../cadastroCliente/cadastroCliente.jsp">' +
+                '<div class="menu-item"> ' +
+                ' <span class="icon clientes"></span>' +
+                '<span class="description">CLIENTES</span> ' +
+                '</div>' +
+                '</a>' +
+                ' </li>' +
+                '<li>' +
+                ' <a href="../cadastroProduto/cadastroProduto.jsp">' +
+                '<div class="menu-item"> ' +
+                ' <span class="icon produtos"></span>' +
+                '<span class="description">PRODUTOS</span> ' +
+                '</div>' +
+                '</a>' +
+                ' </li>' +
+                '<li>' +
+                '<a href="../relatorios/relatorio.jsp">' +
+                '<div class="menu-item">' +
+                '<span class="icon relatorios"></span>' +
+                '<span class="description">RELATÓRIOS</span> ' +
+                '</div>' +
+                ' </a>' +
+                '</li> ');
+    }
+    $("#listNav").append('<li>' +
+            '<a href="../../logout">' +
+            '<div class="menu-item">  ' +
+            '<span class="icon logout"></span>' +
+            '<span class="description">LOGOUT</span>  ' +
+            ' </div>' +
+            '</a>' +
+            '</li>');
+}
+
+function obterFiliais() {
+    if (filiais.length === 0) {
+        $.ajax({
+            type: 'GET',
+            url: '../../notestore?controller=Filial&acao=consultar',
+            contentType: 'application/json;charset=UTF-8',
+            headers: {
+                Accept: "application/json;charset=UTF-8",
+                "Content-Type": "application/json;charset=UTF-8"
+            },
+            success: function (result) {
+                filiais = result;
+                carregarTelas();
+            }});
     }
 }

@@ -33,13 +33,5 @@
         <welcome-file>protegido/index.html</welcome-file>
     </welcome-file-list>
     <jsp-config>
-        <jsp-property-group>
-            <display-name>index</display-name>
-            <url-pattern>/protegido/index.html</url-pattern>
-        </jsp-property-group>
-        <jsp-property-group>
-            <display-name>clientes</display-name>
-            <url-pattern>/protegido/cadastroCliente/cadastroCliente.jsp</url-pattern>
-        </jsp-property-group>
     </jsp-config>
 </web-app>

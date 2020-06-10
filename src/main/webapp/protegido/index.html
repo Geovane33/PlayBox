@@ -1,20 +1,21 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" >
     <head>
+        <title>Welcome - NOTESTORE</title>
         <meta charset="UTF-8">
-        <title>Welcome NoteStore</title>
+        <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'>
+        <link rel='stylesheet' href="./style.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="../protegido/style/botoes.css">
         <link rel="stylesheet" href="../protegido/style/cssMedio.css" media="screen and (min-width:900px)">
         <link rel="stylesheet" href="../protegido/style/cssPequeno.css" media="screen and (min-width:100px)">
-        <link rel="stylesheet" href="../protegido/style/botoes.css">
-
         <script src='index.js'></script>
     </head>
-    <body>
-        <header>
+    <body>   
+        <div id="divBtns">
             <br>
             <br>
-            <h1>NoteStore</h1>
+            <h1>NOTESTORE</h1>
             <br>
             <h2>Filiais</h2>
             <br>
@@ -25,6 +26,59 @@
                 <input type="hidden" value="Filial" name="controller">
                 <input type="hidden" value="consultar" name="acao">
             </form>
-        </header>
+        </div>
+        <!-- partial:index.partial.html -->
+        <div id="navMenu" class="nav-menu collapsed">
+            <div class="menu-header">
+                <div class="menu-title">Menu</div>
+                <a id="toggleMenu" class="menu-toggle" href="#">
+                    <span class="icon collapse"></span>    
+                </a>
+            </div>
+            <div class="menu-items">
+                <ul class="list">
+                    <li>
+                        <a href="../protegido/index.html">
+                            <div class="menu-item">        
+                                <span class="icon filiais"></span>
+                                <span class="description">FILIAIS</span>       
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <div class="menu-item">     
+                                <span class="icon funcionarios"></span>
+                                <span class="description">FUNCIONARIOS</span>       
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <div class="menu-item">        
+                                <span class="icon senha"></span>
+                                <span class="description">SENHA</span>        
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a onclick="relatorioGeral()">
+                            <div class="menu-item">        
+                                <span class="icon relatorios"></span>
+                                <span class="description">RELATÓRIOS</span>        
+                            </div>
+                        </a>
+                    </li>  
+                    <li>
+                        <a href="../logout">
+                            <div class="menu-item">        
+                                <span class="icon logout"></span>
+                                <span class="description">LOGOUT</span>        
+                            </div>
+                        </a>
+                    </li>           
+                </ul>
+            </div>
+        </div>
     </body>
 </html>

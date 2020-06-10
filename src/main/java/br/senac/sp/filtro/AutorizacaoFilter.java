@@ -6,11 +6,7 @@
 package br.senac.sp.filtro;
 
 import br.senac.sp.entidade.UsuarioSistema;
-import br.senac.sp.utils.PerfilEnum;
 import java.io.IOException;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -28,26 +24,25 @@ public class AutorizacaoFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
-        
+
         // 1) Verifica se usuario já está logado
         HttpSession sessao = httpRequest.getSession();
         if (sessao.getAttribute("usuario") == null) {
             // Usuario nao esta logado -> redirecionar para tela de login
-            httpResponse.sendRedirect(httpRequest.getContextPath() + "/login.html");
+            httpResponse.sendRedirect(httpRequest.getContextPath() + "/login.jsp");
             return;
         }
-        
+
         // 2) Usuario esta logado -> Verifica se tem papel necessario para acesso
         UsuarioSistema usuario = (UsuarioSistema) sessao.getAttribute("usuario");
-        
         if (verificarAcesso(usuario, httpRequest)) {
             // Usuario tem permissao de acesso -> Requisição pode seguir para servlet
             chain.doFilter(request, response);
+
         } else {
             // Mostra erro de acesso não autorizado
-            httpResponse.sendRedirect(httpRequest.getContextPath() + "/naoAutorizado.jsp");
+            httpResponse.sendRedirect(httpRequest.getContextPath() + "/NaoAutorizado.jsp");
         }
-
     }
 
     @Override
@@ -57,7 +52,7 @@ public class AutorizacaoFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) {
     }
-    
+
     private boolean verificarAcesso(UsuarioSistema usuario, HttpServletRequest httpRequest) {
         String urlAcessada = httpRequest.getRequestURI();
         if (urlAcessada.contains("/protegido/")) {
@@ -65,12 +60,12 @@ public class AutorizacaoFilter implements Filter {
                 return true;
             }
         } else {
-             if (urlAcessada.contains("/protegido/")) {
-                 return true;
-             }
+            if (urlAcessada.contains("/protegido/")) {
+                return true;
+            }
         }
-            
-        return false;
+
+        return true;
     }
 
 }

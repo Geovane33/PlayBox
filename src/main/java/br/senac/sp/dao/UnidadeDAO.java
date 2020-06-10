@@ -6,7 +6,7 @@
 package br.senac.sp.dao;
 
 import br.senac.sp.db.ConexaoDB;
-import br.senac.sp.entidade.Filial;
+import br.senac.sp.entidade.Unidade;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,17 +19,16 @@ import java.util.List;
  *
  * @author Geovane
  */
-public class FilialDAO implements DAO {
+public class UnidadeDAO implements DAO<Unidade> {
 
     /**
      * Salvar filial
      *
-     * @param object recebe um objeto filial
+     * @param unidade recebe um objeto filial
      * @return true: salvo com sucesso false: erro ao salvar
      */
     @Override
-    public boolean salvar(Object object) {
-        Filial filial = (Filial) object;
+    public boolean salvar(Unidade unidade) {
         boolean ok = false;
         Connection conexao = null;
         PreparedStatement ps = null;
@@ -37,9 +36,9 @@ public class FilialDAO implements DAO {
             conexao = ConexaoDB.getConexao();
             String sql = "INSERT INTO filial VALUES (default,?,?,?)";
             ps = conexao.prepareStatement(sql);
-            ps.setInt(1, filial.getId());
-            ps.setString(2, filial.getNome());
-            ps.setString(3, filial.getEstado());
+            ps.setInt(1, unidade.getId());
+            ps.setString(2, unidade.getNome());
+            ps.setString(3, unidade.getEstado());
             ps.execute();
             ok = true;
         } catch (SQLException ex) {
@@ -76,14 +75,15 @@ public class FilialDAO implements DAO {
      * realizada --> nome, ID ou todos
      * @return listaFiliais
      */
-    public List<Filial> consultarFilial(String values, String tipo) {
+    @Override
+    public List consultar(String values, String tipo) {
         ResultSet rs = null;
         Connection conexao = null;
         PreparedStatement ps = null;
-        List<Filial> listFiliais = new ArrayList<>();
+        List<Unidade> listFiliais = new ArrayList<>();
         try {
             conexao = ConexaoDB.getConexao();
-            if (!values.equals("") && tipo.equals("nome")) {
+            if (!values.equals("") && tipo.equals("NOME")) {
                 ps = conexao.prepareStatement("SELECT * FROM filial where nome_filial like '%" + values + "%';");
             } else if (!values.equals("") && tipo.equals("ID")) {
                 ps = conexao.prepareStatement("SELECT * FROM filial WHERE id_filial = " + Integer.parseInt(values));
@@ -94,7 +94,7 @@ public class FilialDAO implements DAO {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                Filial filial = new Filial();
+                Unidade filial = new Unidade();
                 filial.setId(rs.getInt("id_filial"));
                 filial.setNome(rs.getString("nome_filial"));
                 filial.setEstado(rs.getString("estado_filial"));
@@ -127,15 +127,14 @@ public class FilialDAO implements DAO {
     }
 
     /**
-     * Atualizar dados do Filial
+     * Atualizar dados do Unidade
      *
-     * @param object recebe uma entidade filial
-     * @return true: Filial atulizado com sucesso false: Erro ao atualizar o
-     * Filial
+     * @param unidade recebe uma entidade filial
+     * @return true: Unidade atulizado com sucesso false: Erro ao atualizar o
+ Unidade
      */
     @Override
-    public boolean atualizar(Object object) {
-        Filial filial = (Filial) object;
+    public boolean atualizar(Unidade unidade) {
         Connection conexao = null;
         PreparedStatement ps = null;
 
@@ -148,9 +147,9 @@ public class FilialDAO implements DAO {
             ps = conexao.prepareStatement("UPDATE cliente SET nome_filial = ?, estado_filial = ? WHERE id_filial = ?",
                     Statement.RETURN_GENERATED_KEYS);  //Caso queira retornar o ID
             //Adiciono os parâmetros ao meu comando SQL
-            ps.setString(1, filial.getNome());
-            ps.setString(2, filial.getEstado());
-            ps.setInt(3, filial.getId());
+            ps.setString(1, unidade.getNome());
+            ps.setString(2, unidade.getEstado());
+            ps.setInt(3, unidade.getId());
 
             return ps.executeUpdate() > 0;
 
@@ -218,10 +217,4 @@ public class FilialDAO implements DAO {
             }
         }
     }
-
-    @Override
-    public List<Object> consultar(String values, String tipo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }

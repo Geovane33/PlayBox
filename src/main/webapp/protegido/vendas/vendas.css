@@ -9,6 +9,10 @@
     padding-left: 1px;
 
 }
+body{
+    position: relative;
+    left: 59px;
+}
 .imgDel{
     cursor: pointer;
 }
@@ -23,5 +27,8 @@
 }
 td.cadastro {
     display: table-cell !important;
+    width: 22%;
 }
-/*84px*/
+td.tabela{
+    float: left !important;
+}
