@@ -76,7 +76,7 @@ function calculaTotalVenda(relatorio) {
 function calcTotalPorFilial() {
 
     for (var i = 0; i < relatorio.length; i++) {
-        if (totalPorFilial.indexOf(relatorio[0].filial.nome) === -1) {
+        if (totalPorFilial.indexOf(relatorio[i].filial.nome) === -1) {
             totalPorFilial.push({nome: relatorio[i].filial.nome,
                 qtdVendas: 1,
                 valor: relatorio[i].total});
