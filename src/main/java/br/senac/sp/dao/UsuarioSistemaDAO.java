@@ -73,7 +73,11 @@ public class UsuarioSistemaDAO {
                 String nome = rs.getString("nome");
                 String senha = rs.getString("senha");
                 String perfil = rs.getString("perfil");
+
                 int idFilial = rs.getInt("id_filial");
+
+
+
                 usuarioSistema.setNome(nome);
                 usuarioSistema.setUsuario(usuario);
                 usuarioSistema.setSenha(senha);

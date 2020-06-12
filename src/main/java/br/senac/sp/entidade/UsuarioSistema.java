@@ -96,6 +96,7 @@ public class UsuarioSistema extends Pessoa {
         return PerfilEnum.admin.equals(this.getPerfil());
     }
 
+
     /**
      * usuario que acessa todas as telas de apenas uma filial
      *
@@ -107,8 +108,8 @@ public class UsuarioSistema extends Pessoa {
 
     /**
      * usuario que acessa todas a tela de clientes e vendas
-     *
-     * @return boolean
+     Oi
+     * @return Oi
      */
     public boolean isVendedor() {
         return PerfilEnum.vendedor.equals(this.getPerfil());
@@ -122,5 +123,17 @@ public class UsuarioSistema extends Pessoa {
     public boolean isEstoquista() {
         return PerfilEnum.estoquista.equals(this.getPerfil());
     }
+
+
+
+  
+
+
+    
+
+       
+
+ 
+    
 
 }

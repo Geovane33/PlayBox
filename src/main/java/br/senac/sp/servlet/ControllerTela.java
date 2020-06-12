@@ -45,6 +45,10 @@ public class ControllerTela extends HttpServlet {
         List<Boolean> telas = new ArrayList<>();
         Gson gson = new Gson();
 
+
+
+        
+
         PrintWriter out = response.getWriter();
         if (usuario.isAdmin() || usuario.isGerente()) {
             //cliente
@@ -55,7 +59,12 @@ public class ControllerTela extends HttpServlet {
             telas.add(Boolean.TRUE);
             //relatorios
             telas.add(Boolean.TRUE);
+
         } else if (usuario.isVendedor()) {
+
+
+   
+
             //cliente
             telas.add(Boolean.TRUE);
             //produto
@@ -64,6 +73,7 @@ public class ControllerTela extends HttpServlet {
             telas.add(Boolean.TRUE);
             //relatorios
             telas.add(Boolean.FALSE);
+
         } else if (usuario.isEstoquista()) {
             //cliente
             telas.add(Boolean.FALSE);
@@ -73,6 +83,8 @@ public class ControllerTela extends HttpServlet {
             telas.add(Boolean.FALSE);
             //relatorios
             telas.add(Boolean.FALSE);
+
+
         }
         out.print(gson.toJson(telas));
     }

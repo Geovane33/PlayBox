@@ -197,7 +197,11 @@ function consultarClientes() {
         consulta = $("#campo").val();
         $.ajax({
             type: 'GET',
+
             url: '../../notestore?controller=Funcionario&acao=consultar',
+
+            url: '../../notestore?controller=Cliente&acao=consultar',
+
             headers: {
                 Accept: "application/json; charset=utf-8",
                 "Content-Type": "application/json; charset=utf-8"
@@ -219,12 +223,21 @@ function consultarClientes() {
                 consultar = true;
                 if (result === "" && carregou) {
                     carregou = false;
+
                     Swal.fire('Nenhum Funcionario cadastrado!',
+
+                    Swal.fire('Nenhum cliente cadastrado!',
                             'Cadastre seus clientes.',
                             'warning');
                 } else if (result.length === 0) {
                     Swal.fire({
+
                         title: 'Nenhum Funcionario encontrado!',
+
+                        
+
+
+ 
                         icon: 'warning'
                     });
                     carregou = false;
@@ -277,6 +290,11 @@ function carregaTabela() {
         coluna += '<td>' + cliente[i].nome + '</td>';
         coluna += '<td>' + cliente[i].cpf + '</td>';
         coluna += '<td>' + cliente[i].dataNascimento + '</td>';
+
+
+        
+
+
         coluna += '<td><img class="imgDel" src="../icons/baseline_delete_forever_black_18dp.png" onClick="excluirCliente(this ,' + cliente[i].id + ')"></td>';
         coluna += '<td><img class="imgDel" src="../icons/outline_edit_black_18dp.png" onClick="editarCliente(' + i + ')"></td>';
         linha.append(coluna);
@@ -289,6 +307,18 @@ function editarCliente(indice) {
     document.getElementById("idFilial").value = cliente[indice].idFilial;
     document.getElementById("nome").value = cliente[indice].nome;
     document.getElementById("CPF").value = cliente[indice].cpf;
+
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+
     document.getElementById("cadastrar").value = "atualizar";
     document.getElementById("enviar").value = "atualizar";
 }
@@ -307,7 +337,11 @@ function excluirCliente(td, idCli) {
             preConfirm: () => {
                 return $.ajax({
                     type: 'GET',
-                    url: '../../notestore?controller=Funcionario&acao=excluir&id=' + idCli,
+
+               
+
+                    
+
                     beforeSend: function (xhr) {
                         loadMsg("Excluindo cliente!");
                     },
@@ -503,11 +537,28 @@ function obterTelas() {
             },
             success: function (result) {
                 telas = result;
+
                 if (telas[3]) {
                     $('.corpo').show();
                     carregarTelas();
                 } else {
-                        window.location.href = '../../NaoAutorizado.jsp';
+                      }
+
+            
+            
+             
+      
+                    
+                       
+                 
+        
+                          
+                      
+                   
+                    
+                      
+                 
+
                 }
             }});
     }
