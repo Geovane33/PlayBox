@@ -27,14 +27,16 @@
             <section id ="cliente">
                 <table>
                     <tr>
-                        <td class="cadastro">
+                        <td style="width: 261px;" class="cadastro">
                             <!-- Campos para preencher -->
                             <form id="formCad"action="../../notestore" method="POST">
                                 <div>
-                                    <input  type="hidden" value="0" type="text" id="id" name="id">
+                                    <input  type="hidden" value="0" type="text" name="idFuncionario" id="idFuncionario" name="id">
                                 </div>
                                 <div>
-                                    <input type="hidden"  value="" name="idFilial" id="idFilial" placeholder="id da filial">
+                                    <input type="text"  value="" name="idUsuario" class="idUsuario" id="idUsuario">
+                                    <label for="nome">Filial*</label>
+                                    <input type="text"  value="" name="idFilial" class="filial" id="idFilial" placeholder="id da filial">
                                 </div>
                                 <div>
                                     <label for="nome">Nome*</label>
@@ -50,11 +52,11 @@
                                     </select>
                                 </div>
                                 <div>
-                                    <label for="telefone">Salario*</label>
-                                    <input type="text" name="salario" id="salario" placeholder="telefone">
+                                    <label for="salario">Salario*</label>
+                                    <input type="number" class="salario" name="salario" id="salario" placeholder="salario">
                                 </div>
                                 <div>
-                                    <label for="email">Usuario*</label>
+                                    <label for="usuario">Usuario*</label>
                                     <input class="usuario" type="text" name="usuario" id="usuario" placeholder="usuario">
                                 </div>
                                 <div>
@@ -77,6 +79,7 @@
                                 <thead>
                                     <tr class="desc">
                                         <th>NOME</th>
+                                        <th>USUARIO</th>
                                         <th>FUNCAO</th>
                                         <th>SALARIO</th>
                                         <th></th>

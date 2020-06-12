@@ -82,7 +82,7 @@ public abstract class Pessoa {
     /**
      * @return idFilial
      */
-    public int getIdFIlial() {
+    public int getIdFilial() {
         return this.idFilial;
     }
 

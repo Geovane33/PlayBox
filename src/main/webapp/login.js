@@ -14,6 +14,8 @@ function form() {
             if (result === '401') {
                 $(".message").text("Usuário ou senha inválido");
                 $("#pass").val("");
+            } else if (result === '404') {
+                alert('Usuário não encontrado');
             } else {
                 window.location.href = 'protegido/index.html';
             }

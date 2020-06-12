@@ -1,5 +1,5 @@
 //variaveis globais
-var cliente = {};
+var funcionario = {};
 var dataNascimento = null;
 var consultaTipo = 'nome';
 var filial;
@@ -13,9 +13,9 @@ $(document).ready(function () {
 });
 function init() {
     obterTelas();
+    obterFiliais();
     form();
     expand();
-    setMask();
     setTimeout(function () {
         getFilialSelecionada();
         consultarClientes();
@@ -26,7 +26,7 @@ function init() {
 function loadTime() {
     let timerInterval
     Swal.fire({
-        title: 'Atualizando cliente!',
+        title: 'Atualizando funcionário!',
         timer: 300,
         timerProgressBar: true,
         onBeforeOpen: () => {
@@ -42,7 +42,7 @@ function loadTime() {
         if (result.dismiss === Swal.DismissReason.timer) {
             Swal.increaseTimer(1000);
         }
-    })
+    });
 }
 
 function loadMsg(msg) {
@@ -67,7 +67,7 @@ function form() {
             if (result === '200') {
                 Swal.fire({
                     icon: 'success',
-                    title: 'Cliente cadastrado com sucesso',
+                    title: 'Funcionário cadastrado com sucesso',
                     showConfirmButton: false,
                     timer: 1500
                 })
@@ -77,7 +77,7 @@ function form() {
             } else if (result === '200-2') {
                 Swal.fire({
                     icon: 'success',
-                    title: 'Cliente atualizado com sucesso',
+                    title: 'Funcionário atualizado com sucesso',
                     showConfirmButton: false,
                     timer: 1500
                 })
@@ -85,22 +85,22 @@ function form() {
                     window.location.reload();
                 }, 1500);
 
-            } else if (result === '2') {
+            } else if (result === '422') {
                 Swal.fire({
                     icon: 'error',
-                    title: 'O CPF digitado ja tem cadastro',
+                    title: 'O usuario digitado ja tem cadastro',
                     showConfirmButton: true
                 })
             } else if (result === '500') {
                 Swal.fire({
                     icon: 'error',
-                    title: 'erro no servidor ao cadastrar cliente',
+                    title: 'erro no servidor ao cadastrar funcionario',
                     showConfirmButton: true
                 })
             } else {
                 Swal.fire({
                     icon: 'error',
-                    title: 'erro ao processar os dados do cliente, revise os campos',
+                    title: 'erro ao processar os dados do funcionario, revise os campos',
                     showConfirmButton: true
                 })
             }
@@ -116,36 +116,6 @@ function form() {
     });
 }
 
-
-
-function setMask() {
-    $('#nascimento').mask("00/00/0000", {placeholder: "dd/mm/aaaa"});
-    var trocarMask = function (val) {
-        return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
-    },
-            sp = {
-                onKeyPress: function (val, e, field, options) {
-                    field.mask(trocarMask.apply({}, arguments), options);
-                }
-            };
-    $('#telefone').mask(trocarMask, sp);
-    $('#CEP').mask('ZZZZZ-ZZZ', {
-        translation: {
-            'Z': {
-                pattern: /[0-9]/, optional: false
-            }
-        },
-        placeholder: "_____-___"
-    });
-    $('#CPF').mask('ZZZ.ZZZ.ZZZ-ZZ', {
-        translation: {
-            'Z': {
-                pattern: /[0-9]/, optional: false
-            }
-        },
-        placeholder: "___.___.___-__"
-    });
-}
 
 function getFilialSelecionada() {
     filial = JSON.parse(sessionStorage.getItem('filial'));
@@ -209,7 +179,7 @@ function consultarClientes() {
                 consultar = true;
                 Swal.fire(
                         'Erro ao consultar!',
-                        'Não foi possivel consultar os clientes.',
+                        'Não foi possivel consultar os funcionários.',
                         'error');
             },
             success: function (result) {
@@ -219,13 +189,14 @@ function consultarClientes() {
                 consultar = true;
                 if (result === "" && carregou) {
                     carregou = false;
-                    Swal.fire('Nenhum Funcionario cadastrado!',
-                            'Cadastre seus clientes.',
-                            'warning');
+                    Swal.fire({
+                        title: 'Nenhum Funcionario cadastrado!',
+                        icon: 'warning'
+                    });
                 } else if (result.length === 0) {
                     Swal.fire({
                         title: 'Nenhum Funcionario encontrado!',
-                          icon: 'warning'
+                        icon: 'warning'
                     });
                     carregou = false;
                 } else {
@@ -235,7 +206,7 @@ function consultarClientes() {
                     });
                     carregou = false;
                 }
-                cliente = result;
+                funcionario = result;
                 carregaTabela();
             }});
     }
@@ -269,15 +240,16 @@ function removeLinha() {
 
 function carregaTabela() {
     removeLinha();
-    for (var i = 0; i < cliente.length; i++) {
+    for (var i = 0; i < funcionario.length; i++) {
         $('.tabela').show();
         $('.inputConsult').show();
         var linha = $("<tr>");
         var coluna = "";
-        coluna += '<td>' + cliente[i].nome + '</td>';
-        coluna += '<td>' + cliente[i].cpf + '</td>';
-        coluna += '<td>' + cliente[i].dataNascimento + '</td>';
-        coluna += '<td><img class="imgDel" src="../icons/baseline_delete_forever_black_18dp.png" onClick="excluirCliente(this ,' + cliente[i].id + ')"></td>';
+        coluna += '<td>' + funcionario[i].nome + '</td>';
+        coluna += '<td>' + funcionario[i].usuario + '</td>';
+        coluna += '<td>' + funcionario[i].funcao + '</td>';
+        coluna += '<td>' + funcionario[i].salario + '</td>';
+        coluna += '<td><img class="imgDel" src="../icons/baseline_delete_forever_black_18dp.png" onClick="excluirCliente(this ,' + funcionario[i].idUsuario + ')"></td>';
         coluna += '<td><img class="imgDel" src="../icons/outline_edit_black_18dp.png" onClick="editarCliente(' + i + ')"></td>';
         linha.append(coluna);
         $("#tableClientes").append(linha);
@@ -285,15 +257,17 @@ function carregaTabela() {
 }
 
 function editarCliente(indice) {
-    document.getElementById("id").value = cliente[indice].id;
-    document.getElementById("idFilial").value = cliente[indice].idFilial;
-    document.getElementById("nome").value = cliente[indice].nome;
-    document.getElementById("CPF").value = cliente[indice].cpf;
+    document.getElementById("idFuncionario").value = funcionario[indice].id;
+    document.getElementById("idUsuario").value = funcionario[indice].idUsuario;
+    document.getElementById("idFilial").value = funcionario[indice].idFilial;
+    document.getElementById("nome").value = funcionario[indice].nome;
+    document.getElementById("usuario").value = funcionario[indice].usuario;
+    document.getElementById("funcao").value = funcionario[indice].funcao;
+    document.getElementById("salario").value = funcionario[indice].salario;
     document.getElementById("cadastrar").value = "atualizar";
-    document.getElementById("enviar").value = "atualizar";
 }
 
-function excluirCliente(td, idCli) {
+function excluirCliente(td, idFuncionario) {
     Swal.queue([{
             title: 'Você tem certeza',
             text: "Você não poderá reverter isso!",
@@ -307,7 +281,7 @@ function excluirCliente(td, idCli) {
             preConfirm: () => {
                 return $.ajax({
                     type: 'GET',
-                    url: '../../notestore?controller=Funcionario&acao=excluir&id=' + idCli,
+                    url: '../../notestore?controller=Funcionario&acao=excluir&idUsuario=' + idFuncionario,
                     beforeSend: function (xhr) {
                         loadMsg("Excluindo cliente!");
                     },
@@ -325,17 +299,19 @@ function excluirCliente(td, idCli) {
                         if (result === '200') {
                             Swal.fire({
                                 icon: 'success',
-                                title: 'Cliente excluído com sucesso!',
+                                title: 'Funcionário excluído com sucesso!',
                                 showConfirmButton: false,
                                 timer: 1500
                             });
                             linha = td.parentElement.parentElement;
                             document.getElementById("tableClientes").deleteRow(linha.rowIndex - 1);
                         } else {
-                            Swal.fire(
-                                    'Erro ao excluir!',
-                                    'Cliente possui vendas ativas.',
-                                    'error');
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Erro ao excluír funcionário!',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                         }
                     }});
             }
@@ -349,16 +325,18 @@ function validarForm() {
 //Valida o formulário
     $("#formCad").validate();
     //personalizar mensagens
+    $.validator.addMethod("filial", $.validator.methods.required,
+            "Filial obrigatorio");
     $.validator.addMethod("NOME", $.validator.methods.required,
-            "NOME obrigatorio");
-    $.validator.addMethod("CPF", $.validator.methods.required,
-            "CPF obrigatorio");
-    $.validator.addMethod("NASCIMENTO", $.validator.methods.required,
-            "NASCIMENTO obrigatorio");
-    $.validator.addMethod("SEXO", $.validator.methods.required,
-            "SEXO obrigatorio");
-    $.validator.addMethod("EMAIL", $.validator.methods.required,
-            "EMAIL obrigatorio");
+            "Nome obrigatorio");
+    $.validator.addMethod("funcao", $.validator.methods.required,
+            "Funcao obrigatorio");
+    $.validator.addMethod("salario", $.validator.methods.required,
+            "Salario obrigatorio");
+    $.validator.addMethod("usuario", $.validator.methods.required,
+            "Usuario obrigatorio");
+    $.validator.addMethod("senha", $.validator.methods.required,
+            "Senha obrigatorio");
     $.validator.addMethod("UF", $.validator.methods.required,
             "UF obrigatorio");
     $.validator.addMethod("CIDADE", $.validator.methods.required,
@@ -369,25 +347,17 @@ function validarForm() {
     // combina os dois, aplicando as regras nos campos que contenham a classe "NOME"
     $.validator.addClassRules("NOME", {NOME: true, NOME2: 3}); //NOME REQUERIDO --- NOME2 MININO DE CARACTERES
 
+    $.validator.addClassRules("salario", {salario: true});
 
-    $.validator.addMethod("CPF2", $.validator.methods.minlength,
-            $.validator.format("Minimo 11 caracteres"));
-    $.validator.addClassRules("CPF", {CPF: true, CPF2: 14});
-    $.validator.addMethod("NASCIMENTO2", $.validator.methods.minlength,
-            $.validator.format("Minimo 8 caracteres"));
-    $.validator.addClassRules("NASCIMENTO", {NASCIMENTO: true, NASCIMENTO2: 10});
-    $.validator.addMethod("SEXO2", $.validator.methods.minlength,
-            $.validator.format("Minimo {0} caracteres"));
-    $.validator.addClassRules("SEXO", {SEXO: true, SEXO2: 4});
-    $.validator.addMethod("EMAIL2", $.validator.methods.minlength,
-            $.validator.format("Minimo {0} caracteres"));
-    $.validator.addClassRules("EMAIL", {EMAIL: true, EMAIL2: 5});
-    $.validator.addMethod("UF2", $.validator.methods.maxlength,
-            $.validator.format("Selecione o UF"));
-    $.validator.addClassRules("UF", {UF: true, UF2: 2});
-    $.validator.addMethod("CIDADE2", $.validator.methods.minlength,
-            $.validator.format("Minimo {0} caracteres"));
-    $.validator.addClassRules("CIDADE", {CIDADE: true, CIDADE2: 4});
+    $.validator.addClassRules("usuario", {usuario: true});
+
+    $.validator.addClassRules("filial", {filial: true});
+
+    $.validator.addClassRules("funcao", {funcao: true});
+
+    $.validator.addMethod("senha2", $.validator.methods.minlength,
+            $.validator.format("Minimo 6 caracteres"));
+    $.validator.addClassRules("senha", {senha: true, senha2: 6});
 }
 
 function expand() {
@@ -407,7 +377,6 @@ function expand() {
 }
 
 function carregarTelas() {
-    console.log(telas[0].tela);
     if (telas[0]) {
         $("#listNav").append('<li>' +
                 ' <a href="../cadastroCliente/cadastroCliente.jsp">' +
@@ -507,9 +476,25 @@ function obterTelas() {
                     $('.corpo').show();
                     carregarTelas();
                 } else {
-                        window.location.href = '../../NaoAutorizado.jsp';
+                    window.location.href = '../../NaoAutorizado.jsp';
 
-                      }
+                }
+            }});
+    }
+}
+
+function obterFiliais() {
+    if (filiais.length === 0) {
+        $.ajax({
+            type: 'GET',
+            url: '../../notestore?controller=Filial&acao=consultar',
+            contentType: 'application/json;charset=UTF-8',
+            headers: {
+                Accept: "application/json;charset=UTF-8",
+                "Content-Type": "application/json;charset=UTF-8"
+            },
+            success: function (result) {
+                filiais = result;
             }});
     }
 }
