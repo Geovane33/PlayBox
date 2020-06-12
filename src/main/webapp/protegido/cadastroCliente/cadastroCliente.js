@@ -465,7 +465,7 @@ function carregarTelas() {
             '<a href="../../logout">' +
             '<div class="menu-item">  ' +
             '<span class="icon logout"></span>' +
-            '<span class="description">LOGOUT</span>  ' +
+            '<span class="description">SAIR</span>  ' +
             ' </div>' +
             '</a>' +
             '</li>');

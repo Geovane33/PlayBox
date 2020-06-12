@@ -70,19 +70,15 @@ public class ControllerProduto implements Controller {
                     .setDateFormat("dd/MM/yyyy")
                     .create();
             String idFilial = request.getParameter("idFilial");
-            if (true) {
-                List<Produto> produtos = produtoDAO.consultar(idFilial, "FILIAL");
-                if (produtos.isEmpty()) {
-                    out.write("");
-                } else {
-                    response.setContentType("application/json");
-                    response.setCharacterEncoding("UTF-8");
-                    out.write(gson.toJson(produtos));
-                }
-            } else {
-                out.write("403");
-            }
 
+            List<Produto> produtos = produtoDAO.consultar(idFilial, "FILIAL");
+            if (produtos.isEmpty()) {
+                out.write("");
+            } else {
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                out.write(gson.toJson(produtos));
+            }
             out.flush();
             out.close();
 

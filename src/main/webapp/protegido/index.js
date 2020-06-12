@@ -3,11 +3,11 @@ $(document).ready(function () {
 });
 
 var filiais = [];
-
+var telas = [];
 
 function init() {
+    obterTelas();
     obterFiliais();
-  
     expand();
 }
 
@@ -69,13 +69,13 @@ function relatorioGeral() {
     window.location.href = 'relatorios/relatorio.jsp';
 }
 
-function expand(){  
-  $("#toggleMenu").on("click", function(){
-      var menu = $("#navMenu");
-      
-    menu.toggleClass("collapsed");
-    menu.toggleClass("expanded");
-    });  
+function expand() {
+    $("#toggleMenu").on("click", function () {
+        var menu = $("#navMenu");
+
+        menu.toggleClass("collapsed");
+        menu.toggleClass("expanded");
+    });
 }
 
 function obterFiliais() {
@@ -90,55 +90,93 @@ function obterFiliais() {
             },
             success: function (result) {
                 filiais = result;
-                  carregarFiliais();
-                carregarTelas();
+                carregarFiliais();
             }});
     }
 }
 
 function carregarTelas() {
-    if (filiais.length === 1) {
-        $("#listNav").html('');
-    } else {
-        $("#listNav").append(' <li>'+
-                        '<a href="../protegido/index.html">'+
-                          '  <div class="menu-item">       ' +
-                         '       <span class="icon filiais"></span>'+
-                             '   <span class="description">FILIAIS</span>'+
-                          '  </div>'+
-                   '     </a>'+
-                   ' </li>'+
-                 '   <li>'+
-                      '  <a href="#">'+
-                       '     <div class="menu-item">   '  +
-                              '  <span class="icon funcionarios"></span>'+
-                               ' <span class="description">FUNCIONARIOS</span>   '+    
-                          '  </div>'+
-                     '   </a>'+
-                  '  </li>'+
-                   ' <li>'+
-                      '  <a href="#">'+
-                           ' <div class="menu-item">  '      +
-                              '  <span class="icon senha"></span>'+
-                                '<span class="description">SENHA</span>   '+     
-                          '  </div>'+
-                     '   </a>'+
-                  '  </li>'+
-                    '<li>'+
-                       ' <a onclick="relatorioGeral()">'+
-                          '  <div class="menu-item">   '   +  
-                             '   <span class="icon relatorios"></span>'+
-                                '<span class="description">RELATÓRIOS</span>'      +  
-                            '</div>'+
-                       ' </a>' +
-                    '</li> ');
+    console.log(telas[0].tela);
+    if (telas[0]) {
+        $("#listNav").append(' <li>' +
+                '<a href="../protegido/index.html">' +
+                '  <div class="menu-item">       ' +
+                '       <span class="icon filiais"></span>' +
+                '   <span class="description">FILIAIS</span>' +
+                '  </div>' +
+                '     </a>' +
+                ' </li>');
     }
+    if (telas[1]) {
+        $("#listNav").append('   <li>' +
+                '  <a href="../protegido/cadastroFuncionario/cadastroFuncionario.jsp">' +
+                '     <div class="menu-item">   ' +
+                '  <span class="icon funcionarios"></span>' +
+                ' <span class="description">FUNCIONARIOS</span>   ' +
+                '  </div>' +
+                '   </a>' +
+                '  </li>');
+    }
+
+    if (telas[2]) {
+        $("#listNav").append(' <li>' +
+                '  <a href="#">' +
+                ' <div class="menu-item">  ' +
+                '  <span class="icon senha"></span>' +
+                '<span class="description">SENHA</span>   ' +
+                '  </div>' +
+                '   </a>' +
+                '  </li>');
+    }
+    if (telas[3]) {
+        $("#listNav").append('<li>' +
+                ' <a onclick="relatorioGeral()">' +
+                '  <div class="menu-item">   ' +
+                '   <span class="icon relatorios"></span>' +
+                '<span class="description">RELATÓRIOS</span>' +
+                '</div>' +
+                ' </a>' +
+                '</li>');
+    }
+
+
     $("#listNav").append('<li>' +
             '<a href="../logout">' +
             '<div class="menu-item">  ' +
             '<span class="icon logout"></span>' +
-            '<span class="description">LOGOUT</span>  ' +
+            '<span class="description">SAIR</span>  ' +
             ' </div>' +
             '</a>' +
             '</li>');
+}
+
+function obterTelas() {
+    if (telas.length === 0) {
+        $.ajax({
+            type: 'GET',
+            url: '../telas',
+            contentType: 'application/json;charset=UTF-8',
+            headers: {
+                Accept: "application/json;charset=UTF-8",
+                "Content-Type": "application/json;charset=UTF-8"
+            },
+            success: function (result) {
+                telas = result;
+                if (telas[1]) {
+                    $('.corpo').show();
+                    carregarTelas();
+                } else {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Não autorizado',
+                        onBeforeOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+                    setTimeout(function () {
+                        window.location.href = '../../protegido/index.html';
+                    }, 1200);
+                }
+            }});
+    }
 }

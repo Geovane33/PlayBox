@@ -55,6 +55,8 @@ public class ControllerTela extends HttpServlet {
             telas.add(Boolean.TRUE);
             //relatorios
             telas.add(Boolean.TRUE);
+            //funcionarios
+            telas.add(Boolean.TRUE);
         } else if (usuario.isVendedor()) {
             //cliente
             telas.add(Boolean.TRUE);
@@ -64,6 +66,8 @@ public class ControllerTela extends HttpServlet {
             telas.add(Boolean.TRUE);
             //relatorios
             telas.add(Boolean.FALSE);
+            //funcionarios
+            telas.add(Boolean.TRUE);
         } else if (usuario.isEstoquista()) {
             //cliente
             telas.add(Boolean.FALSE);
@@ -73,6 +77,8 @@ public class ControllerTela extends HttpServlet {
             telas.add(Boolean.FALSE);
             //relatorios
             telas.add(Boolean.FALSE);
+            //funcionarios
+            telas.add(Boolean.TRUE);
         }
         out.print(gson.toJson(telas));
     }

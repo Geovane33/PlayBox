@@ -454,7 +454,7 @@ function carregarTelas() {
             '<a href="../../logout">' +
             '<div class="menu-item">  ' +
             '<span class="icon logout"></span>' +
-            '<span class="description">LOGOUT</span>  ' +
+            '<span class="description">SAIR</span>  ' +
             ' </div>' +
             '</a>' +
             '</li>');
@@ -472,7 +472,7 @@ function obterTelas() {
             },
             success: function (result) {
                 telas = result;
-                if (telas[1]) {
+                if (telas[4]) {
                     $('.corpo').show();
                     carregarTelas();
                 } else {
@@ -510,7 +510,6 @@ function obterTelas() {
                         window.location.href = '../../NaoAutorizado.jsp';
 
                       }
-                }
             }});
     }
 }
