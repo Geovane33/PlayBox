@@ -16,6 +16,12 @@ public class Funcionario extends UsuarioSistema{
    private double salario;
 
     /**
+     * construtor vazio
+     */
+    public Funcionario() {
+    }
+   
+    /**
      * Construtor funcionário
      * @param funcao
      * @param salario
@@ -66,7 +72,7 @@ public class Funcionario extends UsuarioSistema{
      * setar salario do funcionario
      * @param salario 
      */
-    public void setSalario(long salario) {
+    public void setSalario(double salario) {
         this.salario = salario;
     }
 }

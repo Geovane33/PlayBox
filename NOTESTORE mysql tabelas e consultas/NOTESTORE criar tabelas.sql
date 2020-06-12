@@ -68,7 +68,13 @@ CREATE TABLE usuariosistema (
 );
 
 insert into usuariosistema (nome, usuario, senha, perfil,id_filial) values  ('Administrator', 'admin', '$2a$12$QOCya.5hab5l10NK7H27PufZwF5gnJ3DQjqB7qDFZntV08YG4FvXm', 'admin',0);
+
+insert into usuariosistema (nome, usuario, senha, perfil,id_filial) values  ('Gerente', 'gerente', '$2a$12$QOCya.5hab5l10NK7H27PufZwF5gnJ3DQjqB7qDFZntV08YG4FvXm', 'gerente',1);
 insert into usuariosistema (nome, usuario, senha, perfil,id_filial) values  ('Mike Wilson', 'mike', '$2a$12$LRiaGx0f6hKD7ffdF0huquyeKchRVI0A10fWOx.uIN37bC/RSd9OS', 'vendedor',1);
+insert into usuariosistema (nome, usuario, senha, perfil,id_filial) values  ('Wallan', 'wallan', '$2a$12$QOCya.5hab5l10NK7H27PufZwF5gnJ3DQjqB7qDFZntV08YG4FvXm', 'estoquista',1);
+
+
+
 
 insert into filial values(default, 'SÃO PAULO', 'SP');
 insert into filial values(default, 'RIO DE JANEIRO', 'RJ');

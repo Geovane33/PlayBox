@@ -2,6 +2,7 @@ package br.senac.sp.dao;
 
 import br.senac.sp.db.ConexaoDB;
 import br.senac.sp.entidade.Cliente;
+import br.senac.sp.entidade.Funcionario;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -11,35 +12,38 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClienteDAO implements DAO<Cliente>{
+public class FuncionarioDAO implements DAO<Funcionario> {
 
     /**
      * Salvar clientes
      *
-     * @param cliente recebe um objeto cliente
+     * @param funcionario recebe um objeto cliente
      * @return true: salvo com sucesso false: erro ao salvar
      */
     @Override
-    public boolean salvar(Cliente cliente) {
+    public boolean salvar(Funcionario funcionario) {
         boolean ok = false;
         Connection conexao = null;
         PreparedStatement ps = null;
+        UsuarioSistemaDAO usuarioDAO = new UsuarioSistemaDAO();
+
+        usuarioDAO.salvar(funcionario);
         try {
             conexao = ConexaoDB.getConexao();
             String sql = "INSERT INTO cliente VALUES (default,?,?,?,?,?,?,?,?,?,?,?,?)";
             ps = conexao.prepareStatement(sql);
-            ps.setInt(1, cliente.getIdFIlial());
-            ps.setString(2, cliente.getNome());
-            ps.setString(3, cliente.getCpf());
-            ps.setDate(4, new Date(cliente.getDataNascimento().getTime()));
-            ps.setString(5, cliente.getSexo());
-            ps.setString(6, cliente.getTelefone());
-            ps.setString(7, cliente.getEmail());
-            ps.setString(8, cliente.getUf());
-            ps.setString(9, cliente.getCidade());
-            ps.setString(10, cliente.getCep());
-            ps.setString(11, cliente.getBairro());
-            ps.setString(12, cliente.getNumero());
+            ps.setInt(1, funcionario.getIdFIlial());
+            ps.setString(2, funcionario.getNome());
+            ps.setString(3, funcionario.getCpf());
+            ps.setDate(4, new Date(funcionario.getDataNascimento().getTime()));
+            ps.setString(5, funcionario.getSexo());
+            ps.setString(6, funcionario.getTelefone());
+            ps.setString(7, funcionario.getEmail());
+            ps.setString(8, funcionario.getUf());
+            ps.setString(9, funcionario.getCidade());
+            ps.setString(10, funcionario.getCep());
+            ps.setString(11, funcionario.getBairro());
+            ps.setString(12, funcionario.getNumero());
             ps.execute();
             ok = true;
         } catch (SQLException ex) {
@@ -149,7 +153,7 @@ public class ClienteDAO implements DAO<Cliente>{
      * Cliente
      */
     @Override
-    public boolean atualizar(Cliente cliente) {
+    public boolean atualizar(Funcionario cliente) {
         Connection conexao = null;
         PreparedStatement ps = null;
 

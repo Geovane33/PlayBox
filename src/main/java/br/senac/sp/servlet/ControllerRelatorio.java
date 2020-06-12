@@ -49,6 +49,10 @@ public class ControllerRelatorio implements Controller {
                 if (usuario.isAdmin() || usuario.isGerente()) {
                     relatorio = relatorioDAO.consultar(idFilial);
                 } else {
+
+                    //vendedor e estoquista não tem permissão para ver relatorio
+
+
                       out.write("403");
                 }
 
