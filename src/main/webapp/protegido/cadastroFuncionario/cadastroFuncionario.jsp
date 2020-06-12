@@ -34,7 +34,7 @@
                                     <input  type="hidden" value="0" type="text" id="id" name="id">
                                 </div>
                                 <div>
-                                    <input type="hidden"  value="0" name="idFilial" id="idFilial" placeholder="id da filial">
+                                    <input type="hidden"  value="" name="idFilial" id="idFilial" placeholder="id da filial">
                                 </div>
                                 <div>
                                     <label for="nome">Nome*</label>
