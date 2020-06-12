@@ -517,7 +517,9 @@ function obterTelas() {
                 if (telas[0]) {
                     $('.corpo').show();
                     carregarTelas();
-                } else {
+                } else if(telas[1]){
+                       window.location.href = '../cadastroProduto/cadastroProduto.jsp';
+                }else{
                     Swal.fire({
                         icon: 'warning',
                         title: 'Não autorizado',

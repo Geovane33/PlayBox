@@ -82,14 +82,14 @@ public abstract class Pessoa {
     /**
      * @return idFilial
      */
-    public int getIdUnidade() {
+    public int getIdFIlial() {
         return this.idFilial;
     }
 
     /**
      * @param idFilial idFilial para set
      */
-    public void setIdUnidade(int idFilial) {
+    public void setIdFilial(int idFilial) {
         this.idFilial = idFilial;
     }
 

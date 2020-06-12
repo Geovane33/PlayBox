@@ -33,7 +33,7 @@ public class ControllerFilial implements Controller {
                     filiais = new FilialDAO().consultar("", "TODOS");
                     filiais.add(new Filial(0, "RELATÓRIO GERAL", ""));
                 } else{
-                     filiais = new FilialDAO().consultar( usuario.getIdUnidade()+"","ID");
+                     filiais = new FilialDAO().consultar(usuario.getIdFIlial()+"","ID");
                 }
                 PrintWriter out = response.getWriter();
                 Gson gson = new Gson();

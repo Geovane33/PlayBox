@@ -44,7 +44,7 @@ public class ControllerTela extends HttpServlet {
         UsuarioSistema usuario = (UsuarioSistema) sessao.getAttribute("usuario");
         List<Boolean> telas = new ArrayList<>();
         Gson gson = new Gson();
-        
+
         PrintWriter out = response.getWriter();
         if (usuario.isAdmin() || usuario.isGerente()) {
             //cliente
@@ -55,14 +55,22 @@ public class ControllerTela extends HttpServlet {
             telas.add(Boolean.TRUE);
             //relatorios
             telas.add(Boolean.TRUE);
-        }
-        if (usuario.isVendedor()) {
+        } else if (usuario.isVendedor()) {
             //cliente
             telas.add(Boolean.TRUE);
             //produto
             telas.add(Boolean.FALSE);
             //vendas
             telas.add(Boolean.TRUE);
+            //relatorios
+            telas.add(Boolean.FALSE);
+        } else if (usuario.isEstoquista()) {
+            //cliente
+            telas.add(Boolean.FALSE);
+            //produto
+            telas.add(Boolean.TRUE);
+            //vendas
+            telas.add(Boolean.FALSE);
             //relatorios
             telas.add(Boolean.FALSE);
         }

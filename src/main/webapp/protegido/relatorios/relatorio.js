@@ -18,7 +18,6 @@ var tabela2;
 var expan = false;
 var idCLientes = [];
 $(document).ready(() => {
-
     init();
 });
 
@@ -29,7 +28,6 @@ function init() {
         expand();
         getFilial();
         obterRelatorio();
-
     }, 280);
 }
 

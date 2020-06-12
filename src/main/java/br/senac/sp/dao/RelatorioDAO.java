@@ -57,7 +57,7 @@ public class RelatorioDAO {
 
                 Cliente cliente = new Cliente();
                 cliente.setId(rs.getInt("id_cliente"));
-                cliente.setIdUnidade(rs.getInt("id_filial"));
+                cliente.setIdFilial(rs.getInt("id_filial"));
                 cliente.setNome(rs.getString("nome_cliente"));
                 cliente.setCpf(rs.getString("cpf_cliente"));
                 cliente.setDataNascimento(rs.getTimestamp("nasc_cliente"));
@@ -143,7 +143,7 @@ public class RelatorioDAO {
 
                 Cliente cliente = new Cliente();
                 cliente.setId(rs.getInt("id_cliente"));
-                cliente.setIdUnidade(rs.getInt("id_filial"));
+                cliente.setIdFilial(rs.getInt("id_filial"));
                 cliente.setNome(rs.getString("nome_cliente"));
                 cliente.setCpf(rs.getString("cpf_cliente"));
                 cliente.setDataNascimento(rs.getTimestamp("nasc_cliente"));
