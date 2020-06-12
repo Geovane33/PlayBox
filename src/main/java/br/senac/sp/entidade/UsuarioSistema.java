@@ -122,5 +122,4 @@ public class UsuarioSistema extends Pessoa {
     public boolean isEstoquista() {
         return PerfilEnum.estoquista.equals(this.getPerfil());
     }
-
 }

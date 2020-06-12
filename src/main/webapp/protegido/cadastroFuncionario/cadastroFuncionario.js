@@ -225,7 +225,7 @@ function consultarClientes() {
                 } else if (result.length === 0) {
                     Swal.fire({
                         title: 'Nenhum Funcionario encontrado!',
-                        icon: 'warning'
+                          icon: 'warning'
                     });
                     carregou = false;
                 } else {
@@ -508,6 +508,8 @@ function obterTelas() {
                     carregarTelas();
                 } else {
                         window.location.href = '../../NaoAutorizado.jsp';
+
+                      }
                 }
             }});
     }
