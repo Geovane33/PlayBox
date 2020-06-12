@@ -7,6 +7,7 @@ package br.senac.sp.servlet;
 
 import br.senac.sp.dao.ProdutoDAO;
 import br.senac.sp.entidade.Produto;
+import br.senac.sp.entidade.UsuarioSistema;
 import br.senac.sp.utils.BuilderProduto;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -15,6 +16,7 @@ import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -61,7 +63,6 @@ public class ControllerProduto implements Controller {
     @Override
     public void consultar(HttpServletRequest request, HttpServletResponse response
     ) {
-
         try {
             PrintWriter out = response.getWriter();
             ProdutoDAO produtoDAO = new ProdutoDAO();
@@ -69,14 +70,19 @@ public class ControllerProduto implements Controller {
                     .setDateFormat("dd/MM/yyyy")
                     .create();
             String idFilial = request.getParameter("idFilial");
-            List<Produto> produtos = produtoDAO.consultar(idFilial, "FILIAL");
-            if (produtos.isEmpty()) {
-                out.write("");
+            if (true) {
+                List<Produto> produtos = produtoDAO.consultar(idFilial, "FILIAL");
+                if (produtos.isEmpty()) {
+                    out.write("");
+                } else {
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                    out.write(gson.toJson(produtos));
+                }
             } else {
-                response.setContentType("application/json");
-                response.setCharacterEncoding("UTF-8");
-                out.write(gson.toJson(produtos));
+                out.write("403");
             }
+
             out.flush();
             out.close();
 
@@ -96,18 +102,26 @@ public class ControllerProduto implements Controller {
      */
     @Override
     public void atualizar(HttpServletRequest request, HttpServletResponse response) {
+
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        HttpSession sessao = httpRequest.getSession();
+        UsuarioSistema usuario = (UsuarioSistema) sessao.getAttribute("usuario");
+
         try {
             BuilderProduto builderProduto = new BuilderProduto(request.getParameterMap());
             Produto produto = builderProduto.getObjProduto();
             ProdutoDAO produtoDAO = new ProdutoDAO();
-
             PrintWriter out = response.getWriter();
-
-            if (produtoDAO.atualizar(produto)) {
-                out.write("Produto atualizado com sucesso");
+            if (usuario.isAdmin()) {
+                if (produtoDAO.atualizar(produto)) {
+                    out.write("Produto atualizado com sucesso");
+                } else {
+                    out.write("erro ao atualizar produto");
+                }
             } else {
-                out.write("erro ao atualizar produto");
+                out.write("403");
             }
+
             out.flush();
             out.close();
         } catch (IOException ex) {

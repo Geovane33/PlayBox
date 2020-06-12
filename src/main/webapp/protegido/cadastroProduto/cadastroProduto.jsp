@@ -105,7 +105,7 @@
                     </a>
                 </div>
                 <div class="menu-items">
-                    <ul class="list">
+                    <ul id='listNav' class="list">
                         <li>
                             <a href="../index.html">
                                 <div class="menu-item">        
@@ -113,39 +113,7 @@
                                     <span class="description">INICIO</span>        
                                 </div>
                             </a>
-                        </li>
-                        <li>
-                            <a href="../cadastroCliente/cadastroCliente.jsp">
-                                <div class="menu-item">        
-                                    <span class="icon clientes"></span>
-                                    <span class="description">CLIENTES</span>        
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="../vendas/realizarVenda.jsp">
-                                <div class="menu-item">        
-                                    <span class="icon vendas"></span>
-                                    <span class="description">VENDAS</span>        
-                                </div>
-                            </a>
-                        </li>     
-                        <li>
-                            <a href="../relatorios/relatorio.jsp">
-                                <div class="menu-item">        
-                                    <span class="icon relatorios"></span>
-                                    <span class="description">RELATÓRIOS</span>        
-                                </div>
-                            </a>
-                        </li> 
-                        <li>
-                            <a href="../../logout">
-                                <div class="menu-item">        
-                                    <span class="icon logout"></span>
-                                    <span class="description">LOGOUT</span>        
-                                </div>
-                            </a>
-                        </li>    
+                        </li>  
                     </ul>
                 </div>
             </div>

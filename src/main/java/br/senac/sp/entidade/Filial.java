@@ -9,7 +9,7 @@ package br.senac.sp.entidade;
  *
  * @author Geovane
  */
-public class Unidade {
+public class Filial {
     private int id;
     private String nome;
     private String estado;
@@ -17,7 +17,7 @@ public class Unidade {
     /**
      *Contrutor vazio
      */
-    public Unidade(){
+    public Filial(){
         
     }
 
@@ -27,7 +27,7 @@ public class Unidade {
      * @param nome
      * @param estado
      */
-    public Unidade(int id, String nome, String estado) {
+    public Filial(int id, String nome, String estado) {
         this.id = id;
         this.nome = nome;
         this.estado = estado;
@@ -38,7 +38,7 @@ public class Unidade {
      * @param nome
      * @param estado
      */
-    public Unidade(String nome, String estado) {
+    public Filial(String nome, String estado) {
         this.nome = nome;
         this.estado = estado;
     }

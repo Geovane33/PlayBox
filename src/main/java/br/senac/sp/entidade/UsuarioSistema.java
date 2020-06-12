@@ -55,5 +55,14 @@ public class UsuarioSistema extends Pessoa{
     public boolean isAdmin() {
         return PerfilEnum.admin.equals(this.getPerfil());
     }
+    //usuario que acessa todas as telas de apenas uma filial
+    public boolean isGerente() {
+        return PerfilEnum.gerente.equals(this.getPerfil());
+    }
+    
+      public boolean isVendedor() {
+        return PerfilEnum.vendedor.equals(this.getPerfil());
+    }
+ 
     
 }

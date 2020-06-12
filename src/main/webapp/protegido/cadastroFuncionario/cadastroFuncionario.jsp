@@ -5,7 +5,7 @@
     <head>
         <meta charset='UTF-8'>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title> CLIENTES - NOTESTORE </title>
+        <title> FUNCIONARIOS - NOTESTORE </title>
         <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'>
         <link rel="stylesheet" href="../style.css">
         <link rel="stylesheet" href="../style/cssPequeno.css" media="screen and (min-width:100px)">
@@ -39,14 +39,6 @@
                                 <div>
                                     <label for="nome">Nome*</label>
                                     <input class="NOME" type="text" name="nome" id="nome" minlength="2" placeholder="nome">
-                                </div>
-                                <div>
-                                    <label for="CPF">CPF*</label>
-                                    <input class="CPF"ype="text"  id="CPF" name="CPF" placeholder="CPF">
-                                </div>
-                                <div>
-                                    <label for="nascimento">Nascimento*</label>
-                                    <input class="NASCIMENTO" type="text" id="nascimento" name="nascimento"/>
                                 </div>
                                 <div>
                                     <label for="sexo">Sexo*</label>

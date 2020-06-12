@@ -27,7 +27,7 @@ body {
   content: "\e021";
 }
 .icon.clientes:before {
-  content: "\e022";
+  content: "\e008";
 }
 .icon.produtos:before {
   content: "\e116";
@@ -36,7 +36,7 @@ body {
   content: "\e040";
 }
 .icon.funcionarios:before {
-  content: "\e008";
+  content: url(../protegido/icons/funcionario.png);
 }
 .icon.filiais:before {
   content: "\e012";

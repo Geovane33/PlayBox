@@ -7,6 +7,7 @@ var filiais = [];
 
 function init() {
     obterFiliais();
+  
     expand();
 }
 
@@ -75,4 +76,69 @@ function expand(){
     menu.toggleClass("collapsed");
     menu.toggleClass("expanded");
     });  
+}
+
+function obterFiliais() {
+    if (filiais.length === 0) {
+        $.ajax({
+            type: 'GET',
+            url: '../notestore?controller=Filial&acao=consultar',
+            contentType: 'application/json;charset=UTF-8',
+            headers: {
+                Accept: "application/json;charset=UTF-8",
+                "Content-Type": "application/json;charset=UTF-8"
+            },
+            success: function (result) {
+                filiais = result;
+                  carregarFiliais();
+                carregarTelas();
+            }});
+    }
+}
+
+function carregarTelas() {
+    if (filiais.length === 1) {
+        $("#listNav").html('');
+    } else {
+        $("#listNav").append(' <li>'+
+                        '<a href="../protegido/index.html">'+
+                          '  <div class="menu-item">       ' +
+                         '       <span class="icon filiais"></span>'+
+                             '   <span class="description">FILIAIS</span>'+
+                          '  </div>'+
+                   '     </a>'+
+                   ' </li>'+
+                 '   <li>'+
+                      '  <a href="#">'+
+                       '     <div class="menu-item">   '  +
+                              '  <span class="icon funcionarios"></span>'+
+                               ' <span class="description">FUNCIONARIOS</span>   '+    
+                          '  </div>'+
+                     '   </a>'+
+                  '  </li>'+
+                   ' <li>'+
+                      '  <a href="#">'+
+                           ' <div class="menu-item">  '      +
+                              '  <span class="icon senha"></span>'+
+                                '<span class="description">SENHA</span>   '+     
+                          '  </div>'+
+                     '   </a>'+
+                  '  </li>'+
+                    '<li>'+
+                       ' <a onclick="relatorioGeral()">'+
+                          '  <div class="menu-item">   '   +  
+                             '   <span class="icon relatorios"></span>'+
+                                '<span class="description">RELATÓRIOS</span>'      +  
+                            '</div>'+
+                       ' </a>' +
+                    '</li> ');
+    }
+    $("#listNav").append('<li>' +
+            '<a href="../logout">' +
+            '<div class="menu-item">  ' +
+            '<span class="icon logout"></span>' +
+            '<span class="description">LOGOUT</span>  ' +
+            ' </div>' +
+            '</a>' +
+            '</li>');
 }

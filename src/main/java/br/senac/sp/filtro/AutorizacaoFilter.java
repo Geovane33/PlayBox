@@ -56,12 +56,12 @@ public class AutorizacaoFilter implements Filter {
     private boolean verificarAcesso(UsuarioSistema usuario, HttpServletRequest httpRequest) {
         String urlAcessada = httpRequest.getRequestURI();
         if (urlAcessada.contains("/protegido/")) {
-            if (usuario.isAdmin()) {
+            if (usuario.isAdmin()  || usuario.isGerente()) {
+                //caso o usuario for gerente ele terá acesso a todas as tela de apenas uma filial, caso seja admin terá acesso a tudo
                 return true;
-            }
-        } else {
-            if (urlAcessada.contains("/protegido/")) {
-                return true;
+            } else if (usuario.isVendedor()) {
+                //caso o usuario for vendedor ele terá acesso a tela de cliente e vendas
+                return !(urlAcessada.contains("/protegido/CadastraProduto/") || urlAcessada.contains("/protegido/relatorios/"));
             }
         }
 

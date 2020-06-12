@@ -63,30 +63,6 @@
                         </a>
                     </li>
                     <li>
-                        <a href="../cadastroCliente/cadastroCliente.jsp">
-                            <div class="menu-item">        
-                                <span class="icon clientes"></span>
-                                <span class="description">CLIENTES</span>        
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="../cadastroProduto/cadastroProduto.jsp">
-                            <div class="menu-item">        
-                                <span class="icon produtos"></span>
-                                <span class="description">PRODUTOS</span>        
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="../relatorios/relatorio.jsp">
-                            <div class="menu-item">        
-                                <span class="icon relatorios"></span>
-                                <span class="description">RELATÓRIOS</span>        
-                            </div>
-                        </a>
-                    </li> 
-                    <li>
                         <a href="../../logout">
                             <div class="menu-item">        
                                 <span class="icon logout"></span>
