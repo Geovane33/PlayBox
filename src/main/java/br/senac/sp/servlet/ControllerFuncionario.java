@@ -21,7 +21,6 @@ public class ControllerFuncionario implements Controller {
     @Override
     public void adicionar(HttpServletRequest request, HttpServletResponse response) {
         try {
-            FuncionarioDAO FuncionarioDAO = new FuncionarioDAO();
             PrintWriter out = response.getWriter();
             int idFilial = Integer.parseInt(request.getParameter("idFilial"));
             String funcao = request.getParameter("funcao");
@@ -30,12 +29,13 @@ public class ControllerFuncionario implements Controller {
             String usuario = request.getParameter("usuario");
             String senha = request.getParameter("senha");
             Funcionario funcionario = new Funcionario();
-             funcionario.setIdFilial(idFilial);
+            funcionario.setIdFilial(idFilial);
             funcionario.setNome(nome);
             funcionario.setUsuario(usuario);
             funcionario.setFuncao(funcao);
             funcionario.setSenha(senha);
             funcionario.setSalario(salario);
+            FuncionarioDAO FuncionarioDAO = new FuncionarioDAO();
             if (FuncionarioDAO.salvar(funcionario)) {
                 out.write("200");
             } else {

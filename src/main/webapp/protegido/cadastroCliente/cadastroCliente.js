@@ -473,40 +473,6 @@ function carregarTelas() {
 
 function obterTelas() {
     if (telas.length === 0) {
-
-
-      
-           
-            
-            
-            
-                
-                
-    
-            
-               
-                
-                    
-                    
-      
-                   
-                     
-        
-                     
-
-                        
-                    
-                    
-                        
-                    
-                
-           
-    
-
-
-
-
-
         $.ajax({
             type: 'GET',
             url: '../../telas',
@@ -517,7 +483,6 @@ function obterTelas() {
             },
             success: function (result) {
                 telas = result;
-
                 if (telas[1]) {
                     $('.corpo').show();
                     carregarTelas();
@@ -554,13 +519,11 @@ function obterTelas() {
                     carregarTelas();
                 } else if(telas[1]){
                        window.location.href = '../cadastroProduto/cadastroProduto.jsp';
+                } else if(telas[2]){
+                       window.location.href = '../vendas/realizarVenda.jsp';
+                } else if(telas[3]){
+                       window.location.href = '../relatorios/relatorio.jsp';
                 }else{
-
-                
-              
-                 
-
-
                     Swal.fire({
                         icon: 'warning',
                         title: 'Não autorizado',
