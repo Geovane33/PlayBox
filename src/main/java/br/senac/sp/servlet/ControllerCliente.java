@@ -3,14 +3,18 @@ package br.senac.sp.servlet;
 import br.senac.sp.dao.ClienteDAO;
 import br.senac.sp.dao.VendaDAO;
 import br.senac.sp.entidade.Cliente;
+import br.senac.sp.entidade.UsuarioSistema;
 import br.senac.sp.utils.BuilderCliente;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class ControllerCliente implements Controller {
 
@@ -62,8 +66,16 @@ public class ControllerCliente implements Controller {
             Gson gson = new GsonBuilder()
                     .setDateFormat("dd/MM/yyyy")
                     .create();
+            HttpServletRequest httpRequest = (HttpServletRequest) request;
+            HttpSession sessao = httpRequest.getSession();
+            UsuarioSistema usuario = (UsuarioSistema) sessao.getAttribute("usuario");
+            List<Cliente> clientes = new ArrayList<>();
+            if (usuario.isAdmin()) {
+                clientes = clienteDAO.consultar(consulta, consultaTipo);
+            } else {
+                clientes = clienteDAO.consultar("", "nome");
+            }
 
-            List<Cliente> clientes = clienteDAO.consultar(consulta, consultaTipo);
             if (clientes.isEmpty()) {
                 out.write("");
             } else {

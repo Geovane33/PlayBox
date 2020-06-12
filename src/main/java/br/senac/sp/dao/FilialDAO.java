@@ -6,7 +6,7 @@
 package br.senac.sp.dao;
 
 import br.senac.sp.db.ConexaoDB;
-import br.senac.sp.entidade.Unidade;
+import br.senac.sp.entidade.Filial;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @author Geovane
  */
-public class UnidadeDAO implements DAO<Unidade> {
+public class FilialDAO implements DAO<Filial> {
 
     /**
      * Salvar filial
@@ -28,7 +28,7 @@ public class UnidadeDAO implements DAO<Unidade> {
      * @return true: salvo com sucesso false: erro ao salvar
      */
     @Override
-    public boolean salvar(Unidade unidade) {
+    public boolean salvar(Filial unidade) {
         boolean ok = false;
         Connection conexao = null;
         PreparedStatement ps = null;
@@ -80,7 +80,7 @@ public class UnidadeDAO implements DAO<Unidade> {
         ResultSet rs = null;
         Connection conexao = null;
         PreparedStatement ps = null;
-        List<Unidade> listFiliais = new ArrayList<>();
+        List<Filial> listFiliais = new ArrayList<>();
         try {
             conexao = ConexaoDB.getConexao();
             if (!values.equals("") && tipo.equals("NOME")) {
@@ -94,7 +94,7 @@ public class UnidadeDAO implements DAO<Unidade> {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                Unidade filial = new Unidade();
+                Filial filial = new Filial();
                 filial.setId(rs.getInt("id_filial"));
                 filial.setNome(rs.getString("nome_filial"));
                 filial.setEstado(rs.getString("estado_filial"));
@@ -127,14 +127,14 @@ public class UnidadeDAO implements DAO<Unidade> {
     }
 
     /**
-     * Atualizar dados do Unidade
+     * Atualizar dados do Filial
      *
      * @param unidade recebe uma entidade filial
-     * @return true: Unidade atulizado com sucesso false: Erro ao atualizar o
- Unidade
+     * @return true: Filial atulizado com sucesso false: Erro ao atualizar o
+ Filial
      */
     @Override
-    public boolean atualizar(Unidade unidade) {
+    public boolean atualizar(Filial unidade) {
         Connection conexao = null;
         PreparedStatement ps = null;
 

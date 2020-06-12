@@ -18,7 +18,7 @@ public class Relatorio {
     //atributos privados
     private int qtdVenda;
     private double total;
-    private Unidade filial;
+    private Filial filial;
 
     public int getQtdVenda() {
         return qtdVenda;
@@ -40,11 +40,11 @@ public class Relatorio {
         this.total = total;
     }
 
-    public Unidade getFilial() {
+    public Filial getFilial() {
         return filial;
     }
 
-    public void setFilial(Unidade filial) {
+    public void setFilial(Filial filial) {
         this.filial = filial;
     }
     

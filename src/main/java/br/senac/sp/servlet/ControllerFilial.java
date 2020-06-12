@@ -1,7 +1,7 @@
 package br.senac.sp.servlet;
 
-import br.senac.sp.dao.UnidadeDAO;
-import br.senac.sp.entidade.Unidade;
+import br.senac.sp.dao.FilialDAO;
+import br.senac.sp.entidade.Filial;
 import br.senac.sp.entidade.UsuarioSistema;
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -22,7 +22,7 @@ public class ControllerFilial implements Controller {
      */
     @Override
     public void consultar(HttpServletRequest request, HttpServletResponse response) {
-        List<Unidade> filiais;
+        List<Filial> filiais;
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpSession sessao = httpRequest.getSession();
         UsuarioSistema usuario = (UsuarioSistema) sessao.getAttribute("usuario");
@@ -30,10 +30,10 @@ public class ControllerFilial implements Controller {
 
             if (request.getMethod().equalsIgnoreCase("GET")) {
                 if (usuario.isAdmin()) {
-                    filiais = new UnidadeDAO().consultar("", "TODOS");
-                    filiais.add(new Unidade(0, "RELATÓRIO GERAL", ""));
+                    filiais = new FilialDAO().consultar("", "TODOS");
+                    filiais.add(new Filial(0, "RELATÓRIO GERAL", ""));
                 } else{
-                     filiais = new UnidadeDAO().consultar( usuario.getIdUnidade()+"","ID");
+                     filiais = new FilialDAO().consultar( usuario.getIdUnidade()+"","ID");
                 }
                 PrintWriter out = response.getWriter();
                 Gson gson = new Gson();

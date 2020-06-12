@@ -7,7 +7,7 @@ package br.senac.sp.dao;
 
 import br.senac.sp.db.ConexaoDB;
 import br.senac.sp.entidade.Cliente;
-import br.senac.sp.entidade.Unidade;
+import br.senac.sp.entidade.Filial;
 import br.senac.sp.entidade.Produto;
 import br.senac.sp.entidade.Relatorio;
 import br.senac.sp.entidade.Venda;
@@ -50,7 +50,7 @@ public class RelatorioDAO {
             }
             rs = ps.executeQuery();
             while (rs.next()) {
-                Unidade unidade = new Unidade();
+                Filial unidade = new Filial();
                 unidade.setId(rs.getInt("id_filial"));
                 unidade.setNome(rs.getString("nome_filial"));
                 unidade.setEstado(rs.getString("estado_filial"));
@@ -136,7 +136,7 @@ public class RelatorioDAO {
             rs = ps.executeQuery();
             while (rs.next()) {
 
-                Unidade unidade = new Unidade();
+                Filial unidade = new Filial();
                 unidade.setId(rs.getInt("id_filial"));
                 unidade.setNome(rs.getString("nome_filial"));
                 unidade.setEstado(rs.getString("estado_filial"));

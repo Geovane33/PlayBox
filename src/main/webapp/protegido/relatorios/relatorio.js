@@ -6,6 +6,8 @@ var filialVendas = {
 };
 var totalPorFilial = [filialVendas];
 
+var telas = [];
+
 //tabela
 var relatorio = [];
 var carregou = true;
@@ -192,7 +194,15 @@ function obterRelatorio() {
         success: function (result) {
             if (result === "" && carregou) {
                 carregou = false;
-                alert("Nenhuma venda encontrada para gerar relatorio");
+                Swal.fire({
+                    title: 'Nenhuma venda encontrada para gerar relatorio',
+                    icon: 'warnig'
+                });
+            } else if (result === "403") {
+                Swal.fire({
+                    title: 'Não autorizado',
+                    icon: 'error'
+                });
             } else {
                 carregou = false;
                 relatorio = result;
@@ -225,4 +235,34 @@ function expand() {
         }
 
     });
+}
+function obterTelas() {
+    if (telas.length === 0) {
+        $.ajax({
+            type: 'GET',
+            url: '../../telas',
+            contentType: 'application/json;charset=UTF-8',
+            headers: {
+                Accept: "application/json;charset=UTF-8",
+                "Content-Type": "application/json;charset=UTF-8"
+            },
+            success: function (result) {
+                telas = result;
+                if (telas[3]) {
+                    $('.corpo').show();
+                    carregarTelas();
+                } else {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Não autorizado',
+                        onBeforeOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+                    setTimeout(function () {
+                        window.location.href = '../../protegido/index.html';
+                    }, 1200);
+                }
+            }});
+    }
 }

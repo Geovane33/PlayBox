@@ -4,6 +4,7 @@
 $(document).ready(function () {
     init();
 });
+var telas = [];
 var expan = false;
 var venda = {total: 0};
 var produtoCarrinho = [];
@@ -12,6 +13,7 @@ var cliente = [];
 var produto = [];
 function init() {
     setTimeout(function () {
+        obterTelas();
         getFilialSelecionada();
         expand();
         obterFiliais();
@@ -20,7 +22,7 @@ function init() {
         listarProduto();
         setTimeout(function () {
             Swal.fire({
-                  showConfirmButton: false,
+                showConfirmButton: false,
                 timer: 1
             })
         }, 1000);
@@ -67,8 +69,6 @@ function getFilialSelecionada() {
                 window.location.href = '../index.html';
             }
         })
-    } else {
-        $('.corpo').show();
     }
 }
 
@@ -394,7 +394,7 @@ function getProdVenda() {
 function loadMsg(msg) {
     Swal.fire({
         title: msg,
-          showConfirmButton: false,
+        showConfirmButton: false,
         onBeforeOpen: () => {
             Swal.showLoading();
         }
@@ -439,7 +439,7 @@ function gerarVenda() {
                             icon: 'error'
                         });
                     } else if (result !== "") {
-                                  Swal.fire({
+                        Swal.fire({
                             title: result,
                             icon: 'error'
                         });
@@ -482,7 +482,7 @@ function expand() {
 }
 
 function carregarTelas() {
-    if (filiais.length === 1) {
+    if (telas[0]) {
         $("#listNav").append('<li>' +
                 ' <a href="../cadastroCliente/cadastroCliente.jsp">' +
                 '<div class="menu-item"> ' +
@@ -491,26 +491,30 @@ function carregarTelas() {
                 '</div>' +
                 '</a>' +
                 ' </li>');
-    } else {
-        $("#listNav").append(
-                '<li>' +
-                ' <a href="../cadastroCliente/cadastroCliente.jsp">' +
-                '<div class="menu-item"> ' +
-                ' <span class="icon clientes"></span>' +
-                '<span class="description">CLIENTES</span> ' +
-                '</div>' +
-                '</a>' +
-                ' </li>' +
-                '<li>' +
+    }
+    if (telas[1]) {
+        $("#listNav").append('<li>' +
                 ' <a href="../cadastroProduto/cadastroProduto.jsp">' +
                 '<div class="menu-item"> ' +
                 ' <span class="icon produtos"></span>' +
                 '<span class="description">PRODUTOS</span> ' +
                 '</div>' +
                 '</a>' +
-                ' </li>' +
-                '<li>' +
-                '<a href="../relatorios/relatorio.jsp">' +
+                ' </li>');
+    }
+
+    if (telas[2]) {
+        $("#listNav").append('<li>' +
+                '<a href="../vendas/realizarVenda.jsp">' +
+                '<div class="menu-item">' +
+                '<span class="icon vendas"></span>' +
+                '<span class="description">VENDAS</span> ' +
+                '</div>' +
+                '</a>' +
+                '</li>');
+    }
+    if (telas[3]) {
+        $("#listNav").append('<a href="../relatorios/relatorio.jsp">' +
                 '<div class="menu-item">' +
                 '<span class="icon relatorios"></span>' +
                 '<span class="description">RELATÓRIOS</span> ' +
@@ -518,6 +522,8 @@ function carregarTelas() {
                 ' </a>' +
                 '</li> ');
     }
+
+
     $("#listNav").append('<li>' +
             '<a href="../../logout">' +
             '<div class="menu-item">  ' +
@@ -527,6 +533,7 @@ function carregarTelas() {
             '</a>' +
             '</li>');
 }
+
 
 function obterFiliais() {
     if (filiais.length === 0) {
@@ -540,7 +547,38 @@ function obterFiliais() {
             },
             success: function (result) {
                 filiais = result;
-                carregarTelas();
+            }});
+    }
+}
+
+function obterTelas() {
+    if (telas.length === 0) {
+        $.ajax({
+            type: 'GET',
+            url: '../../telas',
+            contentType: 'application/json;charset=UTF-8',
+            headers: {
+                Accept: "application/json;charset=UTF-8",
+                "Content-Type": "application/json;charset=UTF-8"
+            },
+            success: function (result) {
+                telas = result;
+                if (telas[2]) {
+                    
+                    $('.corpo').show();
+                    carregarTelas();
+                } else {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Não autorizado',
+                        onBeforeOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+                    setTimeout(function () {
+                        window.location.href = '../../protegido/index.html';
+                    }, 1200);
+                }
             }});
     }
 }

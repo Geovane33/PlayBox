@@ -6,6 +6,7 @@
 package br.senac.sp.servlet;
 
 import br.senac.sp.dao.RelatorioDAO;
+import br.senac.sp.entidade.UsuarioSistema;
 import br.senac.sp.entidade.Venda;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -35,11 +37,21 @@ public class ControllerRelatorio implements Controller {
         Gson gson = new GsonBuilder()
                 .setDateFormat("dd/MM/yyyy")
                 .create();
+
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        HttpSession sessao = httpRequest.getSession();
+        UsuarioSistema usuario = (UsuarioSistema) sessao.getAttribute("usuario");
+
         try {
             PrintWriter out = response.getWriter();
             try {
                 int idFilial = Integer.parseInt(request.getParameter("idFilial"));
-                relatorio = relatorioDAO.consultar(idFilial);
+                if (usuario.isAdmin() || usuario.isGerente()) {
+                    relatorio = relatorioDAO.consultar(idFilial);
+                } else {
+                      out.write("403");
+                }
+
             } catch (NumberFormatException ex) {
                 System.out.println("Erro em obter filial ao gerar relatorio");
                 System.out.println("Message: " + ex.getMessage());

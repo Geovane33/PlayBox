@@ -1,9 +1,11 @@
 
 var produto = [];
+var telas = [];
 var filial = {};
 var expan = false;
 function init() {
     setTimeout(function () {
+        obterTelas();
         getFilial();
         consultarProdutos();
     }, 280);
@@ -52,6 +54,18 @@ function consultarProdutos() {
                     showConfirmButton: false,
                     timer: 1000
                 });
+            } else if (result === "403") {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Não autorizado',
+                    showConfirmButton: false,
+                    timer: 1000
+
+                });
+                setTimeout(function () {
+                    window.location.href = '../../protegido/index.html';
+                }, 900);
+
             } else {
                 Swal.fire({
                     showConfirmButton: false,
@@ -208,6 +222,7 @@ function validarForm() {
 }
 function getFilial() {
     filial = JSON.parse(sessionStorage.getItem('filial'));
+
     if (filial === null) {
         let timerInterval
         Swal.enableLoading();
@@ -240,8 +255,6 @@ function getFilial() {
                 window.location.href = '../../protegido/index.html';
             }
         })
-    } else {
-        $('.corpo').show();
     }
     document.getElementById("idFilial").value = filial.id;
 }
@@ -270,4 +283,88 @@ function loadMsg(msg) {
             Swal.showLoading();
         }
     });
+}
+
+function carregarTelas() {
+    if (telas[0]) {
+        $("#listNav").append('<li>' +
+                ' <a href="../cadastroCliente/cadastroCliente.jsp">' +
+                '<div class="menu-item"> ' +
+                ' <span class="icon clientes"></span>' +
+                '<span class="description">CLIENTES</span> ' +
+                '</div>' +
+                '</a>' +
+                ' </li>');
+    }
+    if (telas[1]) {
+        $("#listNav").append('<li>' +
+                ' <a href="../cadastroProduto/cadastroProduto.jsp">' +
+                '<div class="menu-item"> ' +
+                ' <span class="icon produtos"></span>' +
+                '<span class="description">PRODUTOS</span> ' +
+                '</div>' +
+                '</a>' +
+                ' </li>');
+    }
+
+    if (telas[2]) {
+        $("#listNav").append('<li>' +
+                '<a href="../vendas/realizarVenda.jsp">' +
+                '<div class="menu-item">' +
+                '<span class="icon vendas"></span>' +
+                '<span class="description">VENDAS</span> ' +
+                '</div>' +
+                '</a>' +
+                '</li>');
+    }
+    if (telas[3]) {
+        $("#listNav").append('<a href="../relatorios/relatorio.jsp">' +
+                '<div class="menu-item">' +
+                '<span class="icon relatorios"></span>' +
+                '<span class="description">RELATÓRIOS</span> ' +
+                '</div>' +
+                ' </a>' +
+                '</li> ');
+    }
+
+
+    $("#listNav").append('<li>' +
+            '<a href="../../logout">' +
+            '<div class="menu-item">  ' +
+            '<span class="icon logout"></span>' +
+            '<span class="description">LOGOUT</span>  ' +
+            ' </div>' +
+            '</a>' +
+            '</li>');
+}
+
+function obterTelas() {
+    if (telas.length === 0) {
+        $.ajax({
+            type: 'GET',
+            url: '../../telas',
+            contentType: 'application/json;charset=UTF-8',
+            headers: {
+                Accept: "application/json;charset=UTF-8",
+                "Content-Type": "application/json;charset=UTF-8"
+            },
+            success: function (result) {
+                telas = result;
+                if (telas[1]) {
+                    $('.corpo').show();
+                    carregarTelas();
+                } else {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Não autorizado',
+                        onBeforeOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+                    setTimeout(function () {
+                        window.location.href = '../../protegido/index.html';
+                    }, 1200);
+                }
+            }});
+    }
 }
