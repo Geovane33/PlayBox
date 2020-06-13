@@ -71,10 +71,14 @@ public class UsuarioSistema extends Pessoa {
         this.senha = senha;
     }
 
-    public PerfilEnum getPerfil() {
+    public PerfilEnum getPerfilEnum() {
         return perfil;
     }
 
+       public String getPerfilString() {
+        return perfil.getPerfil();
+    }
+    
     public void setPerfil(PerfilEnum perfil) {
         this.perfil = perfil;
     }
@@ -93,7 +97,7 @@ public class UsuarioSistema extends Pessoa {
      * @return boolean
      */
     public boolean isAdmin() {
-        return PerfilEnum.admin.equals(this.getPerfil());
+        return PerfilEnum.admin.equals(this.getPerfilEnum());
     }
 
     /**
@@ -102,7 +106,7 @@ public class UsuarioSistema extends Pessoa {
      * @return boolean
      */
     public boolean isGerente() {
-        return PerfilEnum.gerente.equals(this.getPerfil());
+        return PerfilEnum.gerente.equals(this.getPerfilEnum());
     }
 
     /**
@@ -111,7 +115,7 @@ public class UsuarioSistema extends Pessoa {
      * @return boolean
      */
     public boolean isVendedor() {
-        return PerfilEnum.vendedor.equals(this.getPerfil());
+        return PerfilEnum.vendedor.equals(this.getPerfilEnum());
     }
 
     /**
@@ -120,6 +124,6 @@ public class UsuarioSistema extends Pessoa {
      * @return boolean
      */
     public boolean isEstoquista() {
-        return PerfilEnum.estoquista.equals(this.getPerfil());
+        return PerfilEnum.estoquista.equals(this.getPerfilEnum());
     }
 }

@@ -7,7 +7,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +27,7 @@ public class ClienteDAO implements DAO<Cliente>{
             conexao = ConexaoDB.getConexao();
             String sql = "INSERT INTO cliente VALUES (default,?,?,?,?,?,?,?,?,?,?,?,?)";
             ps = conexao.prepareStatement(sql);
-            ps.setInt(1, cliente.getIdFIlial());
+            ps.setInt(1, cliente.getIdFilial());
             ps.setString(2, cliente.getNome());
             ps.setString(3, cliente.getCpf());
             ps.setDate(4, new Date(cliente.getDataNascimento().getTime()));
@@ -144,7 +143,7 @@ public class ClienteDAO implements DAO<Cliente>{
      * Atualizar dados do Cliente
      *
      * @param cliente - recebe por parametro um objeto cliente criado na classe
-     * controle
+     * controller
      * @return true: Cliente atulizado com sucesso false: Erro ao atualizar o
      * Cliente
      */
@@ -161,8 +160,7 @@ public class ClienteDAO implements DAO<Cliente>{
 
             ps = conexao.prepareStatement("UPDATE cliente SET nome_cliente = ?, cpf_cliente = ?, nasc_cliente = ?, sexo_cliente = ?,"
                     + " telefone_cliente = ?, email_cliente = ?, uf_cliente = ?, cidade_cliente =?, cep_cliente = ?,"
-                    + "bairro_cliente = ?,  numero_cliente = ? WHERE id_cliente = ?",
-                    Statement.RETURN_GENERATED_KEYS);  //Caso queira retornar o ID do cliente
+                    + "bairro_cliente = ?,  numero_cliente = ? WHERE id_cliente = ?");
             //Adiciono os parâmetros ao meu comando SQL
             ps.setString(1, cliente.getNome());
             ps.setString(2, cliente.getCpf());
