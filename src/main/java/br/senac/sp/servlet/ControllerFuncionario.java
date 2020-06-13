@@ -89,7 +89,6 @@ public class ControllerFuncionario implements Controller {
 
             FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
             if (usuario.isAdmin()) {
-
                 funcionarios = funcionarioDAO.consultar("", "TODOS");
             } else if (usuario.isGerente()) {
                 funcionarios = funcionarioDAO.consultar(usuario.getIdFilial() + "", "ID");

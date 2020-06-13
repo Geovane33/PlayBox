@@ -118,28 +118,6 @@ function carregarTelas() {
                 '  </li>');
     }
 
-    if (telas[2]) {
-        $("#listNav").append(' <li>' +
-                '  <a href="#">' +
-                ' <div class="menu-item">  ' +
-                '  <span class="icon senha"></span>' +
-                '<span class="description">SENHA</span>   ' +
-                '  </div>' +
-                '   </a>' +
-                '  </li>');
-    }
-    if (telas[3]) {
-        $("#listNav").append('<li>' +
-                ' <a onclick="relatorioGeral()">' +
-                '  <div class="menu-item">   ' +
-                '   <span class="icon relatorios"></span>' +
-                '<span class="description">RELATÓRIOS</span>' +
-                '</div>' +
-                ' </a>' +
-                '</li>');
-    }
-
-
     $("#listNav").append('<li>' +
             '<a href="../logout">' +
             '<div class="menu-item">  ' +
