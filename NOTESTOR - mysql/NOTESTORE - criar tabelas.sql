@@ -1,4 +1,4 @@
-CREATE DATABASE NOTESTORE;
+-- CREATE DATABASE NOTESTORE;
 CREATE TABLE filial (
     id_filial INT AUTO_INCREMENT PRIMARY KEY,
     nome_filial VARCHAR(20) NOT NULL,
@@ -58,6 +58,7 @@ CREATE TABLE venda_produto (
     FOREIGN KEY (id_venda)
         REFERENCES venda (id_venda)
 );
+
 CREATE TABLE usuariosistema (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     usuario VARCHAR(255),
@@ -80,18 +81,18 @@ CREATE TABLE funcionario (
     FOREIGN KEY (id_usuario)
         REFERENCES usuariosistema (id_usuario) ON DELETE CASCADE
 );
-insert into filial values(default, 'ACESSO TOTAL', '');
+
 insert into filial values(default, 'SÃO PAULO', 'SP');
 insert into filial values(default, 'RIO DE JANEIRO', 'RJ');
 insert into filial values(default, 'MINAS GERAIS', 'MG');
 
-SELECT * FROM usuariosistema;
+SELECT * FROM filial;
 
-DELETE FROM usuariosistema WHERE id_usuario = 27;
+SELECT * from usuariosistema;
 
 SELECT * FROM funcionario f inner join usuariosistema us on us.id_usuario = f.id_usuario;
 
 insert into usuariosistema (usuario, senha, perfil,id_filial) values  ('admin', '$2a$12$QOCya.5hab5l10NK7H27PufZwF5gnJ3DQjqB7qDFZntV08YG4FvXm', 'admin',1);
-insert into usuariosistema (usuario, senha, perfil,id_filial) values  ('gerente', '$2a$12$QOCya.5hab5l10NK7H27PufZwF5gnJ3DQjqB7qDFZntV08YG4FvXm', 'gerente',2);
-insert into usuariosistema (usuario, senha, perfil,id_filial) values  ('mike', '$2a$12$LRiaGx0f6hKD7ffdF0huquyeKchRVI0A10fWOx.uIN37bC/RSd9OS', 'vendedor',2);
-insert into usuariosistema (usuario, senha, perfil,id_filial) values  ('wallan', '$2a$12$QOCya.5hab5l10NK7H27PufZwF5gnJ3DQjqB7qDFZntV08YG4FvXm', 'estoquista',2);
+-- insert into usuariosistema (usuario, senha, perfil,id_filial) values  ('gerente', '$2a$12$QOCya.5hab5l10NK7H27PufZwF5gnJ3DQjqB7qDFZntV08YG4FvXm', 'gerente',2);
+-- insert into usuariosistema (usuario, senha, perfil,id_filial) values  ('mike', '$2a$12$LRiaGx0f6hKD7ffdF0huquyeKchRVI0A10fWOx.uIN37bC/RSd9OS', 'vendedor',2);
+-- insert into usuariosistema (usuario, senha, perfil,id_filial) values  ('wallan', '$2a$12$QOCya.5hab5l10NK7H27PufZwF5gnJ3DQjqB7qDFZntV08YG4FvXm', 'estoquista',2);
