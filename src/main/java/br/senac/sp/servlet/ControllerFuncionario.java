@@ -5,10 +5,8 @@
  */
 package br.senac.sp.servlet;
 
-import br.senac.sp.dao.ClienteDAO;
 import br.senac.sp.dao.FuncionarioDAO;
 import br.senac.sp.dao.UsuarioSistemaDAO;
-import br.senac.sp.dao.VendaDAO;
 import br.senac.sp.entidade.Funcionario;
 import br.senac.sp.entidade.UsuarioSistema;
 import br.senac.sp.utils.PerfilEnum;
@@ -91,7 +89,6 @@ public class ControllerFuncionario implements Controller {
 
             FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
             if (usuario.isAdmin()) {
-
                 funcionarios = funcionarioDAO.consultar("", "TODOS");
             } else if (usuario.isGerente()) {
                 funcionarios = funcionarioDAO.consultar(usuario.getIdFilial() + "", "ID");

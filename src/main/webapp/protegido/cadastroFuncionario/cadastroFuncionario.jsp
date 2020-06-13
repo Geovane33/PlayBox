@@ -31,12 +31,15 @@
                             <!-- Campos para preencher -->
                             <form id="formCad"action="../../notestore" method="POST">
                                 <div>
-                                    <input  type="hidden" value="0" type="text" name="idFuncionario" id="idFuncionario" name="id">
+                                    <input  type="hidden" value="0" name="idUsuario" id="idUsuario" name="idUsuario">
+
+                                    <input  type="hidden" value="0" name="idFuncionario" id="idFuncionario" name="idFuncionario">
                                 </div>
+
                                 <div>
-                                    <input type="text"  value="" name="idUsuario" class="idUsuario" id="idUsuario">
-                                    <label for="nome">Filial*</label>
-                                    <input type="text"  value="" name="idFilial" class="filial" id="idFilial" placeholder="id da filial">
+                                    <label class="filial" for="filial">Filial*</label>
+                                    <select class="filial" id="idFilial" name="idFilial">
+                                    </select>
                                 </div>
                                 <div>
                                     <label for="nome">Nome*</label>

@@ -143,7 +143,7 @@ public class ClienteDAO implements DAO<Cliente>{
      * Atualizar dados do Cliente
      *
      * @param cliente - recebe por parametro um objeto cliente criado na classe
-     * controle
+     * controller
      * @return true: Cliente atulizado com sucesso false: Erro ao atualizar o
      * Cliente
      */

@@ -91,7 +91,6 @@ public class FuncionarioDAO implements DAO<Funcionario> {
                 funcionario.setIdFilial(rs.getInt("id_filial"));
                 funcionario.setIdUsuario(rs.getInt("id_usuario"));
                 funcionario.setUsuario(rs.getString("usuario"));
-                funcionario.setSenha(rs.getString("senha"));
                 funcionario.setNome(rs.getString("nome"));
                 funcionario.setFuncao(rs.getString("perfil"));
                 funcionario.setSalario(rs.getDouble("salario"));

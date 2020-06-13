@@ -1,5 +1,5 @@
 //variaveis globais
-var funcionario = {};
+var funcionario = [];
 var dataNascimento = null;
 var consultaTipo = 'nome';
 var filial;
@@ -17,7 +17,6 @@ function init() {
     form();
     expand();
     setTimeout(function () {
-        getFilialSelecionada();
         consultarClientes();
     }, 280);
 
@@ -283,7 +282,7 @@ function excluirCliente(td, idFuncionario) {
                     type: 'GET',
                     url: '../../notestore?controller=Funcionario&acao=excluir&idUsuario=' + idFuncionario,
                     beforeSend: function (xhr) {
-                        loadMsg("Excluindo cliente!");
+                        loadMsg("Excluindo funcionário!");
                     },
                     headers: {
                         Accept: "application/json; charset=utf-8",
@@ -317,9 +316,6 @@ function excluirCliente(td, idFuncionario) {
             }
         }])
 }
-
-
-
 
 function validarForm() {
 //Valida o formulário
@@ -376,49 +372,7 @@ function expand() {
     });
 }
 
-function carregarTelas() {
-    if (telas[0]) {
-        $("#listNav").append('<li>' +
-                ' <a href="../cadastroCliente/cadastroCliente.jsp">' +
-                '<div class="menu-item"> ' +
-                ' <span class="icon clientes"></span>' +
-                '<span class="description">CLIENTES</span> ' +
-                '</div>' +
-                '</a>' +
-                ' </li>');
-    }
-    if (telas[1]) {
-        $("#listNav").append('<li>' +
-                ' <a href="../cadastroProduto/cadastroProduto.jsp">' +
-                '<div class="menu-item"> ' +
-                ' <span class="icon produtos"></span>' +
-                '<span class="description">PRODUTOS</span> ' +
-                '</div>' +
-                '</a>' +
-                ' </li>');
-    }
-
-    if (telas[2]) {
-        $("#listNav").append('<li>' +
-                '<a href="../vendas/realizarVenda.jsp">' +
-                '<div class="menu-item">' +
-                '<span class="icon vendas"></span>' +
-                '<span class="description">VENDAS</span> ' +
-                '</div>' +
-                '</a>' +
-                '</li>');
-    }
-    if (telas[3]) {
-        $("#listNav").append('<a href="../relatorios/relatorio.jsp">' +
-                '<div class="menu-item">' +
-                '<span class="icon relatorios"></span>' +
-                '<span class="description">RELATÓRIOS</span> ' +
-                '</div>' +
-                ' </a>' +
-                '</li> ');
-    }
-
-
+function carregarTelas() {             
     $("#listNav").append('<li>' +
             '<a href="../../logout">' +
             '<div class="menu-item">  ' +
@@ -495,6 +449,25 @@ function obterFiliais() {
             },
             success: function (result) {
                 filiais = result;
+                carregaListaProd();
             }});
+    }
+}
+
+/**
+ * Listar produtos adicionando cada um em uma tag option
+ */
+function carregaListaProd() {
+    var lista = '<option value="">---</option>';
+    $("#idFilial").append(lista);
+    for (i = 0; i < filiais.length; i++) {
+        if (filiais[i].id !== 0) {
+            lista = "";
+            lista += '<option value="' + filiais[i].id + '">' + filiais[i].nome + '</option>';
+            $("#idFilial").append(lista);
+        }
+
+
+
     }
 }

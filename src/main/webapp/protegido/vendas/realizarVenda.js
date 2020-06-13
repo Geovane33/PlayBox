@@ -33,7 +33,7 @@ function init() {
 }
 
 /**
- * chamada no mesmo momento que a pagina carregar
+  * chamada no mesmo momento que a pagina carregar
  */
 function getFilialSelecionada() {
     venda.filial = JSON.parse(sessionStorage.getItem('filial'));
