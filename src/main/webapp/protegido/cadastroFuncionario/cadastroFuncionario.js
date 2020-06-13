@@ -4,6 +4,7 @@ var dataNascimento = null;
 var consultaTipo = 'nome';
 var filial;
 var filiais = [];
+var filiaiss = [];
 var telas = [];
 var expan = false;
 var carregou = true;
@@ -371,7 +372,6 @@ function expand() {
 
     });
 }
-
 function carregarTelas() {             
     $("#listNav").append('<li>' +
             '<a href="../../logout">' +
@@ -431,12 +431,10 @@ function obterTelas() {
                     carregarTelas();
                 } else {
                     window.location.href = '../../NaoAutorizado.jsp';
-
                 }
             }});
     }
 }
-
 function obterFiliais() {
     if (filiais.length === 0) {
         $.ajax({
@@ -466,8 +464,5 @@ function carregaListaProd() {
             lista += '<option value="' + filiais[i].id + '">' + filiais[i].nome + '</option>';
             $("#idFilial").append(lista);
         }
-
-
-
     }
 }

@@ -10,7 +10,6 @@ public class ConexaoDB {
 
     private static String STATUS = "Não conectado";
     private static String DRIVER = "com.mysql.cj.jdbc.Driver";
-
     private static String DB_ADDRESS = "jdbc:mysql://b3oeg1ukyncxwz0asovh-mysql.services.clever-cloud.com:20069/b3oeg1ukyncxwz0asovh";
     private static String USER = "ufgdrfi6yvhdnvic";
     private static String PASSWORD = "gXqVGteMPYqbhVnjCMfs";
