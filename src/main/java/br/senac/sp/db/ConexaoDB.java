@@ -11,9 +11,9 @@ public class ConexaoDB {
     private static String STATUS = "Não conectado";
     private static String DRIVER = "com.mysql.cj.jdbc.Driver";
 
-    private static String DB_ADDRESS = "jdbc:mysql://localhost:3307/notestore";
-    private static String USER = "root";
-    private static String PASSWORD = "";
+    private static String DB_ADDRESS = "jdbc:mysql://bwjhlrcu2gqbk5oncepz-mysql.services.clever-cloud.com:20085/bwjhlrcu2gqbk5oncepz";
+    private static String USER = "u7h0seagtxd5kio9";
+    private static String PASSWORD = "77jQCsW0Ge7MrqejdvUT";
     private static Connection CONEXAO = null;
 
     static {

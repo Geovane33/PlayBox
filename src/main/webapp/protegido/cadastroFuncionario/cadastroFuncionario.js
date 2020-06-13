@@ -4,6 +4,7 @@ var dataNascimento = null;
 var consultaTipo = 'nome';
 var filial;
 var filiais = [];
+var filiaiss = [];
 var telas = [];
 var expan = false;
 var carregou = true;
@@ -318,9 +319,6 @@ function excluirCliente(td, idFuncionario) {
         }])
 }
 
-
-
-
 function validarForm() {
 //Valida o formulário
     $("#formCad").validate();
@@ -495,6 +493,21 @@ function obterFiliais() {
             },
             success: function (result) {
                 filiais = result;
+                carregaListaProd();
             }});
+    }
+}
+
+/**
+ * Listar produtos adicionando cada um em uma tag option
+ */
+function carregaListaProd() {
+    var lista = '<option value="">---</option>';
+    $("#idFilial").append(lista);
+    for (i = 0; i < filiais.length-1; i++) {
+        console.log(filiais[i]);
+        lista = "";
+        lista += '<option value="' + filiais[i].id + '">' + filiais[i].nome + '</option>';
+        $("#idFilial").append(lista);
     }
 }

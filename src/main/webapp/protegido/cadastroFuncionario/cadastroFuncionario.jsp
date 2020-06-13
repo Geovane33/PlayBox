@@ -33,10 +33,11 @@
                                 <div>
                                     <input  type="hidden" value="0" type="text" name="idFuncionario" id="idFuncionario" name="id">
                                 </div>
+
                                 <div>
-                                    <input type="text"  value="" name="idUsuario" class="idUsuario" id="idUsuario">
-                                    <label for="nome">Filial*</label>
-                                    <input type="text"  value="" name="idFilial" class="filial" id="idFilial" placeholder="id da filial">
+                                    <label class="filial" for="funcao">Filial*</label>
+                                    <select class="filial" id="idFilial" name="idFilial">
+                                    </select>
                                 </div>
                                 <div>
                                     <label for="nome">Nome*</label>
